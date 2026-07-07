@@ -1,6 +1,6 @@
 # TESTING.md — ZineIt v2.0 test report
 
-**Result: 89 passed · 0 failed · 0 console errors.** The whole tool — including the
+**Result: 92 passed · 0 failed · 0 console errors.** The whole tool — including the
 v3.2 type system and production-hardening pass — was tested before this render, as
 required.
 
@@ -72,7 +72,8 @@ cd tests && npm install && npm test
 | Production shell | Inline SVG favicon, noscript message, header version badge matching APP_VER, console version banner |
 | Error handling | Synthetic uncaught error raises one toast naming the error, reassuring about autosave, and routing to the feedback email; a second immediate error is throttled; async rejections covered; boot guarded with a readable failure screen |
 | Accessibility | All icon-only controls carry aria-labels; `prefers-reduced-motion` honoured |
-| Console health | Zero page errors or uncaught exceptions across all 89 tests |
+| Favicon set | Real multi-size `.ico`, gradient `.svg`, and PNG signatures verified; week-long cache headers on icons while the HTML stays `must-revalidate`; inline data-URI icon retained and **no** file-based icon links, so a locally saved single file keeps working |
+| Console health | Zero page errors or uncaught exceptions across all 92 tests |
 
 ## Defects found by this suite and fixed before render
 

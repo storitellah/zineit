@@ -10,7 +10,9 @@ Type system + production readiness.
 - **Crash guards**: boot is wrapped — a startup failure shows a readable message pointing to bryanjaybee@gmail.com instead of a blank page; uncaught errors and async rejections raise a gentle toast that names the error, reassures that work is autosaved, and routes to ✉ Feedback (throttled — never a toast storm).
 - **Inline SVG favicon** (no 404s in production), **noscript** message, **version badge** in the header (so bug reports say which build), and a console version banner.
 - **Accessibility**: aria-labels on all icon-only controls; `prefers-reduced-motion` disables drawer/toast animation.
-- 6 new automated tests (89 total, all passing).
+- 9 new automated tests (92 total, all passing).
+
+- **Shipped favicon set for the Cloudflare deployment**: `favicon.ico` (16/32/48 multi-size), scalable `favicon.svg`, `apple-touch-icon.png` (iOS Add-to-Home-Screen finds it at the root by convention), and 192/512 px PNGs for future PWA use — all the gradient Z mark, all cache-controlled for a week in `_headers`. No icon links were added to the HTML: browsers use the inline data-URI (which keeps a locally saved single ZineIt.html fully working), while crawlers, bookmark services, and iOS fetch the root files directly — so production logs stop showing favicon 404s.
 
 ### Notes
 - The file ships readable, not minified — Cloudflare compresses on the wire (the gap is a few KB), and an auditable single file is part of ZineIt's local-first promise.

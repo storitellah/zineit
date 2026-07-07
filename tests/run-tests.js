@@ -881,7 +881,32 @@ T('accessibility: icon-only controls are labelled; reduced motion respected', ()
   ok(/prefers-reduced-motion:reduce/.test(SRC2), 'transitions disabled for reduced-motion users');
 });
 
-/* ============ 18 · console health ============ */
+/* ============ 18 · shipped favicon set (served by Cloudflare Pages) ============ */
+T('physical favicon files ship in the repo with valid signatures', () => {
+  const root = path.join(__dirname, '..');
+  const ico = fs.readFileSync(path.join(root, 'favicon.ico'));
+  ok(ico.length > 1000 && ico[0] === 0 && ico[1] === 0 && ico[2] === 1 && ico[3] === 0, 'favicon.ico is a real multi-image ICO');
+  const svg = fs.readFileSync(path.join(root, 'favicon.svg'), 'utf8');
+  ok(/^<svg /.test(svg) && /linearGradient/.test(svg), 'favicon.svg is the gradient Z mark');
+  for (const f of ['apple-touch-icon.png', 'icon-192.png', 'icon-512.png']) {
+    const b = fs.readFileSync(path.join(root, f));
+    ok(b.length > 1000 && b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4E && b[3] === 0x47, f + ' is a real PNG');
+  }
+});
+T('icons are cache-controlled on Cloudflare; the app itself stays always-fresh', () => {
+  const h = fs.readFileSync(path.join(__dirname, '..', '_headers'), 'utf8');
+  ['/favicon.ico', '/favicon.svg', '/apple-touch-icon.png'].forEach(p =>
+    ok(new RegExp(p.replace(/[.\/]/g, '\\$&') + '\\n\\s+Cache-Control: public, max-age=604800').test(h), p + ' cached for a week'));
+  ok(/\/\*\n(.|\n)*?max-age=0, must-revalidate/.test(h), 'HTML remains must-revalidate so updates land instantly');
+});
+T('single-file use keeps working: inline data-URI icon retained, no file-based icon links', () => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  ok(/rel="icon" href='data:image\/svg\+xml/.test(src), 'data-URI icon still in the HTML (works when ZineIt.html is opened locally)');
+  ok(!/rel="icon" href="favicon/.test(src) && !/rel="apple-touch-icon"/.test(src),
+    'no relative icon links that would 404 for a saved single file — iOS and crawlers find the root files by convention');
+});
+
+/* ============ 19 · console health ============ */
 T('no page errors or uncaught exceptions across the whole run', () => {
   eq(pageErrors.length, 0, 'errors: ' + pageErrors.slice(0, 3).join(' | '));
 });
