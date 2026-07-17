@@ -1,7 +1,7 @@
 # TESTING.md — ZineIt v2.0 test report
 
-**Result: 133 passed · 0 failed · 0 console errors in the app suite, plus 22 Lua unit
-tests for the Lightroom plug-in — 155 total, all green.** The whole tool — including the
+**Result: 153 passed · 0 failed · 0 console errors in the app suite, plus 22 Lua unit
+tests for the Lightroom plug-in — 175 total, all green.** The whole tool — including the
 v3.2 type system and production-hardening pass — was tested before this render, as
 required.
 
@@ -88,7 +88,11 @@ cd tests && npm test    # just the app + contract suite
 | Audio removal | No UI, handlers, markup or state field anywhere |
 | Templates | All nine templates supply all eleven page types; Blank stays blank; the seven templates named in the brand guidelines all exist; **every recipe materialises on-page across all seven formats** (mini-zine, mini-16, A4 portrait/landscape, 3:2, 2:3, half-letter); type scales with page size but never below legibility; applying sets frames, text, fonts, colours and margin; **replace keeps photos, their order and their true aspect ratio**; surplus photos are never discarded; text carries across by role; whole-zine apply assigns cover/intro/closing/back and leaves a project that passes the verifier; custom save/duplicate/export→import round-trip; junk template files refused; customs persist to local storage; browser UI previews from real recipes and applies |
 | Text colour | Defaults to ink, renders on canvas, used by the 300 DPI export |
-| Console health | Zero page errors or uncaught exceptions across all 133 app tests |
+| One-window workspace | Right panel is tabbed (props/page/layers/guides/export) and shows exactly one pane; every toolbar and panel control present; compact title never truncates the saved value; panels resize via CSS variables, collapse, persist to local storage, and reset; focus mode and preview-only, both exited with Esc; bleed hint tracks the real millimetre setting |
+| Layers | Stack listed front-to-back; bring to front / forward / backward / send to back; drag-reorder lands where dropped; **hidden layers leave the canvas, the print path and the 300 DPI export but stay in the project**; locked layers refuse to be dragged; eye and padlock toggles; renaming never touches the photo record |
+| Undo / redo | Walks back and forward; **the asset record is byte-identical after an undo**; a new edit clears the redo branch; buttons reflect what is actually possible |
+| Text colour | Hex parsing accepts `#FFC43D` / `ffc43d` / `#fc3` and refuses junk; RGB readout; seven brand presets; recent colours persisted; apply-by-scope recolours only matching roles |
+| Console health | Zero page errors or uncaught exceptions across all 153 app tests |
 
 ## Defects found by this suite and fixed before render
 

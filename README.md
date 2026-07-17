@@ -57,6 +57,22 @@ Every project automatically includes a **front cover** and **back cover**; inter
   [`docs/TEMPLATE-GUIDE.md`](docs/TEMPLATE-GUIDE.md).
 - Brand system applied throughout; page audio notes removed.
 
+**v4.1 — the one-window workspace**
+
+- **Everything in one window.** Compact toolbar, media on the left, pages in the middle,
+  a **tabbed** properties panel on the right (it used to be one endless scroll), timeline
+  along the bottom. Panels resize, collapse, and remember where you left them.
+- **Layers** — the page stack, front to back. Reorder, rename, hide, lock. Hiding is not
+  deleting: a hidden layer leaves the page and the export, but stays in your file.
+- **Undo and redo**, 60 steps, `Ctrl/⌘ Z`. It snapshots the project, never your photographs.
+- **Text colour**: picker, HEX, RGB, the brand palette, recent colours, and apply-by-scope
+  that respects the text's role.
+- **Installable PWA** — and still just a file you can double-click. The service worker
+  skips itself on `file://` rather than throwing errors at you.
+- **Android build project** — a real Capacitor project you can build in ten minutes.
+  See [`docs/ANDROID-BUILD.md`](docs/ANDROID-BUILD.md). There is no compiled APK in here,
+  and that doc explains exactly why.
+
 v4.0 is Phase 1 of a larger brief — rulers, guides, colour proofing, panorama books,
 mockups and the printmaker guide are sequenced in
 [`docs/ROADMAP.md`](docs/ROADMAP.md).
@@ -138,6 +154,9 @@ Nothing is ever sent anywhere. The `.bak` lives wherever your downloads go — m
 index.html            the entire product — zero-build, works offline
 docs/ROADMAP.md       what shipped in v4.0 and what is sequenced next
 docs/TEMPLATE-GUIDE.md  the template library and how replace keeps your work
+docs/ANDROID-BUILD.md   building the Android app — and why there is no APK in the repo
+docs/APK-SIGNING.md     signing a release build with your own key
+DEPLOYMENT.md         the file, the site, and the app
 lightroom/            Lightroom Classic plug-in (Lua) + its tests
 run-tests.sh          runs every suite in one command
 PROMPT.md             the full build prompt, requirements, and version record
