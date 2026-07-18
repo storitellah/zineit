@@ -1,4 +1,4 @@
-ZineIt v4.1 test run — 2026-07-18T02:38:18.180Z
+ZineIt v4.2 test run — 2026-07-18T07:46:00.141Z
 PASS  boots into a valid mini-zine project
 PASS  spread model: cover alone · 3 interior pairs · back alone
 PASS  forward/backward page navigation, no skips, covers included
@@ -149,8 +149,18 @@ PASS  file naming: exports and backups follow the house scheme, sanitised
 PASS  JPG export numbers pages in reading order and spreads separately
 PASS  the ZIP writer produces a real, readable archive
 PASS  300 DPI is the export target, and it renders from originals not previews
+PASS  crop editor opens on a photo and edits a working copy, not the original
+PASS  crop editor cancel discards all changes
+PASS  flip flags survive migration and reach every render path
+PASS  rulers and user guides live in settings and default off/empty
+PASS  a guide can be added, snapped to, and cleared — and never prints
+PASS  rulers markup and engine are present
+PASS  toolbar buttons carry text labels, not bare icons
+PASS  Export stands alone with its own button
+PASS  pan mode toggles from both the toolbar and the properties panel
+PASS  clock and autosave moved into the right panel status strip
 PASS  audio notes are gone from every surface
 PASS  support and feedback route to hello@storitellah.com
 PASS  no page errors or uncaught exceptions across the whole run
 
-153 passed · 0 failed
+163 passed · 0 failed

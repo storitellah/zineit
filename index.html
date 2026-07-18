@@ -80,26 +80,40 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2.5
   width:150px;max-width:22vw;font-size:12.5px;font-weight:600;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
 #projName:hover{border-color:var(--line);background:var(--panel-2)}
 #projName:focus{border-color:var(--yellow);background:var(--panel-2);width:260px;max-width:40vw;text-overflow:clip}
-.tbar{display:flex;align-items:center;gap:3px}
-.tbar .sep{width:1px;height:20px;background:var(--line);margin:0 3px}
-.tb{width:28px;height:28px;padding:0;display:inline-flex;align-items:center;justify-content:center;
-  background:none;border:1px solid transparent;border-radius:5px;color:var(--muted);font-size:13px;line-height:1}
+.tbar{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}
+.tbar .sep{width:1px;height:22px;background:var(--line);margin:0 4px;flex:0 0 auto}
+.zoomGrp{display:inline-flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.zoomGrp .tb{border-radius:0;border:none;border-right:1px solid var(--line);height:30px}
+.zoomGrp .tb:last-child{border-right:none}
+/* icon-only button */
+.tb{height:30px;min-width:30px;padding:0 6px;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  background:none;border:1px solid transparent;border-radius:6px;color:var(--muted);font-size:13px;line-height:1;white-space:nowrap;flex:0 0 auto}
 .tb:hover:not(:disabled){background:var(--panel-2);border-color:var(--line);color:var(--text)}
 .tb.on{color:var(--ink);background:var(--yellow);border-color:var(--yellow)}
-.tb:disabled{opacity:.32}
-.tb.wide{width:auto;padding:0 8px;font-size:11.5px;gap:5px}
-.tb.go{background:var(--yellow);color:var(--ink);font-weight:700;border-color:var(--yellow)}
-select.tbsel{height:28px;padding:0 6px;font-size:11.5px;background:var(--panel-2);border:1px solid var(--line);border-radius:5px;color:var(--text);max-width:132px}
-@media(max-width:1240px){ #clock{display:none} .tb.wide span{display:none} }
-@media(max-width:1040px){ .brand .by,.brand .ver{display:none} }
-.hdr-spacer{flex:1}
-#clock{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;line-height:1.35;white-space:nowrap}
-#clock b{color:var(--text);font-weight:600}
-#saveState{font-family:var(--mono);font-size:11px;color:var(--faint);display:flex;align-items:center;gap:6px;white-space:nowrap}
-#saveState .dot{width:7px;height:7px;border-radius:50%;background:var(--faint)}
-#saveState.saved .dot{background:var(--ok)}
+.tb:disabled{opacity:.34;cursor:default}
+/* labelled button: icon + text, so nobody has to guess what "+" means */
+.tb.lbl{padding:0 9px;font-size:11.5px;font-weight:500}
+.tb.lbl .i{font-size:13px;line-height:1;display:inline-flex}
+.tb.lbl .t{letter-spacing:.1px}
+/* Export stands alone — its own colour, its own corner */
+.exportBtn{height:30px;padding:0 16px;display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;
+  background:var(--yellow);color:var(--ink);font-weight:700;font-size:12.5px;border:none;border-radius:6px;
+  box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.exportBtn:hover{filter:brightness(1.05)}
+.exportBtn .i{font-size:14px}
+select.tbsel{height:30px;padding:0 8px;font-size:11.5px;background:var(--panel-2);border:1px solid var(--line);border-radius:6px;color:var(--text);max-width:150px;flex:0 0 auto}
+/* progressively drop labels as the window narrows, icons always remain */
+@media(max-width:1360px){ .tb.lbl .t{display:none} .tb.lbl{padding:0 8px} }
+@media(max-width:1040px){ .brand .ver{display:none} }
+.hdr-spacer{flex:1 1 auto;min-width:8px}
 #saveState.saving .dot{background:var(--warn)}
 #saveState.err .dot{background:var(--danger)}
+.statusStrip{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:5px}
+#clock{font-family:var(--mono);font-size:10.5px;color:var(--faint);line-height:1.35;white-space:nowrap}
+#clock b{color:var(--muted);font-weight:600}
+#saveState{font-family:var(--mono);font-size:11px;color:var(--faint);display:flex;align-items:center;gap:6px;white-space:nowrap}
+#saveState .dot{width:7px;height:7px;border-radius:50%;background:var(--faint);flex:0 0 auto}
+#saveState.saved .dot{background:var(--ok)}
 
 /* ============ PANELS ============ */
 .side{background:var(--panel);overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:15px;position:relative}
@@ -218,6 +232,24 @@ textarea{resize:vertical;min-height:56px}
 #zoomPct{font-family:var(--mono);font-size:11px;color:var(--faint);min-width:42px;text-align:center}
 #canvasScroll{flex:1;overflow:auto;display:grid;place-items:center;padding:26px;position:relative}
 #pageHost{position:relative;flex:none}
+/* rulers — off by default (canvas stays centred); on adds a 22px gutter top & left */
+#rulerCorner,#rulerH,#rulerV{display:none;position:absolute;z-index:8;background:var(--panel)}
+#rulerCorner{top:0;left:0;width:22px;height:22px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+#rulerH{top:0;left:22px;height:22px;border-bottom:1px solid var(--line)}
+#rulerV{left:0;top:22px;width:22px;border-right:1px solid var(--line)}
+#canvasScroll.rulers{place-items:start}
+#canvasScroll.rulers #rulerCorner,#canvasScroll.rulers #rulerH,#canvasScroll.rulers #rulerV{display:block}
+#canvasScroll.rulers #pageHost{margin:22px 0 0 22px}
+/* user guides — teal, draggable, never printed */
+#userGuides{position:absolute;inset:0;pointer-events:none;z-index:7}
+.uguide{position:absolute;pointer-events:auto;background:var(--teal)}
+.uguide.h{left:0;right:0;height:1px;cursor:row-resize}
+.uguide.v{top:0;bottom:0;width:1px;cursor:col-resize}
+.uguide::after{content:"";position:absolute;inset:-4px}
+.uguide.h::after{left:0;right:0;height:9px;top:-4px}
+.uguide.v::after{top:0;bottom:0;width:9px;left:-4px}
+.uguide:hover{background:var(--yellow);box-shadow:0 0 0 1px var(--yellow)}
+#canvasScroll.rulers #rulerH,#canvasScroll.rulers #rulerV{cursor:crosshair}
 #page{position:relative;overflow:hidden;background:var(--paper);box-shadow:0 18px 50px -12px var(--paper-shadow),0 0 0 1px rgba(0,0,0,.4)}
 #page.gridOn{background-image:
   repeating-linear-gradient(0deg,rgba(60,90,140,.10) 0,rgba(60,90,140,.10) 1px,transparent 1px,transparent var(--gpx)),
@@ -238,6 +270,10 @@ textarea{resize:vertical;min-height:56px}
 .el.img.empty::after{content:"drop photo";font-family:var(--mono);font-size:10px;color:rgba(44,93,179,.85);letter-spacing:.8px}
 .el.txt{color:#1b1b1b;line-height:1.32;white-space:pre-wrap;word-break:break-word;overflow:hidden}
 .el.sel{outline:1.5px solid var(--accent);outline-offset:0;z-index:60!important}
+body.panning .el.img{cursor:grab}
+body.panning .el.img:active{cursor:grabbing}
+.el{cursor:pointer}
+.el.txt{cursor:text}
 .el.locked{opacity:.92}
 .el.warnEdge{outline:1.5px dashed var(--warn)}
 .el.dropTarget{outline:2px solid var(--ok)}
@@ -402,8 +438,6 @@ body.fs #canvasScroll{padding:14px}
   #fsInd{bottom:max(14px,env(safe-area-inset-bottom,0px))}
   select,input[type=text],input[type=number],textarea{font-size:16px}  /* ≥16px stops iOS zoom-on-focus */
   #projName{min-width:0;flex:1;font-size:16px}
-  #clkDate,#saveStateTxt{display:none}
-  #clock{font-size:11px}
   .side{position:fixed;top:calc(46px + env(safe-area-inset-top,0px));bottom:calc(54px + env(safe-area-inset-bottom,0px));width:min(84vw,330px);z-index:320;transition:transform .22s ease;box-shadow:0 0 44px rgba(0,0,0,.55);-webkit-overflow-scrolling:touch}
   #left{left:0;border-right:1px solid var(--line);transform:translateX(-106%)}
   #right{right:0;border-left:1px solid var(--line);transform:translateX(106%)}
@@ -425,6 +459,34 @@ body.fs #canvasScroll{padding:14px}
   .teAdd{grid-template-columns:1fr}
   .modal{padding:16px}
 }
+
+/* ---- crop editor window ---- */
+#cropBk{z-index:680}
+.cropWin{background:var(--panel);border:1px solid var(--line);border-radius:12px;width:min(1080px,96vw);height:min(88vh,860px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.cropHead{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line);flex:0 0 auto}
+.cropTitle{display:flex;align-items:baseline;gap:10px;min-width:0}
+.cropTitle b{font-family:var(--display);font-weight:700;font-size:15px}
+.cropTitle .mono{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cropX{font-size:20px;width:34px;height:34px;flex:0 0 auto}
+.cropBody{flex:1;display:flex;min-height:0}
+#cropStage{flex:1;min-width:0;background:repeating-conic-gradient(#1a1a1a 0% 25%,#161616 0% 50%) 50%/22px 22px;display:grid;place-items:center;overflow:hidden;position:relative}
+#cropCanvas{position:relative;box-shadow:0 0 0 1px var(--line),0 20px 60px rgba(0,0,0,.6);background:#0d0d0d;touch-action:none}
+#cropImg{position:absolute;left:50%;top:50%;transform-origin:center center;user-select:none;-webkit-user-drag:none;cursor:grab}
+#cropImg:active{cursor:grabbing}
+#cropFrame{position:absolute;inset:0;pointer-events:none;box-shadow:0 0 0 9999px rgba(10,10,10,.62);outline:1px solid var(--yellow);z-index:3}
+#cropFrame.grid::before,#cropFrame.grid::after{content:"";position:absolute;background:rgba(255,196,61,.35)}
+#cropFrame.grid::before{left:33.33%;right:33.33%;top:0;bottom:0;border-left:1px solid rgba(255,196,61,.35);border-right:1px solid rgba(255,196,61,.35)}
+#cropFrame.grid::after{top:33.33%;bottom:33.33%;left:0;right:0;border-top:1px solid rgba(255,196,61,.35);border-bottom:1px solid rgba(255,196,61,.35)}
+#cropOrig{position:absolute;pointer-events:none;border:1px dashed rgba(0,180,166,.8);z-index:2}
+.cropSide{width:280px;flex:0 0 auto;border-left:1px solid var(--line);padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;background:var(--panel)}
+.cropGrp{display:flex;flex-direction:column;gap:7px}
+.cropGrpT{font-family:var(--display);font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+.cropGrpT .mono{font-family:var(--mono);letter-spacing:0;color:var(--faint);text-transform:none}
+.cropSide input[type=range]{width:100%;accent-color:var(--yellow)}
+.cropFoot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-top:1px solid var(--line);flex:0 0 auto}
+.cropFoot .mono{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.cropFoot .btns{display:flex;gap:8px}
+@media(max-width:760px){ .cropBody{flex-direction:column} .cropSide{width:auto;border-left:none;border-top:1px solid var(--line);max-height:40vh} }
 
 /* ---- template browser ---- */
 #tplModal .modal{max-width:760px;width:96vw}
@@ -454,31 +516,31 @@ body.fs #canvasScroll{padding:14px}
   <header>
     <div class="brand">
       <span class="mark">Zine<span>It</span></span>
-      <span class="ver" id="verBadge">v4.1</span>
-      <span class="by">by <a href="https://storitellah.com" target="_blank" rel="noopener">Storitellah</a></span>
+      <span class="ver" id="verBadge">v4.2</span>
     </div>
     <input id="projName" type="text" value="Untitled project" spellcheck="false" aria-label="Project title" title="Project title — click to edit">
     <div class="tbar">
-      <button class="tb" id="tbUndo" title="Undo (Ctrl/Cmd Z)" aria-label="Undo" disabled>↺</button>
-      <button class="tb" id="tbRedo" title="Redo (Ctrl/Cmd Shift Z)" aria-label="Redo" disabled>↻</button>
+      <button class="tb lbl" id="tbUndo" title="Undo (Ctrl/Cmd Z)" disabled><span class="i">&#8630;</span><span class="t">Undo</span></button>
+      <button class="tb lbl" id="tbRedo" title="Redo (Ctrl/Cmd Shift Z)" disabled><span class="i">&#8631;</span><span class="t">Redo</span></button>
       <span class="sep"></span>
       <select class="tbsel" id="tbFormat" title="Page size and orientation" aria-label="Page size"></select>
-      <button class="tb" id="tbAddPage" title="Add a page" aria-label="Add page">&#43;</button>
-      <button class="tb" id="tbAddSpread" title="Make the selected photo a double-page spread" aria-label="Add spread">&#8660;</button>
-      <button class="tb wide" id="tbTpl" title="Browse templates">&#9636;&nbsp;<span>Templates</span></button>
+      <button class="tb lbl" id="tbAddPage" title="Add a new page"><span class="i">&#43;</span><span class="t">Add page</span></button>
+      <button class="tb lbl" id="tbAddSpread" title="Make the selected photo a double-page spread"><span class="i">&#8660;</span><span class="t">Spread</span></button>
+      <button class="tb lbl" id="tbTpl" title="Browse layout and cover templates"><span class="i">&#9636;</span><span class="t">Templates</span></button>
       <span class="sep"></span>
-      <button class="tb" id="tbZoomOut" title="Zoom out" aria-label="Zoom out">&#8722;</button>
-      <button class="tb wide" id="tbZoomFit" title="Fit the page to the window">Fit</button>
-      <button class="tb" id="tbZoomIn" title="Zoom in" aria-label="Zoom in">&#43;</button>
+      <button class="tb lbl" id="tbPan" title="Pan mode — drag to move a photo inside its frame"><span class="i">&#9995;</span><span class="t">Pan</span></button>
+      <span class="zoomGrp">
+        <button class="tb" id="tbZoomOut" title="Zoom out" aria-label="Zoom out">&#8722;</button>
+        <button class="tb" id="tbZoomFit" title="Fit the page to the window">Fit</button>
+        <button class="tb" id="tbZoomIn" title="Zoom in" aria-label="Zoom in">&#43;</button>
+      </span>
       <span class="sep"></span>
-      <button class="tb" id="tbFocus" title="Focus mode — hide the side panels (Esc to exit)" aria-label="Focus mode">&#9713;</button>
-      <button class="tb" id="tbPreview" title="Preview only — just the pages (Esc to exit)" aria-label="Preview only">&#9654;</button>
+      <button class="tb lbl" id="tbFocus" title="Focus mode — hide the side panels (Esc to exit)"><span class="i">&#9713;</span><span class="t">Focus</span></button>
+      <button class="tb lbl" id="tbPreview" title="Preview only — just the pages (Esc to exit)"><span class="i">&#9654;</span><span class="t">Preview</span></button>
       <button class="tb" id="tbReset" title="Reset the workspace layout" aria-label="Reset workspace">&#8635;</button>
     </div>
     <div class="hdr-spacer"></div>
-    <div id="saveState"><span class="dot"></span><span id="saveStateTxt">idle</span></div>
-    <button class="tb wide go" id="tbExport" title="Print, PDF and high-resolution JPGs">&#8613;&nbsp;<span>Export</span></button>
-    <div id="clock"><b id="clkTime">--:--:--</b><br><span id="clkDate">—</span></div>
+    <button class="exportBtn" id="tbExport" title="Print, PDF and high-resolution JPGs"><span class="i">&#8613;</span>Export</button>
   </header>
 
   <!-- LEFT -->
@@ -547,9 +609,13 @@ body.fs #canvasScroll{padding:14px}
     </div>
 
     <div id="canvasScroll">
+      <div id="rulerCorner" title="Rulers show inches"></div>
+      <canvas id="rulerH"></canvas>
+      <canvas id="rulerV"></canvas>
       <div id="pageHost">
         <div id="pageTag"></div>
         <div id="page"></div>
+        <div id="userGuides"></div>
       </div>
     </div>
 
@@ -601,6 +667,10 @@ body.fs #canvasScroll{padding:14px}
           <option value="0.5">½ in</option>
         </select>
       </div>
+      <div class="statusStrip">
+        <div id="saveState" title="Your work saves automatically to this browser"><span class="dot"></span><span id="saveStateTxt">autosave on</span></div>
+        <div id="clock"><b id="clkTime">--:--:--</b> · <span id="clkDate">—</span></div>
+      </div>
     </div>
 
     <div class="sec" data-p="guides">
@@ -620,6 +690,15 @@ body.fs #canvasScroll{padding:14px}
       </div>
       <label class="toggle"><input type="checkbox" id="warnChk" checked>Warn when photos cross margins</label>
       <div class="hint">Bleed off: nothing can pass the trim edge, ever. Bleed on: a controlled <b id="bleedHintMm">3&nbsp;mm</b> spill for full-bleed printing, including across the gutter on spreads.</div>
+      <h3 style="margin-top:14px"><span class="dotc" style="background:var(--teal)"></span>Rulers &amp; guides</h3>
+      <label class="toggle"><input type="checkbox" id="rulerChk">Show rulers (inches)</label>
+      <label class="toggle"><input type="checkbox" id="snapObjChk" checked>Snap to guides &amp; edges</label>
+      <div class="row">
+        <button class="btn" id="addGuideH">+ Horizontal guide</button>
+        <button class="btn" id="addGuideV">+ Vertical guide</button>
+      </div>
+      <button class="btn wide danger" id="clearGuides">Clear all guides</button>
+      <div class="hint">Turn on rulers, then drag from a ruler onto the page to place a guide. Drag a guide off the page to remove it. Guides are for you only — they never print or export.</div>
     </div>
 
     <div class="sec" data-p="page">
@@ -657,6 +736,7 @@ body.fs #canvasScroll{padding:14px}
     <div class="sec" id="inspector" data-p="props" style="display:none">
       <h3>Selection</h3>
       <div id="inspImg" style="display:none;flex-direction:column;gap:8px">
+        <button class="btn primary wide" id="cropOpenBtn" title="Open this photo in the crop window (double-click the photo too)">✂ Crop photo…</button>
         <div class="row">
           <button class="btn" id="fitBtn" title="Whole photo visible, no crop">Fit</button>
           <button class="btn" id="fillBtn" title="Fill frame, crop allowed, never stretched">Fill</button>
@@ -890,6 +970,71 @@ body.fs #canvasScroll{padding:14px}
   </div>
 </div>
 
+<!-- CROP EDITOR — a dedicated window for cropping one photo, non-destructively -->
+<div class="modalBk" id="cropBk">
+  <div class="cropWin">
+    <div class="cropHead">
+      <div class="cropTitle"><b id="cropName">Crop photo</b><span id="cropMeta" class="mono"></span></div>
+      <button class="btn ghost" id="cropX" title="Close without applying">&times;</button>
+    </div>
+    <div class="cropBody">
+      <div id="cropStage">
+        <div id="cropCanvas">
+          <img id="cropImg" alt="" draggable="false">
+          <div id="cropFrame"></div>
+          <div id="cropOrig" title="The whole photo — the shaded area is cropped out"></div>
+        </div>
+      </div>
+      <div class="cropSide">
+        <div class="cropGrp">
+          <div class="cropGrpT">Fit the photo to the frame</div>
+          <div class="row">
+            <button class="btn" id="cropFit" title="Whole photo visible (F)">Fit</button>
+            <button class="btn" id="cropFill" title="Fill the frame, crop the overflow (⇧F)">Fill</button>
+            <button class="btn" id="cropCentre" title="Centre in the frame (C)">Centre</button>
+          </div>
+        </div>
+        <div class="cropGrp">
+          <div class="cropGrpT">Zoom <span id="cropZoomVal" class="mono"></span></div>
+          <input type="range" id="cropZoom" min="0" max="100" value="50" title="Zoom the photo inside the frame">
+          <div class="row">
+            <button class="btn" id="cropZoomOut">&minus;</button>
+            <button class="btn" id="cropZoomIn">+</button>
+          </div>
+        </div>
+        <div class="cropGrp">
+          <div class="cropGrpT">Straighten <span id="cropRotVal" class="mono"></span></div>
+          <input type="range" id="cropStraight" min="-45" max="45" step="0.5" value="0" title="Level the horizon">
+          <div class="row">
+            <button class="btn" id="cropRotL" title="Rotate 90° left">&#8634; 90&deg;</button>
+            <button class="btn" id="cropRotR" title="Rotate 90° right">90&deg; &#8635;</button>
+            <button class="btn" id="cropStraight0" title="Straighten to 0°">0&deg;</button>
+          </div>
+        </div>
+        <div class="cropGrp">
+          <div class="cropGrpT">Flip</div>
+          <div class="row">
+            <button class="btn" id="cropFlipH" title="Flip left-to-right">&#8596; Horizontal</button>
+            <button class="btn" id="cropFlipV" title="Flip top-to-bottom">&#8597; Vertical</button>
+          </div>
+        </div>
+        <label class="toggle"><input type="checkbox" id="cropGrid" checked>Rule-of-thirds grid</label>
+        <div class="hint">The frame is a mask over your photo. Drag the photo to reposition it, zoom and straighten to taste — your original file is never changed, so you can reset any time.</div>
+        <div class="cropGrp">
+          <button class="btn wide danger" id="cropReset" title="Back to the untouched photo, filling the frame">Reset crop</button>
+        </div>
+      </div>
+    </div>
+    <div class="cropFoot">
+      <span class="mono" id="cropHintTxt">Drag to move &middot; scroll to zoom &middot; F fit &middot; ⇧F fill &middot; C centre</span>
+      <div class="btns">
+        <button class="btn" id="cropCancel">Cancel</button>
+        <button class="btn primary" id="cropApply">Apply crop</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="lightbox" role="dialog" aria-label="Full-size photo">
   <button id="lbClose" title="Close (Esc)">×</button>
   <img id="lbImg" alt="">
@@ -922,7 +1067,7 @@ const FORMATS = {
   'book-3x2'   :{group:'Photobooks', name:'Photobook — 3:2 landscape (12 × 8 in)', w:12, h:8},
   'book-2x3'   :{group:'Photobooks', name:'Photobook — 2:3 portrait (8 × 12 in)',  w:8, h:12},
 };
-const APP_VER='4.1', FEEDBACK_EMAIL='hello@storitellah.com';
+const APP_VER='4.2', FEEDBACK_EMAIL='hello@storitellah.com';
 const GRID=0.125, MM=1/25.4;
 const FONTS = ['Inter','Manrope','Roboto','Open Sans','Lato','Montserrat','Poppins','Raleway','Work Sans','DM Sans','Nunito',
   'Rubik','Karla','Source Sans 3','Space Grotesk','Archivo','Archivo Black','IBM Plex Sans','Oswald','Bebas Neue','Anton',
@@ -950,6 +1095,7 @@ function blankPage(label){return {id:uid(), label, elements:[]}}
 function defaultSettings(){ return { snap:true, grid:true, margin:0.25, daily:true, keepAspect:true,
   bleed:false, bleedMm:3, warnMargins:true, pageNumsPreview:false, pageNumsPrint:false,
   guides:{margins:true, safe:false, bleedG:false, fold:true}, nameSuffix:'',
+  rulers:false, userGuides:[], snapObjects:true,
   imp:{paper:'letter', fit:true, margins:false, fold:true, cut:true} }; }
 function newProject(formatKey){
   const f=FORMATS[formatKey], n=f.fixed||4;
@@ -1265,6 +1411,7 @@ function ensureImg(e){
   if(!Number.isFinite(e.img.ox))e.img.ox=0;
   if(!Number.isFinite(e.img.oy))e.img.oy=0;
   if(!Number.isFinite(e.img.rot))e.img.rot=0;
+  e.img.fx=!!e.img.fx; e.img.fy=!!e.img.fy;
   return e.img;
 }
 function imgBox(e){                     // photo rect in page inches (rotation ignored — used for the ghost)
@@ -1275,7 +1422,7 @@ function imgBox(e){                     // photo rect in page inches (rotation i
 function imgFit(e){ const g=ensureImg(e); if(!g)return; g.w=containW(e); g.ox=0; g.oy=0; }
 function imgFill(e){ const g=ensureImg(e); if(!g)return; g.w=coverW(e); g.ox=0; g.oy=0; }
 function imgCentre(e){ const g=ensureImg(e); if(!g)return; g.ox=0; g.oy=0; }   // keeps the current zoom
-function imgResetCrop(e){ const g=ensureImg(e); if(!g)return; g.w=coverW(e); g.ox=0; g.oy=0; g.rot=0; }
+function imgResetCrop(e){ const g=ensureImg(e); if(!g)return; g.w=coverW(e); g.ox=0; g.oy=0; g.rot=0; g.fx=false; g.fy=false; }
 function imgResetFrame(e){
   if(e.home){ e.x=e.home.x; e.y=e.home.y; e.w=e.home.w; e.h=e.home.h; }
   else if(e.asset) applyAspectToFrame(e);
@@ -1290,7 +1437,7 @@ function imgCropPct(e){                 // how much of the photo the frame hides
 function imgStyle(e,px){                // CSS for the <img> inside its clipping frame
   const g=ensureImg(e), w=g.w*px, h=g.w*assetAR(e)*px;
   return `position:absolute;left:50%;top:50%;width:${w}px;height:${h}px;max-width:none;`
-    +`transform:translate(-50%,-50%) translate(${g.ox*px}px,${g.oy*px}px) rotate(${g.rot}deg);`
+    +`transform:translate(-50%,-50%) translate(${g.ox*px}px,${g.oy*px}px) rotate(${g.rot}deg) scale(${g.fx?-1:1},${g.fy?-1:1});`
     +`transform-origin:center center;`;
 }
 function snapV(v){ return state.settings.snap? Math.round(v/GRID)*GRID : v; }
@@ -1304,12 +1451,16 @@ function clampEl(e){
   e.y=Math.max(-b, Math.min(e.y, f.h+b-e.h));
 }
 function snapEdges(e){
-  if(!state.settings.snap) return;
+  if(!state.settings.snap && !state.settings.snapObjects) return;
   const f=fmt(), W=surfW(e), m=state.settings.margin, th=0.07, b=bleedAllow();
-  const lines=[0,m,W-m,W,-b,W+b]; if(e.spread){ lines.push(f.w-m,f.w,f.w+m); }
-  for(const L of lines){ if(Math.abs(e.x-L)<th)e.x=L; if(Math.abs(e.x+e.w-L)<th)e.x=L-e.w; }
+  const hlines=[0,m,W-m,W,-b,W+b]; if(e.spread){ hlines.push(f.w-m,f.w,f.w+m); }
   const vlines=[0,m,f.h-m,f.h,-b,f.h+b];
-  for(const L of vlines){ if(Math.abs(e.y-L)<th)e.y=L; if(Math.abs(e.y+e.h-L)<th)e.y=L-e.h; }
+  // user guides become snap targets too, when object-snapping is on
+  if(state.settings.snapObjects){
+    (state.settings.userGuides||[]).forEach(g=>{ if(g.axis==='v')hlines.push(g.pos); else vlines.push(g.pos); });
+  }
+  for(const L of hlines){ if(Math.abs(e.x-L)<th)e.x=L; if(Math.abs(e.x+e.w-L)<th)e.x=L-e.w; if(Math.abs(e.x+e.w/2-L)<th)e.x=L-e.w/2; }
+  for(const L of vlines){ if(Math.abs(e.y-L)<th)e.y=L; if(Math.abs(e.y+e.h-L)<th)e.y=L-e.h; if(Math.abs(e.y+e.h/2-L)<th)e.y=L-e.h/2; }
 }
 function marginViolation(e){ // sides where the element crosses the margin box
   const f=fmt(), W=surfW(e), m=state.settings.margin, out=[];
@@ -1738,6 +1889,7 @@ function renderCanvas(){
     }
   });
   updateSelectionDom();
+  renderRulers(); renderUserGuides();
   renderPageTag(); updateFsUi();
 }
 function addGuide(P,cls,x,y,w,h){
@@ -1745,6 +1897,226 @@ function addGuide(P,cls,x,y,w,h){
   g.style.left=(x*scale)+'px'; g.style.top=(y*scale)+'px';
   g.style.width=(w*scale)+'px'; g.style.height=(h*scale)+'px'; P.appendChild(g); return g;
 }
+
+/* ================= RULERS & GUIDES =================
+   Illustrator/InDesign-style. Rulers read in inches and track the zoom. Drag from a
+   ruler onto the page to drop a guide; drag a guide off the page to remove it. Guides
+   are teal, snap targets, and never appear in a printed or exported page. */
+function rulerMetrics(){
+  const f=fmt(), cs=canvasSize();
+  // page host is offset by 22px when rulers are on; origin (0in) is the page's top-left
+  const hostLeft=22, hostTop=22;
+  return {f, cs, hostLeft, hostTop, wpx:cs.w*scale, hpx:cs.h*scale};
+}
+function renderRulers(){
+  const on=!!state.settings.rulers;
+  $('canvasScroll').classList.toggle('rulers',on);
+  if(!on) return;
+  const m=rulerMetrics(), dpr=window.devicePixelRatio||1;
+  const host=$('pageHost');
+  const wpx=Math.max(m.wpx, host.clientWidth), hpx=Math.max(m.hpx, host.clientHeight);
+  drawRuler($('rulerH'), wpx, 22, 'h', dpr);
+  drawRuler($('rulerV'), 22, hpx, 'v', dpr);
+}
+function drawRuler(cv, wCss, hCss, axis, dpr){
+  cv.style.width=wCss+'px'; cv.style.height=hCss+'px';
+  cv.width=Math.round(wCss*dpr); cv.height=Math.round(hCss*dpr);
+  const c=cv.getContext('2d'); c.scale(dpr,dpr);
+  const css=getComputedStyle(document.documentElement);
+  const ink=css.getPropertyValue('--muted')||'#9a978c', faint=css.getPropertyValue('--faint')||'#6b675c';
+  c.clearRect(0,0,wCss,hCss);
+  c.fillStyle=faint; c.strokeStyle=faint; c.font='9px ui-monospace,monospace'; c.textBaseline='top';
+  const len=axis==='h'?wCss:hCss;
+  const perInch=scale;                 // px per inch on screen
+  const totalIn=len/perInch;
+  // choose a sensible tick step so labels never collide
+  let step=1;
+  if(perInch<40)step=1; if(perInch<22)step=2;
+  const minor= perInch>=60 ? 0.25 : (perInch>=34?0.5:1);
+  for(let inch=0; inch<=totalIn+1; inch+=minor){
+    const pos=inch*perInch;
+    const major=Math.abs(inch/step-Math.round(inch/step))<1e-6;
+    const tick=major?12:(Math.abs(inch*2-Math.round(inch*2))<1e-6?8:5);
+    c.beginPath();
+    if(axis==='h'){ c.moveTo(pos,22); c.lineTo(pos,22-tick); }
+    else { c.moveTo(22,pos); c.lineTo(22-tick,pos); }
+    c.stroke();
+    if(major && inch>0){
+      const lbl=String(Math.round(inch));
+      if(axis==='h'){ c.fillText(lbl, pos+2, 3); }
+      else { c.save(); c.translate(3,pos+2); c.fillText(lbl,0,0); c.restore(); }
+    }
+  }
+}
+function renderUserGuides(){
+  const L=$('userGuides'); if(!L)return; L.innerHTML='';
+  const f=fmt();
+  (state.settings.userGuides||[]).forEach((g,i)=>{
+    const d=document.createElement('div');
+    d.className='uguide '+g.axis;
+    if(g.axis==='h'){ d.style.top=(g.pos*scale)+'px'; }
+    else { d.style.left=(g.pos*scale)+'px'; }
+    d.title=g.axis==='h'? `Horizontal guide · ${g.pos.toFixed(2)} in` : `Vertical guide · ${g.pos.toFixed(2)} in`;
+    d.addEventListener('pointerdown',ev=>startGuideDrag(ev,i));
+    L.appendChild(d);
+  });
+}
+let guideDrag=null;
+function startGuideDrag(ev,i){
+  ev.preventDefault(); ev.stopPropagation();
+  guideDrag={i, host:$('pageHost').getBoundingClientRect()};
+  window.addEventListener('pointermove',moveGuide);
+  window.addEventListener('pointerup',endGuideDrag,{once:true});
+}
+function moveGuide(ev){
+  const g=state.settings.userGuides[guideDrag.i]; if(!g)return;
+  const r=guideDrag.host;
+  const inX=(ev.clientX-r.left)/scale, inY=(ev.clientY-r.top)/scale;
+  g.pos = g.axis==='h'? clampG(inY, canvasSize().h) : clampG(inX, canvasSize().w);
+  g._off = g.axis==='h' ? (ev.clientY<r.top-24||ev.clientY>r.bottom+24)
+                        : (ev.clientX<r.left-24||ev.clientX>r.right+24);
+  renderUserGuides();
+}
+function clampG(v,max){ return Math.max(0, Math.min(max, Math.round(v*100)/100)); }
+function endGuideDrag(){
+  window.removeEventListener('pointermove',moveGuide);
+  const g=state.settings.userGuides[guideDrag.i];
+  if(g&&g._off){ state.settings.userGuides.splice(guideDrag.i,1); toast('Guide removed.'); }
+  guideDrag=null; renderUserGuides(); touch();
+}
+function addGuideFromRuler(ev,axis){
+  const r=$('pageHost').getBoundingClientRect();
+  const pos = axis==='h' ? clampG((ev.clientY-r.top)/scale, canvasSize().h)
+                         : clampG((ev.clientX-r.left)/scale, canvasSize().w);
+  state.settings.userGuides.push({axis,pos});
+  renderUserGuides(); touch();
+  toast(`${axis==='h'?'Horizontal':'Vertical'} guide added — drag it off the page to remove.`);
+}
+function initRulers(){
+  $('rulerH').addEventListener('pointerdown',ev=>{ if(state.settings.rulers) addGuideFromRuler(ev,'v'); });
+  $('rulerV').addEventListener('pointerdown',ev=>{ if(state.settings.rulers) addGuideFromRuler(ev,'h'); });
+}
+
+/* ================= CROP EDITOR WINDOW =================
+   A dedicated window onto one photo's frame. It edits a WORKING COPY of the photo's
+   transform (e.img) — position, zoom, rotation, flip — at a large size, then writes
+   back only on Apply. The original file is never touched; Cancel discards everything. */
+let crop=null;   // {e, work:{w,ox,oy,rot,fx,fy}, base, px, drag}
+function openCropEditor(e){
+  if(!e||e.type!=='image'||!e.asset){ toast('Select a photo first.','err'); return; }
+  const g=ensureImg(e);
+  crop={ e, work:{w:g.w, ox:g.ox, oy:g.oy, rot:g.rot||0, fx:!!g.fx, fy:!!g.fy}, drag:null };
+  const a=state.assets[e.asset];
+  $('cropName').textContent=(a&&a.name)||'Photo';
+  $('cropMeta').textContent=a? `${a.w} × ${a.h}px · frame ${e.w.toFixed(2)}″ × ${e.h.toFixed(2)}″` : '';
+  $('cropBk').classList.add('show');
+  // load the sharpest source we have
+  const src=assetStore.cachedUrl(e.asset,'full')||assetStore.cachedUrl(e.asset,'preview')||(a&&a.thumb)||'';
+  $('cropImg').src=src;
+  assetStore.url(e.asset,'full').then(u=>{ if(u&&crop&&$('cropBk').classList.contains('show'))$('cropImg').src=u; });
+  layoutCropStage(); syncCropUI();
+  window.addEventListener('resize',layoutCropStage);
+}
+function closeCropEditor(){
+  $('cropBk').classList.remove('show'); crop=null;
+  window.removeEventListener('resize',layoutCropStage);
+}
+function layoutCropStage(){
+  if(!crop)return;
+  const e=crop.e, stage=$('cropStage'), pad=40;
+  const availW=Math.max(120,stage.clientWidth-pad), availH=Math.max(120,stage.clientHeight-pad);
+  // frame keeps the element's aspect ratio; scale it to fit the stage
+  const ar=e.h/e.w;
+  let fw=availW, fh=fw*ar;
+  if(fh>availH){ fh=availH; fw=fh/ar; }
+  crop.px=fw/e.w;                                  // pixels per inch inside the window
+  const cv=$('cropCanvas'); cv.style.width=fw+'px'; cv.style.height=fh+'px';
+  renderCropImg();
+}
+function renderCropImg(){
+  if(!crop)return;
+  const e=crop.e, w=crop.work, px=crop.px;
+  const im=$('cropImg');
+  const iw=w.w*px, ih=w.w*assetAR(e)*px;
+  im.style.width=iw+'px'; im.style.height=ih+'px';
+  im.style.transform=`translate(-50%,-50%) translate(${w.ox*px}px,${w.oy*px}px) rotate(${w.rot}deg) scale(${w.fx?-1:1},${w.fy?-1:1})`;
+  // the dashed original-boundary marker (whole photo at current zoom, unclipped)
+  const o=$('cropOrig');
+  o.style.width=iw+'px'; o.style.height=ih+'px';
+  o.style.left='50%'; o.style.top='50%';
+  o.style.transform=`translate(-50%,-50%) translate(${w.ox*px}px,${w.oy*px}px) rotate(${w.rot}deg)`;
+}
+function syncCropUI(){
+  if(!crop)return;
+  const e=crop.e, w=crop.work;
+  // zoom slider maps contain..(cover*4) onto 0..100
+  const lo=containW(e), hi=coverW(e)*4, t=Math.max(0,Math.min(1,(w.w-lo)/(hi-lo)));
+  $('cropZoom').value=Math.round(t*100);
+  $('cropZoomVal').textContent=Math.round(w.w/coverW(e)*100)+'%';
+  let s=((w.rot%360)+360)%360; if(s>180)s-=360;
+  $('cropStraight').value=Math.max(-45,Math.min(45,s));
+  $('cropRotVal').textContent=Math.round(w.rot)+'°';
+  $('cropFrame').classList.toggle('grid',$('cropGrid').checked);
+}
+function cropZoomTo(mult){ if(!crop)return; const e=crop.e,w=crop.work;
+  w.w=Math.max(0.15,Math.min(w.w*mult, coverW(e)*8)); renderCropImg(); syncCropUI(); }
+function cropSet(fn){ if(!crop)return; fn(crop.work,crop.e); renderCropImg(); syncCropUI(); }
+function startCropDrag(ev){
+  if(!crop)return; ev.preventDefault();
+  const w=crop.work;
+  crop.drag={sx:ev.clientX,sy:ev.clientY,ox:w.ox,oy:w.oy};
+  try{ if(ev.target.setPointerCapture&&ev.pointerId!=null)ev.target.setPointerCapture(ev.pointerId); }catch(e){}
+  window.addEventListener('pointermove',moveCropDrag);
+  window.addEventListener('pointerup',()=>{ crop&&(crop.drag=null); window.removeEventListener('pointermove',moveCropDrag); },{once:true});
+}
+function moveCropDrag(ev){
+  if(!crop||!crop.drag)return;
+  const d=crop.drag, px=crop.px;
+  crop.work.ox=d.ox+(ev.clientX-d.sx)/px;
+  crop.work.oy=d.oy+(ev.clientY-d.sy)/px;
+  renderCropImg();
+}
+function applyCrop(){
+  if(!crop)return;
+  const g=ensureImg(crop.e), w=crop.work;
+  g.w=w.w; g.ox=w.ox; g.oy=w.oy; g.rot=w.rot; g.fx=w.fx; g.fy=w.fy;
+  closeCropEditor(); renderCanvas(); renderTimeline(); touch();
+  toast('Crop applied — your original photo is untouched.','ok');
+}
+function initCropEditor(){
+  $('cropX').addEventListener('click',closeCropEditor);
+  $('cropCancel').addEventListener('click',closeCropEditor);
+  $('cropApply').addEventListener('click',applyCrop);
+  $('cropImg').addEventListener('pointerdown',startCropDrag);
+  $('cropCanvas').addEventListener('wheel',ev=>{ if(!crop)return; ev.preventDefault();
+    cropZoomTo(ev.deltaY<0?1.06:1/1.06); },{passive:false});
+  $('cropFit').addEventListener('click',()=>cropSet((w,e)=>{ w.w=containW(e); w.ox=0; w.oy=0; }));
+  $('cropFill').addEventListener('click',()=>cropSet((w,e)=>{ w.w=coverW(e); w.ox=0; w.oy=0; }));
+  $('cropCentre').addEventListener('click',()=>cropSet(w=>{ w.ox=0; w.oy=0; }));
+  $('cropReset').addEventListener('click',()=>cropSet((w,e)=>{ w.w=coverW(e); w.ox=0; w.oy=0; w.rot=0; w.fx=false; w.fy=false; }));
+  $('cropZoomIn').addEventListener('click',()=>cropZoomTo(1.1));
+  $('cropZoomOut').addEventListener('click',()=>cropZoomTo(1/1.1));
+  $('cropZoom').addEventListener('input',ev=>{ if(!crop)return; const e=crop.e;
+    const lo=containW(e), hi=coverW(e)*4, t=(+ev.target.value)/100;
+    crop.work.w=lo+(hi-lo)*t; renderCropImg(); syncCropUI(); });
+  $('cropStraight').addEventListener('input',ev=>cropSet(w=>{ w.rot=+ev.target.value; }));
+  $('cropStraight0').addEventListener('click',()=>cropSet(w=>{ w.rot=0; }));
+  $('cropRotL').addEventListener('click',()=>cropSet(w=>{ w.rot-=90; }));
+  $('cropRotR').addEventListener('click',()=>cropSet(w=>{ w.rot+=90; }));
+  $('cropFlipH').addEventListener('click',()=>cropSet(w=>{ w.fx=!w.fx; }));
+  $('cropFlipV').addEventListener('click',()=>cropSet(w=>{ w.fy=!w.fy; }));
+  $('cropGrid').addEventListener('change',syncCropUI);
+  // keyboard inside the crop window
+  window.addEventListener('keydown',ev=>{
+    if(!crop||!$('cropBk').classList.contains('show'))return;
+    if(ev.key==='Escape'){ ev.preventDefault(); closeCropEditor(); return; }
+    if(ev.key==='Enter'){ ev.preventDefault(); applyCrop(); return; }
+    const k=ev.key.toLowerCase();
+    if(k==='f'){ ev.preventDefault(); cropSet((w,e)=>{ if(ev.shiftKey){w.w=coverW(e);}else{w.w=containW(e);} w.ox=0; w.oy=0; }); }
+    if(k==='c'){ ev.preventDefault(); cropSet(w=>{ w.ox=0; w.oy=0; }); }
+  });
+}
+
 function renderEl(P,e,pgIdx,dxIn,z,interactive){
   if(e.hidden) return null;                 // hidden is a view state, not a deletion
   const d=document.createElement('div');
@@ -1756,7 +2128,7 @@ function renderEl(P,e,pgIdx,dxIn,z,interactive){
     const im=document.createElement('img'); im.draggable=false; im.setAttribute('decoding','async');
     hydrate(im,e.asset,'preview');
     im.style.cssText=imgStyle(e,scale); d.appendChild(im);
-    d.addEventListener('dblclick',ev=>{ ev.stopPropagation(); openLightbox(e.asset); });
+    d.addEventListener('dblclick',ev=>{ ev.stopPropagation(); openCropEditor(e); });
   }
   if(e.spread){ const b=document.createElement('span'); b.className='spreadBadge'; b.textContent='SPREAD'; d.appendChild(b); }
   if(state.settings.warnMargins && e.type==='image' && e.asset && !e.spread && marginViolation(e).length && !state.settings.bleed) d.classList.add('warnEdge');
@@ -2040,10 +2412,19 @@ function initToolbar(){
     else toast('This format has a fixed page count.','err'); });
   $('tbAddSpread').addEventListener('click',()=>$('spreadBtn').click());
   $('tbTpl').addEventListener('click',openTplModal);
-  $('tbExport').addEventListener('click',()=>setPane('export'));
+  $('tbExport').addEventListener('click',()=>{ setPane('export'); if(ws.tab!=='export'){} });
   ['tbZoomIn','tbZoomOut','tbZoomFit'].forEach((id,i)=>
     $(id).addEventListener('click',()=>$(['zoomIn','zoomOut','zoomFit'][i]).click()));
+  // pan toggle in the toolbar mirrors the one in Properties
+  $('tbPan').addEventListener('click',()=>{ setPanMode(!panMode); });
   $('projName').addEventListener('focus',()=>$('projName').select());
+}
+function setPanMode(on){
+  panMode=on;
+  const b=$('tbPan'); if(b)b.classList.toggle('on',on);
+  const p=$('panModeBtn'); if(p){ p.textContent='Pan mode: '+(on?'on':'off'); p.classList.toggle('on',on); }
+  document.body.classList.toggle('panning',on);
+  toast(on?'Pan mode on — drag a photo to move it inside its frame.':'Pan mode off.');
 }
 
 
@@ -2608,7 +2989,7 @@ function renderPrintPage(pi,W,H){
       if(e.asset){ const im=document.createElement('img'); im.src=printSrc(e.asset);
         const g=ensureImg(e), iw=g.w, ih=g.w*assetAR(e);
         im.style.cssText='position:absolute;left:50%;top:50%;width:'+iw+'in;height:'+ih+'in;max-width:none;'
-          +'transform:translate(-50%,-50%) translate('+g.ox+'in,'+g.oy+'in) rotate('+g.rot+'deg);transform-origin:center center;';
+          +'transform:translate(-50%,-50%) translate('+g.ox+'in,'+g.oy+'in) rotate('+g.rot+'deg) scale('+(g.fx?-1:1)+','+(g.fy?-1:1)+');transform-origin:center center;';
         x.appendChild(im); }
       else return; // empty frames don't print
     } else {
@@ -2819,6 +3200,7 @@ async function renderPageCanvas(pi,opts){
       ctx.rect((e.x+dx)*DPI,e.y*DPI,e.w*DPI,e.h*DPI); ctx.clip();
       ctx.translate((e.x+dx+e.w/2+g.ox)*DPI,(e.y+e.h/2+g.oy)*DPI);
       ctx.rotate((g.rot||0)*Math.PI/180);
+      ctx.scale(g.fx?-1:1, g.fy?-1:1);
       ctx.drawImage(im,-iw/2,-ih/2,iw,ih);     // aspect preserved — never stretched
       ctx.restore();
     } else {
@@ -2939,6 +3321,8 @@ function renderAll(){
   $('bleedChk').checked=!!st.bleed; $('warnChk').checked=st.warnMargins!==false;
   $('bleedMmSel').value=String(st.bleedMm===5?5:3); syncBleedHint();
   $('gMargins').checked=st.guides.margins; $('gSafe').checked=st.guides.safe;
+  if($('rulerChk'))$('rulerChk').checked=!!st.rulers;
+  if($('snapObjChk'))$('snapObjChk').checked=st.snapObjects!==false;
   $('gBleed').checked=st.guides.bleedG; $('gFold').checked=st.guides.fold;
   syncViewBar();
   renderFormatInfo(); renderLibrary(); renderCanvas(); renderTimeline(); renderInspector(); renderBakInfo();
@@ -2993,7 +3377,7 @@ function boot(){
     +'?subject='+encodeURIComponent('ZineIt v'+APP_VER+' — bug report / idea')
     +'&body='+encodeURIComponent('Hi Brian,\n\nWhat happened (or what I wish ZineIt did):\n\n\nSteps to reproduce (for a bug):\n1.\n2.\n\n—\nZineIt v'+APP_VER+' · format: '+state.format+' · '+(navigator.userAgent||''));
   $('feedbackLink').href=fb; $('fbBtn').href=fb;
-  initToolbar(); initLayerBtns(); initWorkspace(); initPWA();
+  initToolbar(); initLayerBtns(); initWorkspace(); initPWA(); initRulers(); initCropEditor();
   renderAll(); applyMobile(); dailyCheck(); setSaveState('saved','autosave on');
   undoReset();
   window.__zineitReady=(async()=>{      // storage warm-up continues in the background
@@ -3034,6 +3418,11 @@ $('aspectChk').addEventListener('change',e=>{ state.settings.keepAspect=e.target
 document.querySelectorAll('.tpl').forEach(t=>t.addEventListener('click',()=>applyTemplate(t.dataset.t)));
 $('snapChk').addEventListener('change',e=>{ state.settings.snap=e.target.checked; touch(); });
 $('gridChk').addEventListener('change',e=>{ state.settings.grid=e.target.checked; renderCanvas(); touch(); });
+$('rulerChk').addEventListener('change',e=>{ state.settings.rulers=e.target.checked; renderCanvas(); touch(); });
+$('snapObjChk').addEventListener('change',e=>{ state.settings.snapObjects=e.target.checked; touch(); });
+$('addGuideH').addEventListener('click',()=>{ state.settings.userGuides.push({axis:'h',pos:canvasSize().h/2}); if(!state.settings.rulers){state.settings.rulers=true;$('rulerChk').checked=true;} renderCanvas(); touch(); });
+$('addGuideV').addEventListener('click',()=>{ state.settings.userGuides.push({axis:'v',pos:canvasSize().w/2}); if(!state.settings.rulers){state.settings.rulers=true;$('rulerChk').checked=true;} renderCanvas(); touch(); });
+$('clearGuides').addEventListener('click',()=>{ if(!state.settings.userGuides.length){toast('No guides to clear.');return;} state.settings.userGuides=[]; renderCanvas(); touch(); toast('Guides cleared.'); });
 $('marginSel').addEventListener('change',e=>{ state.settings.margin=parseFloat(e.target.value); renderCanvas(); touch(); });
 [['gMargins','margins'],['gSafe','safe'],['gBleed','bleedG'],['gFold','fold']].forEach(([id,k])=>{
   $(id).addEventListener('change',e=>{ state.settings.guides[k]=e.target.checked; renderCanvas(); touch(); }); });
@@ -3064,6 +3453,7 @@ $('fillBtn').addEventListener('click',()=>imgAction(imgFill));
 $('centreBtn').addEventListener('click',()=>imgAction(imgCentre));
 $('resetCropBtn').addEventListener('click',()=>imgAction(imgResetCrop));
 $('resetFrameBtn').addEventListener('click',()=>imgAction(imgResetFrame));
+$('cropOpenBtn').addEventListener('click',()=>{ const e=el(); if(e)openCropEditor(e); });
 function imgZoom(mult){ imgAction(e=>{ const g=ensureImg(e); g.w=Math.max(0.15, Math.min(g.w*mult, surfW(e)*12)); }); }
 $('zoomInImg').addEventListener('click',()=>imgZoom(1.1));
 $('zoomOutImg').addEventListener('click',()=>imgZoom(1/1.1));
@@ -3071,9 +3461,7 @@ $('rotL').addEventListener('click',()=>imgAction(e=>{ensureImg(e).rot-=90;}));
 $('rotR').addEventListener('click',()=>imgAction(e=>{ensureImg(e).rot+=90;}));
 $('rotReset').addEventListener('click',()=>imgAction(e=>{ensureImg(e).rot=0;}));
 $('spreadBtn').addEventListener('click',()=>{ const e=el(); if(!e)return; e.spread?unSpread():makeSpread(); });
-$('panModeBtn').addEventListener('click',()=>{ panMode=!panMode;
-  $('panModeBtn').textContent='Pan mode: '+(panMode?'on':'off');
-  $('panModeBtn').classList.toggle('on',panMode); });
+$('panModeBtn').addEventListener('click',()=>setPanMode(!panMode));
 $('fwdBtn').addEventListener('click',()=>reorderSel(1));
 $('backBtn').addEventListener('click',()=>reorderSel(-1));
 $('dupBtn').addEventListener('click',duplicateSel);
@@ -3248,6 +3636,8 @@ window.__zineit={
   get ws(){return ws}, setPane, applyWs, saveWs, loadWs, resetWs, togglePreviewOnly,
   undo, redo, undoReset, get undoDepth(){return undoPast.length}, get redoDepth(){return undoFuture.length},
   renderLayers, lyShift, lyMoveTo, lyKind, lyName, elById, renderCanvas, touch, initPWA,
+  openCropEditor, closeCropEditor, applyCrop, get crop(){return crop}, initCropEditor,
+  renderRulers, renderUserGuides, addGuideFromRuler, setPanMode, get panMode(){return panMode},
   normHex, hexToRgb, setTextColor, applyColorScope, BRAND_COLORS, syncColorUI,
   fileName, sanitizeName, exportBase, exportJpgs, renderPageCanvas, zipStore, crc32,
   bleedMm, bleedIn, bleedAllow, FORMATS, blankPage, fmt,

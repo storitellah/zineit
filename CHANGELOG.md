@@ -1,5 +1,51 @@
 # Changelog — ZineIt by Storitellah
 
+## v4.2 — 2026-07-18
+A user-experience pass across the whole tool: clearer toolbar, a real crop window,
+rulers and draggable guides, and a pan toggle that stays put.
+
+### Added — crop editor window
+- **Double-click any placed photo (or press ✂ Crop photo…) to open it in a dedicated
+  window.** A large working view of the photo inside its frame, with the cropped-out
+  area shaded and the whole-photo boundary marked.
+- **Everything a crop needs, in one place:** Fit / Fill / Centre, a zoom slider and
+  buttons, a straighten slider (−45°…45°) plus 90° rotate, **flip horizontal and
+  vertical**, a rule-of-thirds grid, and Reset.
+- **Non-destructive by construction.** The window edits a *working copy* of the photo's
+  transform. Nothing is written back until you press **Apply**; **Cancel** discards
+  everything, and your original file is never touched. Keyboard: F fit, ⇧F fill, C
+  centre, Enter applies, Esc cancels.
+- **Flip is now a first-class transform** — it survives save/restore and renders
+  identically on screen, in print, and in the 300 DPI JPG export.
+
+### Added — rulers & draggable guides
+- **Inch rulers** along the top and left of the canvas (toggle in Guides & bleed).
+  They track the zoom.
+- **Drag from a ruler onto the page to drop a guide; drag a guide off the page to
+  remove it.** Add horizontal/vertical guides from buttons, or clear them all.
+- Guides are teal, become **snap targets** (along with page edges, margins and element
+  centres) when object-snapping is on, and **never print or export** — they are for
+  your eye only.
+
+### Changed — toolbar & layout
+- **Toolbar buttons now carry text labels**, not bare icons — Undo, Redo, Add page,
+  Spread, Templates, Pan, Focus, Preview. Nobody has to guess what “+” means. Labels
+  collapse to icons only when the window is genuinely narrow.
+- **Export stands alone** — its own yellow button in its own corner, separated from the
+  editing tools.
+- **The clock and the autosave indicator moved out of the header** and into a status
+  strip at the bottom of the Page pane, under the Layout system.
+- **Pan mode is a proper toggle** in the toolbar (and still in Properties); both stay in
+  sync, and the cursor changes to a grab hand while it is on.
+- Clicking an element selects exactly what is under the cursor and **never reorders the
+  stack** — whatever you click is what you edit, and nothing else on the page moves.
+
+### Tested
+- 163 automated jsdom tests + 22 Lua tests, all green. New coverage: the crop window's
+  working-copy/apply/cancel contract, flip across every render path, rulers & guides
+  state and the guarantee that guides never print, the labelled toolbar, the standalone
+  Export, the pan toggle, and the relocated clock.
+
 ## v4.1 — 2026-07-17
 The one-window workspace. **Phase 2 of the v4 brief**, plus the PWA and the Android
 build project from Phase 6 — see `docs/ROADMAP.md` for what is still open and why.

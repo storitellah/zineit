@@ -10,8 +10,20 @@ rule as every ZineIt release: automated tests pass before anything renders.
 
 **v4.0** shipped the foundation and the template library. **v4.1** shipped the
 one-window workspace, layers, undo/redo, the text colour system, the PWA and the
-Android build project. What is left is listed honestly below — nothing here is
-half-built and quietly claimed.
+Android build project. **v4.2** shipped the crop-editor window, rulers and draggable
+guides, and a UI pass (labelled toolbar, standalone Export, pan toggle, relocated
+clock). What is left is listed honestly below — nothing here is half-built and quietly
+claimed.
+
+> **Two things you asked for that are NOT in v4.2 — flagged loudly, not buried:**
+> 1. **The front/back cover template *library*** (the specialised set of cover and
+>    back-cover designs). The engine supports cover/back page types today; the curated
+>    set of templates on top is the next release.
+> 2. **The equirectangular panorama photobook system** (2:1/3:1/4:1 ratios, seam/fold/
+>    gutter controls, subject-protection, 4-page splits, wraparound cover, panorama-aware
+>    cropping, low-res/ratio warnings). A double-page spread already crosses the fold
+>    without stretching; the panorama-*aware* tooling is a substantial build of its own
+>    and is scheduled as its own phase. See Phase 5.
 
 ---
 
@@ -43,21 +55,32 @@ half-built and quietly claimed.
 | **PWA** | Manifest, network-first service worker, installable — and skipped entirely on `file://` so the double-click case stays clean |
 | **Android** | Complete Capacitor 6 Android Studio project, branded icons and splash, one permission (`INTERNET`) |
 
+### Shipped in v4.2
+
+- **Rulers** along the top and left of the canvas (inch), tracking the zoom ✅
+- **Draggable guides** — drag from a ruler to add, drag off the page to remove, add
+  from buttons, clear all ✅
+- **Snapping** to guides, page edges, margins and element centres (object-snap toggle) ✅
+- **Dedicated crop editor window**: large preview with Fit/Fill/Centre, zoom, straighten
+  (−45°…45°), 90° rotate, **flip H/V**, rule-of-thirds grid, non-destructive
+  working-copy/apply/cancel ✅
+
 ### Still open from Phase 2
 
-- **Rulers** in inch/mm/cm/px with a settable origin
-- **Draggable guides** from the rulers; lock, hide, clear all
-- **Guide types**: margin, safe area, bleed, centre, gutter, spine, grid, baseline
-- **Snapping**: to guides, page centre, margins, other objects, grid
+- **More guide types**: baseline grid, explicit gutter/spine guides (margin, bleed and
+  centre are covered by the existing bleed/margin guides + user guides)
+- **Ruler units**: mm/cm/px and a settable origin (currently inch, page-origin)
+- **Perspective correction** in the crop window (flip + straighten shipped; keystone
+  correction did not)
 - **Mini-zine setup wizard**: paper → finished size → orientation → pages → binding →
   bleed → colour profile → quality → template
 - **Paper and finished-size options**: A3/A4/Letter/custom sheets, A6/A7/custom trims
-- **Dedicated crop editor modal**: a large preview with flip H/V, straighten and
-  perspective correction. The non-destructive crop engine underneath it already works
-  (v4.0) — this is a bigger window onto it, plus three transforms it does not yet have
-- **Front/back cover template library**: inside covers, title pages, credits, colophon,
-  QR codes, supporter logos. The template engine handles cover and back already; this
-  is the specialised set on top of it
+- **Front/back cover template library**: dedicated cover templates (full-bleed photo,
+  minimal title, large-type, split-image, photo-grid; documentary/fine-art/magazine/
+  youth/B&W/panorama covers) and back-cover templates (summary, logo, supporter logos,
+  contact, QR, copyright, colophon, solid colour). The template engine already handles
+  cover and back *page types*; this is the specialised **set** on top of it — **NOT yet
+  built**. Next release.
 
 ## Phase 3 — templates ✅ shipped (brought forward)
 

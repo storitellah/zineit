@@ -73,9 +73,25 @@ Every project automatically includes a **front cover** and **back cover**; inter
   See [`docs/ANDROID-BUILD.md`](docs/ANDROID-BUILD.md). There is no compiled APK in here,
   and that doc explains exactly why.
 
-v4.0 is Phase 1 of a larger brief — rulers, guides, colour proofing, panorama books,
-mockups and the printmaker guide are sequenced in
-[`docs/ROADMAP.md`](docs/ROADMAP.md).
+**v4.2 — the crop window, rulers & guides, and a UI pass**
+
+- **A dedicated crop window.** Double-click a photo (or press ✂ Crop photo…) to open it
+  large: Fit / Fill / Centre, zoom, straighten (−45°…45°), 90° rotate, **flip H/V**, a
+  rule-of-thirds grid, and Reset. It edits a working copy — **Apply** commits, **Cancel**
+  discards, your original file is never touched.
+- **Rulers and draggable guides.** Inch rulers on the top and left; drag from a ruler to
+  drop a guide, drag it off the page to remove it, snap to guides, edges, margins and
+  element centres. Guides never print.
+- **A clearer workspace.** Toolbar buttons now carry **text labels** (no more guessing
+  what “+” means), **Export stands alone**, the clock and autosave moved into the Page
+  pane, and **pan mode is a proper toggle**.
+
+**Not in v4.2 (flagged, not buried):** the front/back **cover-template library** and the
+**equirectangular panorama photobook** system are still ahead — both are substantial and
+sequenced in [`docs/ROADMAP.md`](docs/ROADMAP.md).
+
+v4.0 is Phase 1 of a larger brief — colour proofing, panorama books, mockups and the
+printmaker guide are sequenced in [`docs/ROADMAP.md`](docs/ROADMAP.md).
 
 ### New in v3.3 — Lightroom Classic plug-in
 
