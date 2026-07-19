@@ -100,7 +100,18 @@ Every project automatically includes a **front cover** and **back cover**; inter
   layout and which photos go where, then Relink photos… reconnects them from disk. The
   full one-file .bak is unchanged.
 
-**Not in v4.3 (flagged, not buried):** the **equirectangular panorama photobook** system
+**v4.4 — borderless printing, named tabs, font previews, fold guide**
+
+- **No more white border.** The mini-zine print defaults to **Fill the paper** — the sheet
+  scales to cover A4/Letter/A3 so the bleed runs off the edge and there is nothing to trim.
+  Fit (trim after) and 100% remain as choices, each explained in plain words.
+- **The panel tabs are named** — Selected · Page · Layers · Guides · Export — instead of
+  icons nobody could read. Autosave + clock sit in a footer visible on every tab.
+- **The font picker shows the fonts**: every name renders in its own typeface, searchable,
+  with the button previewing the current face.
+- **✂ How to fold** — six illustrated steps, in the app where you print.
+
+**Not in v4.4 (flagged, not buried):** the **equirectangular panorama photobook** system
 is still ahead — a substantial build sequenced in [`docs/ROADMAP.md`](docs/ROADMAP.md).
 
 v4.0 is Phase 1 of a larger brief — colour proofing, panorama books, mockups and the

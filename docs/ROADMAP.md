@@ -15,6 +15,10 @@ guides, and a UI pass (labelled toolbar, standalone Export, pan toggle, relocate
 clock). What is left is listed honestly below — nothing here is half-built and quietly
 claimed.
 
+> **v4.4 shipped borderless printing** (Fill-the-paper on A4/Letter/A3 — the white border
+> Brian was trimming is gone), **named panel tabs** with the autosave/clock footer, a
+> **font picker with live previews**, and an **illustrated fold guide**.
+>
 > **v4.3 shipped the cover-template library** (12 front + 8 back designs with a large
 > centred, mobile-optimised preview), **transparent graphics** (QR/logo/PNG with alpha
 > preserved through export), a **fixed export** (text colour + hidden layers now honoured),
@@ -77,7 +81,8 @@ claimed.
   correction did not)
 - **Mini-zine setup wizard**: paper → finished size → orientation → pages → binding →
   bleed → colour profile → quality → template
-- **Paper and finished-size options**: A3/A4/Letter/custom sheets, A6/A7/custom trims
+- **Paper and finished-size options**: A3/A4/Letter sheets ✅ shipped in v4.4 (mini-zine
+  imposition, with Fill/Fit/100% scaling). Still open: custom sheet sizes, A6/A7/custom trims
 - **Front/back cover template library** ✅ **shipped in v4.3**: 12 front-cover designs
   (full-bleed photo, photo plate, minimal title, big typography, split image/title,
   magazine, photo grid, documentary, fine-art, youth/community, black & white, panorama

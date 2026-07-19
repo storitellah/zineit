@@ -1,5 +1,46 @@
 # Changelog — ZineIt by Storitellah
 
+## v4.4 — 2026-07-19
+Borderless A4 printing, readable tab names, a font picker that shows the fonts, and an
+illustrated fold guide.
+
+### Fixed — the white border you kept trimming
+- **Fill the paper (borderless)** is the new default for the mini-zine print. The design
+  sheet now scales uniformly to **cover** A4 / Letter / A3, so the sliver of bleed runs off
+  the paper edge instead of leaving white bands — **nothing to cut before folding**. Photos
+  still keep their exact aspect ratios; nothing is ever stretched.
+- The Scale control says exactly what each choice does: **Fill** (borderless), **Fit**
+  (white margin, trim after — the old behaviour), and **100%** (exact size). The preview
+  reports the numbers honestly — e.g. "Fit leaves a white 12 mm band on each side of A4" or
+  "Borderless: 4.2 mm runs off the top and bottom — that is the bleed doing its job."
+- **A3 paper** joins Letter and A4.
+
+### Changed — the tabs now say what they are
+- The right-panel tabs were icon glyphs (⌗ ▤ ▦ ⋈ ↥) that nobody could read. They are now
+  **named**: **Selected · Page · Layers · Guides · Export**.
+- **Autosave and the clock moved to a footer pinned to the bottom of the panel**, visible
+  whichever tab is open — not buried inside one tab.
+
+### Added — a font picker that previews the fonts
+- The font control is now a proper picker: the button shows the current font **in its own
+  typeface**, and the menu lists **every font rendered as itself**, with a category tag
+  (sans / serif / mono / hand) and a search box. Choosing a font routes through the same
+  change path as before, so nothing else moved.
+
+### Added — illustrated "How to fold" guide (inspired by Dirty Little Zine)
+- The folding instructions were buried in a collapsible text list. They are now a proper
+  **✂ How to fold** window with **six drawn step diagrams** — long fold, short fold, doors
+  inward, the one cut, push the ends, collapse — right where you print.
+
+### Looked at: Dirty Little Zine (dirtylittlezine.com)
+Compared feature-for-feature. ZineIt already covers its core (8-page one-sheet imposition,
+contain/cover photo fit, captions, 300 DPI JPG + PDF, offline, nothing uploaded). What it
+had that ZineIt lacked — an in-app illustrated fold guide, paper-size choice including A3,
+and truly borderless output — is all in this release.
+
+### Tested
+- 189 automated jsdom tests + 22 Lua tests, all green (7 new v4.4 tests).
+
 ## v4.3 — 2026-07-18
 The cover-template library, transparent graphics, a fixed export, and a light backup that relinks.
 

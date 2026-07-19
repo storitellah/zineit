@@ -637,14 +637,22 @@ T('maintain-margins shrinks the sheet to keep a ¼″ border', () => {
   approx(scale, Math.min(10.5 / 11, 8 / 8.5), 1e-6, 'fits inside paper minus ¼″ each side');
   Z.state.settings.imp.margins = false;
 });
-T('100% on A4 warns that the sheet will clip; fit-to-paper clears the warning', () => {
-  Z.state.settings.imp.paper = 'a4'; Z.state.settings.imp.fit = false;
+T('imposition scale modes: 100% warns of clipping, fit reports the white band, fill is borderless', () => {
+  Z.state.settings.imp.paper = 'a4';
+  Z.state.settings.imp.mode = 'actual'; Z.state.settings.imp.fit = false;
   let r = Z.buildImpSheet();
-  ok(/Fit to paper/.test(r.warn), 'warning names the remedy');
+  ok(/Fill or Fit/.test(r.warn), 'clip warning names the remedies');
   approx(r.scale, 1, 1e-9, '100% honoured');
-  Z.state.settings.imp.fit = true;
+  Z.state.settings.imp.mode = 'fit'; Z.state.settings.imp.fit = true;
   r = Z.buildImpSheet();
-  eq(r.warn, '', 'no warning when fitted');
+  ok(/white .*band|band .*white|white \d+ mm/.test(r.warn) || /white/.test(r.warn),
+    'fit on A4 honestly reports the white band Brian was trimming');
+  Z.state.settings.imp.mode = 'fill';
+  r = Z.buildImpSheet();
+  const paper = { w: 11.69, h: 8.27 };
+  const f = Z.fmt(), SW = f.w * 4, SH = f.h * 2;
+  ok(r.scale >= Math.max(paper.w / SW, paper.h / SH) - 1e-9, 'fill covers the whole sheet — borderless');
+  ok(!/white/.test(r.warn), 'no white band in fill mode');
 });
 T('page numbers in the imposition follow the print toggle (interiors only)', () => {
   Z.state.settings.pageNumsPrint = true;
@@ -1700,11 +1708,12 @@ T('pan mode toggles from both the toolbar and the properties panel', () => {
   Z.setPanMode(false);
   eq(Z.panMode, false, 'and off again');
 });
-T('clock and autosave moved into the right panel status strip', () => {
-  ok(/<div class="statusStrip">[\s\S]*id="saveState"[\s\S]*id="clock"[\s\S]*<\/div>/.test(SRC2),
-    'status strip holds both autosave and clock');
-  const strip = $('saveState').closest('.statusStrip');
-  ok(strip && strip.closest('[data-p="page"]'), 'the strip lives in the Page pane, not the header');
+T('clock and autosave live in a footer pinned to the bottom of the panel, on every tab', () => {
+  ok(/<div id="panelFoot">[\s\S]*id="saveState"[\s\S]*id="clock"[\s\S]*<\/div>/.test(SRC2),
+    'the panel footer holds both autosave and clock');
+  const foot = $('saveState').closest('#panelFoot');
+  ok(foot, 'saveState sits in #panelFoot');
+  ok(!foot.closest('[data-p]'), 'the footer is outside every tab pane — visible whichever tab is open');
   ok(!/  <header>[\s\S]*id="clock"[\s\S]*<\/header>/.test(SRC2), 'no clock left in the header');
 });
 
@@ -1893,6 +1902,62 @@ T('a light backup still validates and restores as a project', () => {
   const json = Z.buildRefBakJson();
   const err = Z.validateProject(JSON.parse(json));
   eq(err, null, 'the light backup passes project validation');
+});
+
+/* ============ 19n · v4.4: named tabs, font previews, borderless A4, fold guide ============ */
+T('panel tabs carry names, not cryptic icons', () => {
+  const tabs = [...document.querySelectorAll('#rtabs button')].map(b => b.textContent.trim());
+  eq(JSON.stringify(tabs), JSON.stringify(['Selected','Page','Layers','Guides','Export']),
+    'all five tabs are readable words');
+  ok(!/&#8983;|&#9636;|&#9638;|&#8905;|&#8613;/.test(SRC2.match(/<div id="rtabs"[\s\S]*?<\/div>/)[0]),
+    'the old icon glyphs are gone from the tab strip');
+});
+T('the font picker previews every font in its own typeface', () => {
+  Z.buildFontMenu();
+  Z.renderFontList('');
+  const items = [...document.querySelectorAll('#fmList .fmItem .nm')];
+  eq(items.length, Z.FONTS.length, 'every font is listed');
+  const bebas = items.find(n => n.textContent === 'Bebas Neue');
+  ok(bebas && /Bebas Neue/.test(bebas.style.fontFamily), 'each name is styled in its own font');
+  Z.renderFontList('mono');
+  const filtered = [...document.querySelectorAll('#fmList .fmItem')];
+  ok(filtered.length > 0 && filtered.length < Z.FONTS.length, 'search filters the list');
+});
+T('picking a font routes through the one change path and updates the button', () => {
+  Z.newProject('a5');
+  const e = Z.addTextEl('Type me', 14, 'title');
+  Z.select(Z.curPage, e.id);
+  Z.renderAll();
+  Z.pickFont('Playfair Display');
+  eq(e.font, 'Playfair Display', 'the element font changed');
+  const btn = $('fontPickBtn');
+  eq(btn.textContent, 'Playfair Display', 'button shows the font name');
+  ok(/Playfair Display/.test(btn.style.fontFamily), 'button previews the face itself');
+});
+T('A3 paper exists and the imposition accepts it', () => {
+  ok(Z.PAPERS.a3 && Math.abs(Z.PAPERS.a3.w - 16.54) < 0.01, 'A3 is a known paper');
+  Z.newProject('mini-zine');                  // the 8-panel imposition needs 8 pages
+  Z.state.settings.imp.paper = 'a3'; Z.state.settings.imp.mode = 'fill';
+  const r = Z.buildImpSheet();
+  eq(r.paper.name, 'A3', 'the sheet builds on A3');
+});
+T('fill mode is the default for new projects — borderless out of the box', () => {
+  Z.newProject('mini-zine');
+  eq(Z.impMode(Z.state.settings.imp), 'fill', 'new projects print borderless by default');
+});
+T('old saves with the fit boolean still resolve to a sane mode', () => {
+  eq(Z.impMode({ fit: true }), 'fit', 'legacy fit:true → fit');
+  eq(Z.impMode({ fit: false }), 'actual', 'legacy fit:false → 100%');
+  eq(Z.impMode({ mode: 'fill', fit: true }), 'fill', 'explicit mode wins');
+});
+T('the illustrated fold guide is in the app, with all six steps drawn', () => {
+  ok($('howFoldBk'), 'the guide modal exists');
+  eq(document.querySelectorAll('#howFoldBk .foldStep').length, 6, 'six illustrated steps');
+  eq(document.querySelectorAll('#howFoldBk .foldStep svg').length, 6, 'each step has a diagram');
+  click($('howFoldBtn'));
+  ok($('howFoldBk').classList.contains('show'), 'opens from the mini-zine print window');
+  click($('howFoldClose'));
+  ok(!$('howFoldBk').classList.contains('show'), 'and closes');
 });
 
 /* ============ 20 · console health ============ */
