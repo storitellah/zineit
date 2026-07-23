@@ -8,9 +8,13 @@ The official logo becomes the icon, and the layout is tightened on both phone an
   the dotted "i" — in the browser tab, the home-screen icon and the app header. Generated
   at every size (`.ico`, 180/192/512 PNG, plus an SVG that wraps the artwork) and checked
   for legibility down to 16px. The header shows the logo beside the wordmark.
-- The favicon and app icons sit on a **white rounded tile** rather than transparency, so the
-  dark logo stays visible against dark browser tabs and dark home screens. The header logo
-  keeps its transparent background, since it sits on the app's own dark bar by design.
+- **New purpose-designed icon (final):** an open mini-zine standing like a little tent —
+  a warm-yellow leaf and a teal leaf meeting at a paper-white spine, with a coral inner page
+  peeking out (a nod to the single cut that makes a zine). It sits on the ink rounded tile,
+  so it is self-contained and reads on any tab or home-screen colour, light or dark, right
+  down to 16px. This replaces the earlier letter-derived marks: it shows what the app makes,
+  not just its initial. Regenerated across `.ico` (16/32/48), 180/192/512 PNG, the inline
+  SVG favicon and the header mark.
 
 ### Fixed — mobile preview centring
 - On phones and tablets the page preview **now sits centred by default**, both across and

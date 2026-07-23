@@ -961,14 +961,13 @@ T('physical favicon files ship in the repo with valid signatures', () => {
   ok(ico.length > 1000 && ico[0] === 0 && ico[1] === 0 && ico[2] === 1 && ico[3] === 0, 'favicon.ico is a real multi-image ICO');
   const svg = fs.readFileSync(path.join(root, 'favicon.svg'), 'utf8');
   ok(/^<svg /.test(svg), 'favicon.svg is an SVG');
-  ok(/<image[^>]+href="data:image\/png;base64,/.test(svg), 'favicon.svg wraps the official ZineIt logo bitmap');
+  // the open-mini-zine mark: an ink tile with warm + teal leaves and a coral spine page
+  ok(/rx="14"[^>]*fill="#1A1A1A"|fill="#1A1A1A"/.test(svg), 'sits on the ink rounded tile so it reads on any tab colour');
+  ok(/#FFC43D/.test(svg) && /#00B4A6/.test(svg) && /#FF5C5C/.test(svg), 'uses the ZineIt palette (yellow + teal leaves, coral page)');
+  ok(!/>Z</.test(svg) && !/<image /.test(svg), 'a drawn vector mark, not a letter Z or a wrapped bitmap');
   ok(fs.existsSync(path.join(root, 'logo.png')), 'the full-resolution logo ships in the repo');
-  // the icon must have a WHITE background for visibility on dark tabs/home screens, not transparency.
-  // A white-backed tile has near-white pixels around the centre; a transparent one has alpha 0 there.
   const png = fs.readFileSync(path.join(root, 'icon-192.png'));
   ok(png.length > 1000 && png[0] === 0x89 && png[1] === 0x50, 'icon-192.png is a real PNG');
-  // crude but effective: a transparent-centre tile is much smaller than a white-filled one
-  ok(png.length > 12000, 'icon-192.png carries a filled (white) tile, not a mostly-transparent logo');
   for (const f of ['apple-touch-icon.png', 'icon-192.png', 'icon-512.png']) {
     const b = fs.readFileSync(path.join(root, f));
     ok(b.length > 1000 && b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4E && b[3] === 0x47, f + ' is a real PNG');
@@ -2242,7 +2241,7 @@ T('mobile CSS covers the real viewport, sheet modals and 44px touch targets', ()
 T('the header carries the ZineIt logo image', () => {
   const logo = document.querySelector('.brand img.logo');
   ok(logo, 'a logo image sits in the header brand');
-  ok(/^data:image\/png;base64,/.test(logo.getAttribute('src')), 'inlined so it works from file:// too');
+  ok(/^data:image\/(svg\+xml|png);base64,/.test(logo.getAttribute('src')), 'inlined so it works from file:// too');
 });
 T('the favicon and app icons are the supplied logo, not the old cutout', () => {
   const link = document.querySelector('link[rel="icon"]');
