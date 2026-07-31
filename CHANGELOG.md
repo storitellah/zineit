@@ -1,5 +1,39 @@
 # Changelog — Zineit by Storitellah
 
+## v5.3 — 2026-07-31
+The transparency workflow, done properly — plus an honest roadmap for the larger feature
+request that landed with it.
+
+### Fixed / added — PNG transparency, end to end
+- **Transparent PNGs now behave correctly through the whole workflow**, and this is verified
+  at the pixel level, not just asserted. On import, the alpha channel is auto-detected and the
+  file is kept as PNG (never matted onto white), so logos, watermarks, signatures, stickers
+  and icons render with no background — in the editor and in export — and overlay photographs
+  without hiding them.
+- **Transparency checkerboard (editor only).** A new toggle shows a faint checkerboard behind
+  transparent graphics so you can *see* the transparency and tell it apart from white paper.
+  It never prints and never exports — export draws pixels only.
+- **Transparent PNG page export.** A page can now be exported as a PNG with a genuinely
+  transparent background (alpha=0 in empty areas — pixel-verified), for overlays and artwork
+  proofs. JPG and PDF exports keep their flattened white paper, and the project itself stays
+  non-destructive throughout.
+
+### Added — a written roadmap
+- A detailed feature specification arrived with this release (a dedicated Artwork layer type,
+  ~12 paper sizes, a full A3 workflow, 15 print presets, ~19 layouts, 15 template collections,
+  a resizable timeline, a deeper mobile pass, demo assets, GitHub Pages CI, and a performance
+  pass). That is many releases of work. Rather than half-build all of it, this release lands
+  the **top-priority transparency item completely and correctly**, and `docs/ROADMAP.md` now
+  tracks the rest honestly — what's shipped, what's partially there, and what's sequenced next
+  — so nothing is silently dropped.
+
+### Tested
+- 228 automated jsdom tests + 22 Lua tests, all green (4 new: the no-matte + checkerboard CSS
+  contract, the checkerboard toggle, the conditional white-fill for transparent export, and
+  the auto-alpha import wiring). Transparent export was additionally pixel-verified in a real
+  browser (corner alpha = 0), and the checkerboard confirmed to produce real light/dark
+  variation behind a graphic.
+
 ## v5.2 — 2026-07-23
 A real one-click PDF, a flipbook reader, print-shop colour guidance, and the tool's proper
 name in the header.

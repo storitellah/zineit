@@ -280,6 +280,13 @@ textarea{resize:vertical;min-height:56px}
 .el{position:absolute;touch-action:none}
 .el.img{overflow:hidden;background:#e8e5dd}
 .el.img.graphic{background:transparent}           /* transparent PNG / QR / logo — no matte */
+/* editor-only: a faint checkerboard reveals real transparency (never exported — export draws pixels) */
+body.showChecker .el.img.graphic{
+  background-image:
+    linear-gradient(45deg, rgba(0,0,0,.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.05) 75%),
+    linear-gradient(45deg, rgba(0,0,0,.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.05) 75%);
+  background-size:16px 16px; background-position:0 0, 8px 8px;
+}
 .el.img img{display:block;pointer-events:none}   /* frame = clipping mask; photo may exceed it */
 .el.img.empty{background:rgba(44,93,179,.06);border:1.5px dashed rgba(44,93,179,.6);display:flex;align-items:center;justify-content:center}
 .el.img.empty::after{content:"drop photo";font-family:var(--mono);font-size:10px;color:rgba(44,93,179,.85);letter-spacing:.8px}
@@ -678,7 +685,7 @@ body.android select{background-image:none}
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJaaW5lSXQg4oCUIGFuIG9wZW4gbWluaS16aW5lIj4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0iIzFBMUExQSIvPgogIDwhLS0gbGVmdCBsZWFmICh3YXJtIHllbGxvdykgYW5kIHJpZ2h0IGxlYWYgKHRlYWwpLCBzdGFuZGluZyBvcGVuIGxpa2UgYSB0ZW50IC0tPgogIDxwYXRoIGQ9Ik0zMiAxNyBMMTQgMjMuNSBMMTQgNDUgTDMyIDQxIFoiIGZpbGw9IiNGRkM0M0QiIHN0cm9rZT0iI0Y3RjdGNSIgc3Ryb2tlLXdpZHRoPSIyLjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNMzIgMTcgTDUwIDIzLjUgTDUwIDQ1IEwzMiA0MSBaIiBmaWxsPSIjMDBCNEE2IiBzdHJva2U9IiNGN0Y3RjUiIHN0cm9rZS13aWR0aD0iMi40IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPCEtLSBhIGNvcmFsIGlubmVyIHBhZ2UgYXQgdGhlIHNwaW5lOiB0aGUgWmluZUl0IGFjY2VudCBhbmQgYSBub2QgdG8gdGhlIHNpbmdsZSBjdXQgLS0+CiAgPHBhdGggZD0iTTMyIDIwIEwzNyAyMiBMMzcgMzkgTDMyIDM4IFoiIGZpbGw9IiNGRjVDNUMiLz4KICA8IS0tIHNwaW5lLCBkcmF3biBsYXN0IHNvIGl0IHJlYWRzIGNyaXNwIG92ZXIgdGhlIHBhZ2VzIC0tPgogIDxsaW5lIHgxPSIzMiIgeTE9IjE3IiB4Mj0iMzIiIHkyPSI0MSIgc3Ryb2tlPSIjRjdGN0Y1IiBzdHJva2Utd2lkdGg9IjIuNCIvPgo8L3N2Zz4K" alt="ZineIt logo" width="26" height="26">
       <span class="mark">Zine<span>It</span></span>
       <a class="byline" href="https://storitellah.com" target="_blank" rel="noopener">by Storitellah</a>
-      <span class="ver" id="verBadge">v5.2</span>
+      <span class="ver" id="verBadge">v5.3</span>
     </div>
     <input id="projName" type="text" value="Untitled project" spellcheck="false" aria-label="Project title" title="Project title — click to edit">
     <div class="tbar">
@@ -928,6 +935,7 @@ body.android select{background-image:none}
       <div id="inspImg" style="display:none;flex-direction:column;gap:8px">
         <button class="btn primary wide" id="cropOpenBtn" title="Open this photo in the crop window (double-click the photo too)">✂ Crop photo…</button>
         <label class="toggle full"><input type="checkbox" id="graphicChk">Transparent graphic (no white background — for logos, QR codes)</label>
+        <label class="toggle full"><input type="checkbox" id="checkerChk">Show transparency checkerboard (editor only — never printed)</label>
         <div class="row">
           <button class="btn" id="fitBtn" title="Whole photo visible, no crop">Fit</button>
           <button class="btn" id="fillBtn" title="Fill frame, crop allowed, never stretched">Fill</button>
@@ -1018,6 +1026,8 @@ body.android select{background-image:none}
       <button class="btn wide" id="impBtn" style="display:none">Print mini-zine sheet (fold &amp; cut)</button>
       <button class="btn wide" id="saddleBtn" style="display:none">Print 16-page sheets (saddle stitch)</button>
       <button class="btn wide" id="jpgBtn">Download all pages as high-res JPGs</button>
+      <button class="btn wide" id="pngBtn">Download this page as PNG</button>
+      <button class="btn wide" id="pngTransBtn" title="Transparent background — for overlays and artwork proofs">Download this page as transparent PNG</button>
       <div class="hint">The A4 PDF is rendered at 300 DPI from your original photos and named after your project.</div>
     </div>
 
@@ -1348,7 +1358,7 @@ const FORMATS = {
   'book-3x2'   :{group:'Photobooks', name:'Photobook — 3:2 landscape (12 × 8 in)', w:12, h:8},
   'book-2x3'   :{group:'Photobooks', name:'Photobook — 2:3 portrait (8 × 12 in)',  w:8, h:12},
 };
-const APP_VER='5.2', FEEDBACK_EMAIL='hello@storitellah.com';
+const APP_VER='5.3', FEEDBACK_EMAIL='hello@storitellah.com';
 const GRID=0.125, MM=1/25.4;
 const FONTS = ['Inter','Manrope','Roboto','Open Sans','Lato','Montserrat','Poppins','Raleway','Work Sans','DM Sans','Nunito',
   'Rubik','Karla','Source Sans 3','Space Grotesk','Archivo','Archivo Black','IBM Plex Sans','Oswald','Bebas Neue','Anton',
@@ -4249,7 +4259,7 @@ async function renderPageCanvas(pi,opts){
   c.width=Math.round(W*DPI); c.height=Math.round(H*DPI);
   const ctx=c.getContext('2d');
   if(!ctx)throw new Error('canvas unavailable');
-  ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,c.width,c.height);
+  if(!opts.transparent){ ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,c.width,c.height); }  // paper white, unless exporting a transparent PNG
   ctx.translate(b*DPI,b*DPI);                 // page origin, bleed around it
   const items=(opts.items)||pagePrintElements(pi);
   for(const {e,dx} of items){
@@ -4342,6 +4352,16 @@ function buildImagePdf(jpegU8, wIn, hIn){
   let total=0; parts.forEach(p=>total+=p.length);
   const out=new Uint8Array(total); let k=0; parts.forEach(p=>{ out.set(p,k); k+=p.length; });
   return out;
+}
+async function exportCurrentPagePng(transparent){
+  try{
+    toast('Rendering '+(transparent?'transparent ':'')+'PNG at 300 DPI…');
+    const cv=await renderPageCanvas(curPage,{bleed:false, transparent:!!transparent});
+    const blob=await new Promise(r=>cv.toBlob(r,'image/png'));
+    if(!blob){ toast('PNG export not available in this browser.','err'); return; }
+    saveBlob(blob, fileName('export','png').replace('.png', (transparent?'_transparent':'')+'_p'+(curPage+1)+'.png'));
+    toast('PNG saved ✓'+(transparent?' — transparency preserved, no background.':''),'ok');
+  }catch(e){ toast('PNG export failed: '+(e&&e.message||e),'err'); }
 }
 async function downloadMiniZinePdf(){
   try{
@@ -4694,6 +4714,9 @@ $('marginSel').addEventListener('change',e=>{ state.settings.margin=parseFloat(e
 [['gMargins','margins'],['gSafe','safe'],['gBleed','bleedG'],['gFold','fold']].forEach(([id,k])=>{
   $(id).addEventListener('change',e=>{ state.settings.guides[k]=e.target.checked; renderCanvas(); touch(); }); });
 $('cmykNoteChk').addEventListener('change',e=>{ $('cmykHint').style.display=e.target.checked?'block':'none'; });
+$('checkerChk').addEventListener('change',e=>{ document.body.classList.toggle('showChecker',e.target.checked); });
+$('pngBtn').addEventListener('click',()=>exportCurrentPagePng(false));
+$('pngTransBtn').addEventListener('click',()=>exportCurrentPagePng(true));
 $('bleedChk').addEventListener('change',e=>{ state.settings.bleed=e.target.checked;
   if(!e.target.checked){ state.pages.forEach(p=>p.elements.forEach(clampEl)); }
   renderCanvas(); touch();
@@ -4971,7 +4994,7 @@ window.__zineit={
     try{ const b=dataURLtoBlob(src); assetStore.put(id,{full:b,preview:b}); }catch(e){} },
   alphaCapable, bitmapHasAlpha, importGraphics,
   impMode, PAPERS, openFontMenu, closeFontMenu, pickFont, syncFontBtn, renderFontList, buildFontMenu, fontCategory, fontStack, FONTS, openTextInEditor,
-  buildImagePdf, renderImposedSheetCanvas, downloadMiniZinePdf,
+  buildImagePdf, renderImposedSheetCanvas, downloadMiniZinePdf, exportCurrentPagePng,
   flipFromProject, flipFromImages, flipGo, renderFlip, get flip(){return flip},
   convertProjectFormat, convertGuard,
   isPanorama, isEquirect, panoClass, assetAspect, gutterIn, gutterBand, panoAcrossSpread, panoSplit,

@@ -2332,6 +2332,31 @@ T('toggling a placed photo to graphic re-ingests to recover transparency', () =>
   ok(/ingestInto\(e\.asset, rec\.full, true\)/.test(SRC2), 'the toggle rebuilds the bitmap from the original to recover alpha');
 });
 
+/* ============ 19u · v5.3: transparency workflow ============ */
+T('graphic elements render with no background, and a checkerboard can reveal transparency', () => {
+  ok(/\.el\.img\.graphic\{background:transparent\}/.test(SRC2), 'graphics have no matte');
+  ok(/body\.showChecker \.el\.img\.graphic\{/.test(SRC2), 'an editor-only checkerboard is available');
+  ok(/never exported/.test(SRC2), 'the checkerboard is documented as editor-only');
+});
+T('the checkerboard toggle flips a body class, not anything that would print', () => {
+  document.body.classList.remove('showChecker');
+  $('checkerChk').checked=true; $('checkerChk').dispatchEvent(new window.Event('change', { bubbles: true }));
+  ok(document.body.classList.contains('showChecker'), 'toggle on');
+  $('checkerChk').checked=false; $('checkerChk').dispatchEvent(new window.Event('change', { bubbles: true }));
+  ok(!document.body.classList.contains('showChecker'), 'toggle off');
+});
+T('page rendering can skip the white paper fill for transparent PNG export', () => {
+  ok(/if\(!opts\.transparent\)\{ ctx\.fillStyle='#ffffff'/.test(SRC2),
+    'the white fill is conditional on NOT exporting transparent');
+  eq(typeof Z.exportCurrentPagePng, 'function', 'a PNG page export exists');
+});
+T('transparent import auto-detects alpha and marks the asset as a graphic', () => {
+  // bitmapHasAlpha samples the alpha channel; assert the detection wiring is present
+  ok(/alphaCapable\(f\) *&& *bitmapHasAlpha\(bmp\)/.test(SRC2), 'normal import auto-detects transparency');
+  ok(/drawScaledTransparent/.test(SRC2), 'transparent draws never fill white');
+  ok(/image\/png/.test(SRC2), 'graphic previews stay PNG to keep alpha');
+});
+
 /* ============ 20 · console health ============ */
 T('no page errors or uncaught exceptions across the whole run', () => {
   eq(pageErrors.length, 0, 'errors: ' + pageErrors.slice(0, 3).join(' | '));
