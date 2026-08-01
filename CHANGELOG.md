@@ -1,5 +1,41 @@
 # Changelog — Zineit by Storitellah
 
+## v5.4 — 2026-08-01
+The flipbook grows up — double-page spreads, zoom, and a phone QR — plus an attractive
+GitHub Pages showcase and a rewritten README.
+
+### Added — double-page flipbook view
+- The reader now shows **two facing pages at once**, like a real open book — cover alone,
+  then facing pairs, back cover alone. Toggle **Single / Double** in the reader header.
+
+### Added — zoom, and scroll only when zoomed
+- Zoom the reader in and out (or **Fit**). The preview **scrolls only when you've zoomed past
+  fit** — at fit it stays put and centred, exactly as it should.
+
+### Added — QR to read on your phone
+- A **QR to phone** button shows a scannable code that opens ZineIt on a phone. The code is a
+  standard, **decode-verified** QR for zineit.app, pre-generated and inlined so it's tiny and
+  guaranteed to scan (no shaky in-browser encoder).
+
+### Removed — the “Open a zine” file path
+- ZineIt doesn't read external PDF zines, so the misleading **Open a zine** button and its
+  file picker are gone. The reader renders **your current project**, which is what it's for.
+
+### Timeline
+- Left exactly as it was, as requested.
+
+### Added — GitHub Pages showcase + README
+- A polished **landing page** (`docs/`) with real app mockups, on-brand styling, feature
+  cards, a flipbook section, a mobile section and a quick-start — deployed to **GitHub Pages**
+  via a new Actions workflow. The **README** is rewritten with badges, a screenshot, quick
+  start, print guidance, shortcuts and roadmap links.
+
+### Tested
+- 231 automated jsdom tests + 22 Lua tests, all green (5 new / updated: single vs double-page
+  slotting, clamping at the ends, scroll-only-when-zoomed, the inlined QR, and the removal of
+  the file-open path). The double-page render, zoom-scroll behaviour and the QR were verified
+  in a real browser — and the **QR was decode-checked to resolve to zineit.app**.
+
 ## v5.3 — 2026-07-31
 The transparency workflow, done properly — plus an honest roadmap for the larger feature
 request that landed with it.

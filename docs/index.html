@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZineIt — make print-ready zines & photobooks in your browser</title>
+<meta name="description" content="ZineIt by Storitellah is a free, local-first tool for photographers and photojournalists to lay out and print zines and photobooks. No account, no upload, works offline.">
+<link rel="icon" href="assets/favicon.svg">
+<style>
+  :root{
+    --ink:#1A1A1A; --paper:#F7F7F5; --yellow:#FFC43D; --teal:#00B4A6;
+    --coral:#FF5C5C; --indigo:#3D5AFE; --forest:#2F8A5F; --muted:#6b675c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:'Poppins','Inter',sans-serif;font-weight:800;line-height:1.15;letter-spacing:-.02em}
+
+  /* hero */
+  header.hero{background:var(--ink);color:var(--paper);padding:72px 0 84px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--yellow),var(--teal),var(--coral),var(--indigo))}
+  .hero .wrap{position:relative;z-index:2}
+  .brandline{display:flex;align-items:center;gap:14px;margin-bottom:34px}
+  .brandline img{width:44px;height:44px}
+  .brandline b{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px}
+  .brandline span{color:var(--yellow)}
+  .brandline a{color:var(--muted);text-decoration:none;font-size:13px;margin-left:4px}
+  .hero h1{font-size:clamp(34px,6vw,60px);max-width:16ch;margin-bottom:20px}
+  .hero h1 em{font-style:normal;color:var(--yellow)}
+  .hero p.lead{font-size:clamp(17px,2.4vw,21px);color:#d9d6cf;max-width:52ch;margin-bottom:34px}
+  .cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-block;padding:14px 26px;border-radius:10px;font-weight:700;text-decoration:none;font-size:16px;transition:transform .12s ease, box-shadow .12s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.primary{background:var(--yellow);color:var(--ink);box-shadow:0 8px 30px rgba(255,196,61,.35)}
+  .btn.ghost{border:1.5px solid #3a3a38;color:var(--paper)}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:30px}
+  .badge{font-size:12px;font-family:'Poppins',sans-serif;font-weight:700;padding:5px 11px;border-radius:999px;background:#26262a;color:#cfccc4}
+  .badge.y{background:var(--yellow);color:var(--ink)} .badge.t{background:var(--teal);color:var(--ink)}
+  .badge.c{background:var(--coral);color:#fff} .badge.i{background:var(--indigo);color:#fff}
+
+  /* floating hero shot */
+  .heroShot{margin-top:54px;border-radius:14px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.5);border:1px solid #2c2c2f}
+  .heroShot img{width:100%;display:block}
+
+  /* sections */
+  section{padding:76px 0}
+  section.alt{background:#fff}
+  .kicker{font-family:'Poppins',sans-serif;font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+  section h2{font-size:clamp(26px,4vw,40px);max-width:20ch;margin-bottom:16px}
+  section p.sub{font-size:18px;color:var(--muted);max-width:60ch;margin-bottom:40px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+  .card{background:var(--paper);border:1px solid #e6e3db;border-radius:14px;padding:26px}
+  section.alt .card{background:#faf9f6}
+  .card .ic{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+  .card h3{font-size:19px;margin-bottom:8px}
+  .card p{font-size:15px;color:var(--muted)}
+
+  .split{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
+  .split img{width:100%;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.18);border:1px solid #e6e3db}
+  .split.rev{grid-template-columns:.9fr 1.1fr}
+  .split ul{list-style:none;margin-top:18px}
+  .split li{padding-left:28px;position:relative;margin-bottom:12px;font-size:16px}
+  .split li::before{content:"✓";position:absolute;left:0;color:var(--forest);font-weight:800}
+
+  .mobileShow{display:flex;gap:40px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .mobileShow img{height:520px;border-radius:26px;box-shadow:0 30px 70px rgba(0,0,0,.22);border:6px solid var(--ink)}
+
+  .steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+  .step{position:relative;padding-top:8px}
+  .step::before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--yellow);font-family:'Poppins';font-weight:800;margin-bottom:14px}
+  .step h3{font-size:18px;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:15px}
+
+  footer{background:var(--ink);color:#cfccc4;padding:56px 0;text-align:center}
+  footer .brandline{justify-content:center;margin-bottom:20px}
+  footer a{color:var(--yellow);text-decoration:none}
+  footer .fl{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+
+  @media(max-width:760px){ .split,.split.rev{grid-template-columns:1fr} .heroShot{margin-top:34px} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandline">
+      <img src="assets/logo.png" alt="ZineIt logo">
+      <b>Zine<span>It</span></b>
+      <a href="https://storitellah.com">by Storitellah</a>
+    </div>
+    <h1>Make <em>print-ready</em> zines &amp; photobooks, right in your browser.</h1>
+    <p class="lead">A free, local-first layout tool for photographers and photojournalists. Drop in your photos, arrange them, and export something you can actually print — a folded mini-zine, a saddle-stitched booklet, or a photobook.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://zineit.app">Open ZineIt →</a>
+      <a class="btn ghost" href="https://github.com/storitellah/zineit">View on GitHub</a>
+    </div>
+    <div class="badges">
+      <span class="badge y">Free</span>
+      <span class="badge t">Works offline</span>
+      <span class="badge c">No account</span>
+      <span class="badge i">Mobile ready</span>
+      <span class="badge">Print · 300 DPI</span>
+      <span class="badge">PWA</span>
+    </div>
+    <div class="heroShot"><img src="assets/shot_editor.jpg" alt="The ZineIt editor"></div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Why ZineIt</div>
+    <h2>Everything a zine needs. Nothing that gets in the way.</h2>
+    <p class="sub">Built around how photographers actually work — your originals stay untouched, your photos never leave your device, and every export is ready for the printer.</p>
+    <div class="grid">
+      <div class="card"><div class="ic" style="background:#fff4d6">📐</div><h3>Real formats</h3><p>A4 mini-zines, photobooks and saddle-stitched booklets, with fold and cut guides that line up.</p></div>
+      <div class="card"><div class="ic" style="background:#d6f7f3">🖼️</div><h3>Photos, never stretched</h3><p>Frames crop; your pictures always keep their true shape. Every crop is reversible.</p></div>
+      <div class="card"><div class="ic" style="background:#ffe0e0">📄</div><h3>One-click A4 PDF</h3><p>Export a 300 DPI, print-ready mini-zine, named after your project. No print-dialog dance.</p></div>
+      <div class="card"><div class="ic" style="background:#e0e5ff">🎨</div><h3>Panoramas</h3><p>Run one photo across a spread, several pages, or the whole cover — gutter-aware, never distorted.</p></div>
+      <div class="card"><div class="ic" style="background:#fff4d6">🖌️</div><h3>Transparent artwork</h3><p>Drop in logos, QR codes and signatures with real transparency — no white box, ever.</p></div>
+      <div class="card"><div class="ic" style="background:#d6f7f3">🔒</div><h3>Yours, offline</h3><p>Works from a single file, on a plane, forever. Backs up to a small file you keep.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="split">
+      <img src="assets/shot_flip.jpg" alt="ZineIt flipbook reader in double-page view">
+      <div>
+        <div class="kicker">Read before you print</div>
+        <h2>Flip through your zine like a real book.</h2>
+        <p class="sub">The flipbook reader turns your layout into facing pages you can page through — so you catch what the flat editor hides.</p>
+        <ul>
+          <li>Double-page spreads, just like the printed booklet</li>
+          <li>Zoom in to inspect detail — scrolls only when zoomed</li>
+          <li>Tap the page halves or use the arrow keys</li>
+          <li>A QR code to keep reading on your phone</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Anywhere</div>
+    <h2>Designed for the desk and the field.</h2>
+    <p class="sub">The whole tool works in mobile browsers — Chrome, Safari, Brave — with a layout that adapts to phones and tablets without hiding the tools you need.</p>
+    <div class="mobileShow">
+      <img src="assets/shot_mobile.jpg" alt="ZineIt on a phone">
+      <div style="max-width:34ch">
+        <ul style="list-style:none">
+          <li style="padding-left:28px;position:relative;margin-bottom:14px;font-size:16px">📱 Touch-friendly, 44px targets, bottom sheets</li>
+          <li style="padding-left:28px;position:relative;margin-bottom:14px;font-size:16px">🤏 Pinch to zoom the canvas</li>
+          <li style="padding-left:28px;position:relative;margin-bottom:14px;font-size:16px">↩︎ Android back button closes what's open</li>
+          <li style="padding-left:28px;position:relative;margin-bottom:14px;font-size:16px">📲 Install it to your home screen (PWA)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="kicker">Quick start</div>
+    <h2>Your first zine in four steps.</h2>
+    <p class="sub"></p>
+    <div class="steps">
+      <div class="step"><h3>Open ZineIt</h3><p>Go to zineit.app or open the single HTML file. No sign-up.</p></div>
+      <div class="step"><h3>Drop your photos</h3><p>Drag them in. Originals stay full quality and untouched.</p></div>
+      <div class="step"><h3>Lay out the pages</h3><p>Pick a format, arrange, add text and logos, check the flipbook.</p></div>
+      <div class="step"><h3>Export &amp; print</h3><p>One-click A4 PDF at 300 DPI, named after your project.</p></div>
+    </div>
+    <div class="cta" style="margin-top:40px">
+      <a class="btn primary" href="https://zineit.app">Start making →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">For the print shop</div>
+    <h2>Honest about colour. Ready for professional print.</h2>
+    <p class="sub">ZineIt exports clean 300 DPI, correctly-sized, bleed-ready files. For CMYK with a specific ICC profile (Coated GRACoL 2006 / FOGRA39), it tells you exactly how to convert in a prepress tool — because browsers are RGB-only, and faking it would give you wrong colour.</p>
+    <div class="grid">
+      <div class="card"><h3>300 DPI</h3><p>Crisp in print, from your originals — not the screen.</p></div>
+      <div class="card"><h3>Standard vs rich black</h3><p>K100 for sharp text; a rich-black recipe for deep fills.</p></div>
+      <div class="card"><h3>Bleed &amp; trim</h3><p>Toggle 3 mm / 0.125″ bleed when art runs to the edge.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brandline">
+      <img src="assets/logo.png" alt="ZineIt logo">
+      <b>Zine<span style="color:var(--yellow)">It</span></b>
+    </div>
+    <div class="fl">
+      <a href="https://zineit.app">zineit.app</a>
+      <a href="https://github.com/storitellah/zineit">GitHub</a>
+      <a href="https://storitellah.com">Storitellah</a>
+      <a href="mailto:hello@storitellah.com">hello@storitellah.com</a>
+    </div>
+    <p style="font-size:14px;color:#8a877e">Built by Storitellah · free &amp; open · your photos never leave your device.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -2290,22 +2290,43 @@ T('the imposed A4 sheet targets a true 300 DPI on A4 paper', () => {
   ok(/cv\.width=Math\.round\(paper\.w\*DPI\)/.test(SRC2), 'the sheet canvas is sized paper x 300 DPI');
 });
 T('the flipbook steps through pages and clamps at the ends', () => {
-  // stub a page set (real rendering is Playwright-verified) and exercise navigation
-  Z.flip.pages=['a','b','c','d','e','f','g','h']; Z.flip.i=0;
+  Z.flip.pages=['a','b','c','d','e','f','g','h']; Z.flip.i=0; Z.flip.zoom=1;
+  Z.flipSetView('single');
   Z.renderFlip();
   eq(Z.flip.i, 0, 'starts on the cover');
   Z.flipGo(1); eq(Z.flip.i, 1, 'next turns forward');
-  Z.flipGo(5); eq(Z.flip.i, 6, 'jumps forward but stays in range');
   Z.flipGo(9); eq(Z.flip.i, 7, 'cannot pass the back cover');
   Z.flipGo(-99); eq(Z.flip.i, 0, 'cannot go before the cover');
 });
-T('the flipbook rejects PDF uploads offline with a pointer to the hosted app', () => {
-  let msg='';
-  const origToast=Z.toast; 
-  // flipFromImages with a fake pdf file: no image files -> should not populate pages
-  Z.flip.pages=[]; 
-  Z.flipFromImages([{type:'application/pdf', name:'zine.pdf'}]);
-  eq(Z.flip.pages.length, 0, 'no pages loaded from a PDF offline');
+T('double-page view pairs facing pages, cover and back alone (like a real book)', () => {
+  Z.flip.pages=['0','1','2','3','4','5','6','7']; Z.flip.i=0;
+  Z.flipSetView('double');
+  const slots=Z.flipSlots();
+  eq(JSON.stringify(slots[0]), '[0]', 'cover sits alone on the right');
+  eq(JSON.stringify(slots[1]), '[1,2]', 'then facing pairs');
+  eq(JSON.stringify(slots[2]), '[3,4]', 'and so on');
+  // 8 pages: cover, (1,2)(3,4)(5,6), then 7 alone
+  eq(JSON.stringify(slots[slots.length-1]), '[7]', 'back cover sits alone');
+  Z.flip.i=0; Z.flipGo(1);
+  ok(Z.flip.pages[Z.flip.i]==='1', 'advancing moves to the next spread');
+});
+T('the reader scrolls only when zoomed past fit', () => {
+  ok(/\.flipStage\.zoomed\{[^}]*overflow:auto/.test(SRC2), 'the zoomed stage scrolls');
+  ok(/stage\.classList\.toggle\('zoomed', *z>1\.001\)/.test(SRC2), 'zoomed class is set only when zoom exceeds fit');
+  Z.flip.pages=['a','b']; Z.flip.zoom=1; Z.flipZoom(1.25); ok(Z.flip.zoom>1, 'zoom in increases scale');
+  Z.flipZoomFit(); eq(Z.flip.zoom, 1, 'fit resets to 1');
+});
+T('the phone QR is a real, inlined, pre-verified code for zineit.app', () => {
+  ok(/const ZINEIT_QR_SVG=`<svg/.test(SRC2), 'a static QR SVG is inlined');
+  ok(/zineit\.app/.test(SRC2), 'the reader references the hosted URL');
+  Z.flipShowQr(); ok(!$('flipQr').hidden, 'QR overlay opens');
+  Z.flipHideQr(); ok($('flipQr').hidden, 'and closes');
+});
+T('the flipbook reads the current project only (no PDF/file open path)', () => {
+  eq(typeof Z.flipFromImages, 'undefined', 'the file-open path is gone — the tool does not read PDF zines');
+  eq(typeof Z.flipFromProject, 'function', 'reading the current project remains');
+  ok(!/id="flipInput"/.test(SRC2), 'no file input in the reader');
+  ok(!/Open a zine/.test(SRC2), 'no “Open a zine” button');
 });
 T('the header names the tool and links Storitellah', () => {
   const by=document.querySelector('.brand .byline');
