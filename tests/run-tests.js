@@ -893,7 +893,7 @@ T('mobile view bar scrolls horizontally instead of stacking', () => {
 T('feedback subject carries the running version', () => {
   // Pinned to a shape, not a number — a version bump is not a regression, but a badge
   // that disagrees with the code is.
-  ok(/^\d+\.\d+$/.test(Z.APP_VER), 'version looks like a version');
+  ok(/^\d+\.\d+(\.\d+)?$/.test(Z.APP_VER), 'version looks like a version');
   eq($('verBadge').textContent, 'v' + Z.APP_VER, 'the badge in the header matches the code');
   ok(decodeURIComponent($('fbBtn').href).includes('ZineIt v' + Z.APP_VER), 'mailto subject carries it too');
   ok($('fbBtn').href.startsWith('mailto:hello@storitellah.com'), 'feedback goes to the right address');
@@ -2316,11 +2316,23 @@ T('the reader scrolls only when zoomed past fit', () => {
   Z.flip.pages=['a','b']; Z.flip.zoom=1; Z.flipZoom(1.25); ok(Z.flip.zoom>1, 'zoom in increases scale');
   Z.flipZoomFit(); eq(Z.flip.zoom, 1, 'fit resets to 1');
 });
-T('the phone QR is a real, inlined, pre-verified code for zineit.app', () => {
+T('the phone QR is a real, inlined code that deep-links to the flipbook', () => {
   ok(/const ZINEIT_QR_SVG=`<svg/.test(SRC2), 'a static QR SVG is inlined');
-  ok(/zineit\.app/.test(SRC2), 'the reader references the hosted URL');
+  ok(/zineit\.app\/\?read/.test(SRC2), 'the QR label points at the flipbook deep-link');
   Z.flipShowQr(); ok(!$('flipQr').hidden, 'QR overlay opens');
+  eq($('flipQrUrl').textContent, 'zineit.app/?read', 'the shown URL opens the reader');
   Z.flipHideQr(); ok($('flipQr').hidden, 'and closes');
+});
+T('a ?read deep-link opens the flipbook on load', () => {
+  ok(/wantRead/.test(SRC2), 'boot checks for a read parameter');
+  ok(/if\(wantRead\)\{ setTab\('read'\); flipFromProject\(\); \}/.test(SRC2),
+    'when present, it opens the reader and renders the project');
+});
+T('the reader scrolls when zoomed: book is not clamped and the stage uses safe centring', () => {
+  ok(/\.flipBook\{position:relative;perspective:2000px;flex:0 0 auto\}/.test(SRC2),
+    'the book is no longer clamped by max-width/height, so zoom can enlarge it past the stage');
+  ok(/\.flipStage\{[^}]*place-content:safe center[^}]*overflow:auto/.test(SRC2),
+    'the stage keeps a bounded size and scrolls to overflow rather than clipping it');
 });
 T('the flipbook reads the current project only (no PDF/file open path)', () => {
   eq(typeof Z.flipFromImages, 'undefined', 'the file-open path is gone — the tool does not read PDF zines');

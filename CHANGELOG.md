@@ -1,5 +1,20 @@
 # Changelog — Zineit by Storitellah
 
+## v5.4.1 — 2026-08-03
+Two flipbook fixes.
+
+### Fixed — zoom now actually scrolls
+- The reader preview wouldn't scroll when zoomed in. The book element was clamped by
+  `max-width/height`, so it never grew past the stage and there was nothing to scroll to; the
+  centred grid also clipped any overflow. The book now enlarges freely and the stage uses safe
+  centring, so it stays put and scrolls to reach every part when zoomed. **Verified in a real
+  browser: no scroll at fit, scrolls when zoomed, no scroll back at fit.**
+
+### Changed — the phone QR opens the flipbook directly
+- The QR now deep-links to `zineit.app/?read`, and the app opens **straight into the flipbook
+  reader** when that parameter is present (also accepts `#read`). Previously it opened the app's
+  editor. The QR is regenerated and **decode-verified** to resolve to `https://zineit.app/?read`.
+
 ## v5.4 — 2026-08-01
 The flipbook grows up — double-page spreads, zoom, and a phone QR — plus an attractive
 GitHub Pages showcase and a rewritten README.
