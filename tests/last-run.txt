@@ -1,4 +1,4 @@
-ZineIt v5.5.0 test run — 2026-08-12T22:04:29.531Z
+ZineIt v5.5.0 test run — 2026-08-12T22:21:01.353Z
 PASS  boots into a valid A4 mini-zine project — borderless by default
 PASS  the classic US Letter mini zine is still available (the dimension tests below use it)
 PASS  spread model: cover alone · 3 interior pairs · back alone

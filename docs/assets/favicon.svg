@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ZineIt — an open mini-zine">
   <rect width="64" height="64" rx="14" fill="#1A1A1A"/>
   <!-- left leaf (warm yellow) and right leaf (teal), standing open like a tent -->
-  <path d="M32 17 L14 23.5 L14 45 L32 41 Z" fill="#FFC43D" stroke="#F7F7F5" stroke-width="2.4" stroke-linejoin="round"/>
-  <path d="M32 17 L50 23.5 L50 45 L32 41 Z" fill="#00B4A6" stroke="#F7F7F5" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M32 17 L14 23.5 L14 45 L32 41 Z" fill="#F6D76B" stroke="#F7F7F5" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M32 17 L50 23.5 L50 45 L32 41 Z" fill="#B63A2B" stroke="#F7F7F5" stroke-width="2.4" stroke-linejoin="round"/>
   <!-- a coral inner page at the spine: the ZineIt accent and a nod to the single cut -->
-  <path d="M32 20 L37 22 L37 39 L32 38 Z" fill="#FF5C5C"/>
+  <path d="M32 20 L37 22 L37 39 L32 38 Z" fill="#F7F7F5"/>
   <!-- spine, drawn last so it reads crisp over the pages -->
   <line x1="32" y1="17" x2="32" y2="41" stroke="#F7F7F5" stroke-width="2.4"/>
 </svg>

@@ -1,5 +1,31 @@
 # Changelog — Zineit by Storitellah
 
+## v5.5.0 — 2026-08-12
+The "Butter & Tomato" rebrand.
+
+### Changed — new brand palette
+- Retired the old five-colour system (Warm Yellow `#FFC43D`, Teal, Coral, Indigo, Forest) for a
+  focused two-accent palette: **Butter Pop `#F6D76B`** (primary accent, on dark) and
+  **Tomato Vinyl `#B63A2B`** (action/secondary, on light), on Ink `#1A1A1A` and Paper `#F7F7F5`.
+  Butter Pop passes 14.85:1 on Ink; Tomato Vinyl passes 5.79:1 (AA) on Paper — the palette is used
+  accordingly throughout.
+- Recoloured the logo (Butter Pop + Tomato Vinyl leaves, Paper spine on an Ink tile) and regenerated
+  `favicon.svg`, `favicon.ico`, `icon-192`, `icon-512`, `apple-touch-icon`, `logo.png`, and the
+  GitHub Pages showcase (`docs/`) — page, logo, favicon, and all three preview screenshots.
+- Fold guide and alignment guides brought on-palette (fold = Butter, cut/guides = Tomato, arrows = Ink).
+- Teal / Indigo / Forest are kept as **user content swatches** for backwards compatibility; only the
+  brand/UI surfaces changed.
+
+### Changed — copy
+- Support line: "Keep independent photo stories alive" → **"Made to support *This is where we're from*"**
+  (a photography project, @thisiswherewearefrom).
+- Removed the Resolution / Black text / Deep backgrounds / Bleed print-help rows; kept the honest
+  CMYK/ICC note that points to Affinity Publisher / Scribus for print-shop conversion.
+
+### Notes
+- All 235 JS tests pass. Verified in a real browser: boots clean, imposition preview (A3/A4/Letter)
+  renders with correct 180° top-row rotation, illustrated "How to fold" guide displays.
+
 ## v5.4.1 — 2026-08-03
 Two flipbook fixes.
 
