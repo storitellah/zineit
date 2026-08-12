@@ -1,4 +1,4 @@
-ZineIt v5.4.1 test run — 2026-08-03T06:09:15.315Z
+ZineIt v5.4.1 test run — 2026-08-12T18:26:08.798Z
 PASS  boots into a valid A4 mini-zine project — borderless by default
 PASS  the classic US Letter mini zine is still available (the dimension tests below use it)
 PASS  spread model: cover alone · 3 interior pairs · back alone
@@ -55,6 +55,8 @@ PASS  fullscreen preview: enters, shows page indicator, navigates, exits via Esc
 PASS  view switching survives on mobile: single / spread / fullscreen all reachable
 PASS  Letter imposition: exact 11×8.5 sheet, 8 panels, 4 rotated, scale 1
 PASS  A4 imposition (Fit): paper resized, sheet scaled uniformly (aspect ratios preserved), centred
+PASS  A4 imposition (Safe area): whole sheet inset by the printer margin, uniform, centred
+PASS  safe-area margin is adjustable (3 mm for ink-tank Brothers)
 PASS  fold marks: 4 dashed fold lines + 8 edge ticks at the exact fold positions
 PASS  cut mark: single ✂ line across the two middle panels only
 PASS  guides can be hidden: fold off and cut off remove every mark
@@ -233,4 +235,4 @@ PASS  page rendering can skip the white paper fill for transparent PNG export
 PASS  transparent import auto-detects alpha and marks the asset as a graphic
 PASS  no page errors or uncaught exceptions across the whole run
 
-233 passed · 0 failed
+235 passed · 0 failed

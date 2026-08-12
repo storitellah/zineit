@@ -622,6 +622,27 @@ T('A4 imposition (Fit): paper resized, sheet scaled uniformly (aspect ratios pre
   approx(ox, (11.69291 - 11 * scale) / 2, 1e-4, 'sheet centred horizontally');
   Z.state.settings.imp.mode = 'fill';
 });
+T('A4 imposition (Safe area): whole sheet inset by the printer margin, uniform, centred', () => {
+  // the fix for printers that can't truly print borderless on A4 (e.g. Brother DCP-T420W)
+  Z.state.settings.imp.paper = 'a4'; Z.state.settings.imp.mode = 'safe'; Z.state.settings.imp.safeMm = 5;
+  const f = Z.fmt(), { page, scale } = Z.buildImpSheet();
+  const SW = f.w * 4, SH = f.h * 2, safeIn = 5 / 25.4, paperH = 8.26772, paperW = 11.69291;
+  approx(scale, (paperH - 2 * safeIn) / SH, 1e-6, 'safe scale is limited by the short (height) edge minus the margin');
+  const sheet = page.querySelector('.impSheet');
+  ok(/scale\(0\.9/.test(sheet.style.transform), 'single uniform scale() — fold/cut geometry stays proportional');
+  const oy = parseFloat(sheet.style.top);
+  approx(oy * 25.4, 5, 1e-2, 'exactly a 5 mm margin top and bottom — clears the printer dead zone');
+  const ox = parseFloat(sheet.style.left);
+  ok(ox * 25.4 >= 5 - 1e-6, 'side margins are at least the printer margin too');
+  Z.state.settings.imp.mode = 'fill'; delete Z.state.settings.imp.safeMm;
+});
+T('safe-area margin is adjustable (3 mm for ink-tank Brothers)', () => {
+  Z.state.settings.imp.paper = 'a4'; Z.state.settings.imp.mode = 'safe'; Z.state.settings.imp.safeMm = 3;
+  const { page } = Z.buildImpSheet();
+  const oy = parseFloat(page.querySelector('.impSheet').style.top);
+  approx(oy * 25.4, 3, 1e-2, '3 mm inset applied');
+  Z.state.settings.imp.mode = 'fill'; delete Z.state.settings.imp.safeMm;
+});
 T('fold marks: 4 dashed fold lines + 8 edge ticks at the exact fold positions', () => {
   const { page } = Z.buildImpSheet();
   const folds = page.querySelectorAll('.foldLine');
@@ -912,12 +933,12 @@ T('UI type system follows the brand guidelines: Poppins display, Inter UI', () =
   ok(/#clock\{font-family:var\(--mono\)/.test(SRC2), 'numeric readouts stay monospaced');
 });
 T('brand palette is applied, not approximated', () => {
-  ok(/--ink:#1A1A1A/.test(SRC2) && /--paper-white:#F7F7F5/.test(SRC2) && /--yellow:#FFC43D/.test(SRC2),
+  ok(/--ink:#1A1A1A/.test(SRC2) && /--paper-white:#F7F7F5/.test(SRC2) && /--yellow:#F6D76B/.test(SRC2),
     'primary palette exact');
-  ok(/--teal:#00B4A6/.test(SRC2) && /--coral:#FF5C5C/.test(SRC2) && /--indigo:#3D5AFE/.test(SRC2) && /--forest:#2F8A5F/.test(SRC2),
+  ok(/--teal:#00B4A6/.test(SRC2) && /--coral:#B63A2B/.test(SRC2) && /--indigo:#3D5AFE/.test(SRC2) && /--forest:#2F8A5F/.test(SRC2),
     'secondary palette exact');
   ok(/--accent:var\(--yellow\)/.test(SRC2), 'Warm Yellow is the primary accent');
-  ok(/\.btn\.primary\{background:var\(--yellow\);border:none;color:var\(--ink\)/.test(SRC2),
+  ok(/\.btn\.primary\{background:var\(--yellow\)[^}]*color:var\(--ink\)/.test(SRC2),
     'yellow buttons carry ink text — 4.5:1 contrast, not white-on-yellow');
 });
 T('brand faces are offered for zine text too', () => {
@@ -963,7 +984,7 @@ T('physical favicon files ship in the repo with valid signatures', () => {
   ok(/^<svg /.test(svg), 'favicon.svg is an SVG');
   // the open-mini-zine mark: an ink tile with warm + teal leaves and a coral spine page
   ok(/rx="14"[^>]*fill="#1A1A1A"|fill="#1A1A1A"/.test(svg), 'sits on the ink rounded tile so it reads on any tab colour');
-  ok(/#FFC43D/.test(svg) && /#00B4A6/.test(svg) && /#FF5C5C/.test(svg), 'uses the ZineIt palette (yellow + teal leaves, coral page)');
+  ok(/#F6D76B/.test(svg) && /#B63A2B/.test(svg) && /#F7F7F5/.test(svg), 'uses the ZineIt palette (Butter Pop + Tomato Vinyl leaves, paper spine)');
   ok(!/>Z</.test(svg) && !/<image /.test(svg), 'a drawn vector mark, not a letter Z or a wrapped bitmap');
   ok(fs.existsSync(path.join(root, 'logo.png')), 'the full-resolution logo ships in the repo');
   const png = fs.readFileSync(path.join(root, 'icon-192.png'));
@@ -1434,7 +1455,7 @@ T('hex parsing accepts what people actually type, rejects what it cannot read', 
 });
 T('the brand palette is offered as presets', () => {
   const hexes = Z.BRAND_COLORS.map(c => c[1]);
-  ['#1A1A1A', '#F7F7F5', '#FFC43D', '#00B4A6', '#FF5C5C', '#3D5AFE', '#2F8A5F']
+  ['#1A1A1A', '#F7F7F5', '#F6D76B', '#00B4A6', '#B63A2B', '#3D5AFE', '#2F8A5F']
     .forEach(c => ok(hexes.includes(c), `${c} is a preset`));
   Z.newProject('half-letter'); Z.goPage(1);
   const e = Z.addTextEl('Hello', 12, 'title', 1);
@@ -2348,9 +2369,8 @@ T('the header names the tool and links Storitellah', () => {
 });
 T('the print & colour panel states the CMYK/ICC reality honestly', () => {
   ok(/Coated GRACoL 2006/.test(SRC2) && /FOGRA39/.test(SRC2), 'names the standard ICC profiles');
-  ok(/standard black/i.test(SRC2) && /K 100/.test(SRC2), 'standard black guidance for text');
-  ok(/rich black/i.test(SRC2) && /C75 M68 Y67 K90/.test(SRC2), 'rich black recipe for solids');
-  ok(/300 DPI/.test(SRC2), '300 DPI stated');
+  ok(/Affinity Publisher/.test(SRC2) && /Scribus/.test(SRC2), 'points to prepress tools for CMYK');
+  ok(/300 DPI/.test(SRC2), '300 DPI stated in the CMYK note');
 });
 T('bleed offers a 0.125in option and the model understands it', () => {
   ok(/0\.125″|value="3\.175"/.test(SRC2), 'the 0.125 inch option exists');
