@@ -310,7 +310,7 @@ textarea{resize:vertical;min-height:56px}
 #canvasScroll.rulers #pageHost{margin:22px 0 0 22px}
 /* user guides — teal, draggable, never printed */
 #userGuides{position:absolute;inset:0;pointer-events:none;z-index:7}
-.uguide{position:absolute;pointer-events:auto;background:var(--teal)}
+.uguide{position:absolute;pointer-events:auto;background:var(--coral)}
 .uguide.h{left:0;right:0;height:1px;cursor:row-resize}
 .uguide.v{top:0;bottom:0;width:1px;cursor:col-resize}
 .uguide::after{content:"";position:absolute;inset:-4px}
@@ -689,7 +689,7 @@ body.android select{background-image:none}
 .fFold{stroke:var(--yellow);stroke-width:1.4;stroke-dasharray:4 3;fill:none}
 .fFoldSoft{stroke:#8d8a82;stroke-width:1;stroke-dasharray:3 3;fill:none}
 .fCut{stroke:var(--coral);stroke-width:2;fill:none}
-.fArrow{stroke:var(--teal);stroke-width:1.6;fill:none;stroke-linecap:round}
+.fArrow{stroke:var(--ink);stroke-width:1.6;fill:none;stroke-linecap:round}
 .fScissor{font-size:9px;fill:var(--coral)}
 .teRow.teFocus{outline:2px solid var(--yellow);outline-offset:2px;border-radius:6px;transition:outline-color .4s}
 /* ---- panorama panel ---- */
@@ -760,7 +760,7 @@ body.android select{background-image:none}
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJaaW5lSXQg4oCUIGFuIG9wZW4gbWluaS16aW5lIj4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0iIzFBMUExQSIvPgogIDwhLS0gbGVmdCBsZWFmICh3YXJtIHllbGxvdykgYW5kIHJpZ2h0IGxlYWYgKHRlYWwpLCBzdGFuZGluZyBvcGVuIGxpa2UgYSB0ZW50IC0tPgogIDxwYXRoIGQ9Ik0zMiAxNyBMMTQgMjMuNSBMMTQgNDUgTDMyIDQxIFoiIGZpbGw9IiNGNkQ3NkIiIHN0cm9rZT0iI0Y3RjdGNSIgc3Ryb2tlLXdpZHRoPSIyLjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNMzIgMTcgTDUwIDIzLjUgTDUwIDQ1IEwzMiA0MSBaIiBmaWxsPSIjQjYzQTJCIiBzdHJva2U9IiNGN0Y3RjUiIHN0cm9rZS13aWR0aD0iMi40IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPCEtLSBhIGNvcmFsIGlubmVyIHBhZ2UgYXQgdGhlIHNwaW5lOiB0aGUgWmluZUl0IGFjY2VudCBhbmQgYSBub2QgdG8gdGhlIHNpbmdsZSBjdXQgLS0+CiAgPHBhdGggZD0iTTMyIDIwIEwzNyAyMiBMMzcgMzkgTDMyIDM4IFoiIGZpbGw9IiNGN0Y3RjUiLz4KICA8IS0tIHNwaW5lLCBkcmF3biBsYXN0IHNvIGl0IHJlYWRzIGNyaXNwIG92ZXIgdGhlIHBhZ2VzIC0tPgogIDxsaW5lIHgxPSIzMiIgeTE9IjE3IiB4Mj0iMzIiIHkyPSI0MSIgc3Ryb2tlPSIjRjdGN0Y1IiBzdHJva2Utd2lkdGg9IjIuNCIvPgo8L3N2Zz4K" alt="ZineIt logo" width="26" height="26">
       <span class="mark">Zine<span>It</span></span>
       <a class="byline" href="https://storitellah.com" target="_blank" rel="noopener">by Storitellah</a>
-      <span class="ver" id="verBadge">v5.4.1</span>
+      <span class="ver" id="verBadge">v5.5.0</span>
     </div>
     <input id="projName" type="text" value="Untitled project" spellcheck="false" aria-label="Project title" title="Project title — click to edit">
     <div class="tbar">
@@ -1456,7 +1456,7 @@ const FORMATS = {
   'book-3x2'   :{group:'Photobooks', name:'Photobook — 3:2 landscape (12 × 8 in)', w:12, h:8},
   'book-2x3'   :{group:'Photobooks', name:'Photobook — 2:3 portrait (8 × 12 in)',  w:8, h:12},
 };
-const APP_VER='5.4.1', FEEDBACK_EMAIL='hello@storitellah.com';
+const APP_VER='5.5.0', FEEDBACK_EMAIL='hello@storitellah.com';
 const GRID=0.125, MM=1/25.4;
 const FONTS = ['Inter','Manrope','Roboto','Open Sans','Lato','Montserrat','Poppins','Raleway','Work Sans','DM Sans','Nunito',
   'Rubik','Karla','Source Sans 3','Space Grotesk','Archivo','Archivo Black','IBM Plex Sans','Oswald','Bebas Neue','Anton',
