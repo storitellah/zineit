@@ -7,7 +7,7 @@
 <!-- Icon: the zine cutout — one sheet, one fold, one cut. Inlined only: a saved
      single file has no sibling files to link to; hosted copies get /favicon.ico and
      /apple-touch-icon.png by convention. -->
-<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJaaW5lSXQg4oCUIGFuIG9wZW4gbWluaS16aW5lIj4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0iIzFBMUExQSIvPgogIDwhLS0gbGVmdCBsZWFmICh3YXJtIHllbGxvdykgYW5kIHJpZ2h0IGxlYWYgKHRlYWwpLCBzdGFuZGluZyBvcGVuIGxpa2UgYSB0ZW50IC0tPgogIDxwYXRoIGQ9Ik0zMiAxNyBMMTQgMjMuNSBMMTQgNDUgTDMyIDQxIFoiIGZpbGw9IiNGNkQ3NkIiIHN0cm9rZT0iI0Y3RjdGNSIgc3Ryb2tlLXdpZHRoPSIyLjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNMzIgMTcgTDUwIDIzLjUgTDUwIDQ1IEwzMiA0MSBaIiBmaWxsPSIjQjYzQTJCIiBzdHJva2U9IiNGN0Y3RjUiIHN0cm9rZS13aWR0aD0iMi40IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPCEtLSBhIGNvcmFsIGlubmVyIHBhZ2UgYXQgdGhlIHNwaW5lOiB0aGUgWmluZUl0IGFjY2VudCBhbmQgYSBub2QgdG8gdGhlIHNpbmdsZSBjdXQgLS0+CiAgPHBhdGggZD0iTTMyIDIwIEwzNyAyMiBMMzcgMzkgTDMyIDM4IFoiIGZpbGw9IiNGN0Y3RjUiLz4KICA8IS0tIHNwaW5lLCBkcmF3biBsYXN0IHNvIGl0IHJlYWRzIGNyaXNwIG92ZXIgdGhlIHBhZ2VzIC0tPgogIDxsaW5lIHgxPSIzMiIgeTE9IjE3IiB4Mj0iMzIiIHkyPSI0MSIgc3Ryb2tlPSIjRjdGN0Y1IiBzdHJva2Utd2lkdGg9IjIuNCIvPgo8L3N2Zz4K">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJaaW5lSXQg4oCUIGEgWiBvcGVuaW5nIGxpa2UgYSBib29rIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0iIzFBMUExQSIvPjxwYXRoIGQ9Ik0xMiAxNyBMMzIgMjEgTDMyIDQ3IEwxMiA0NSBaIiBmaWxsPSIjRjZENzZCIi8+PHBhdGggZD0iTTUyIDE3IEwzMiAyMSBMMzIgNDcgTDUyIDQ1IFoiIGZpbGw9IiNCNjNBMkIiLz48bGluZSB4MT0iMzIiIHkxPSIyMSIgeDI9IjMyIiB5Mj0iNDciIHN0cm9rZT0iIzFBMUExQSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTIwIDIwIEg0NCBWMjYgTDI4IDQyIEg0NSBWNDggSDE5IFY0MiBMMzUgMjYgSDIwIFoiIGZpbGw9IiNGN0Y3RjUiLz48L3N2Zz4=">
 <link rel="manifest" href="manifest.webmanifest" id="pwaManifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -95,8 +95,8 @@ a{color:var(--accent)}
 
 /* ============ APP FRAME ============ */
 #app{display:grid;
-     grid-template-rows:44px 1fr var(--railH,150px);
-     grid-template-columns:var(--leftW,268px) 1fr var(--rightW,312px);
+     grid-template-rows:44px 1fr var(--railH,190px);
+     grid-template-columns:var(--leftW,300px) 1fr var(--rightW,344px);
      height:100vh;height:100dvh;
      grid-template-areas:"hdr hdr hdr" "left canvas right" "rail rail rail"}
 #app.noLeft{--leftW:0px} #app.noRight{--rightW:0px} #app.noRail{--railH:0px}
@@ -172,9 +172,9 @@ select.tbsel{height:30px;padding:0 8px;font-size:11.5px;background:var(--panel-2
 .side{background:var(--panel);overflow-y:auto;padding:var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-5);position:relative}
 #right{overflow:hidden;padding:0;gap:0}
 #rtabs{display:flex;gap:2px;padding:6px 6px 0;border-bottom:1px solid var(--line);flex:0 0 auto}
-#rtabs button{flex:1 1 0;min-width:0;height:34px;background:none;border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;
+#rtabs button{flex:1 1 0;min-width:0;height:40px;background:none;border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;
   font-family:var(--display);font-weight:700;letter-spacing:.1px;white-space:nowrap;overflow:visible;padding:0 4px;
-  font-size:clamp(10px,1.05vw,12.5px);color:var(--muted);display:flex;align-items:center;justify-content:center}
+  font-size:clamp(11px,1.15vw,13.5px);color:var(--muted);display:flex;align-items:center;justify-content:center}
 #rtabs button:hover{color:var(--text);background:var(--panel-2)}
 #rtabs button.on{color:var(--yellow);border-color:var(--line);background:var(--bg);box-shadow:inset 0 2px 0 var(--yellow)}
 #rbody{flex:1;overflow-y:auto;overflow-x:hidden;padding:var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-5)}
@@ -757,10 +757,10 @@ body.android select{background-image:none}
 <div id="app">
   <header>
     <div class="brand">
-      <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJaaW5lSXQg4oCUIGFuIG9wZW4gbWluaS16aW5lIj4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0iIzFBMUExQSIvPgogIDwhLS0gbGVmdCBsZWFmICh3YXJtIHllbGxvdykgYW5kIHJpZ2h0IGxlYWYgKHRlYWwpLCBzdGFuZGluZyBvcGVuIGxpa2UgYSB0ZW50IC0tPgogIDxwYXRoIGQ9Ik0zMiAxNyBMMTQgMjMuNSBMMTQgNDUgTDMyIDQxIFoiIGZpbGw9IiNGNkQ3NkIiIHN0cm9rZT0iI0Y3RjdGNSIgc3Ryb2tlLXdpZHRoPSIyLjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNMzIgMTcgTDUwIDIzLjUgTDUwIDQ1IEwzMiA0MSBaIiBmaWxsPSIjQjYzQTJCIiBzdHJva2U9IiNGN0Y3RjUiIHN0cm9rZS13aWR0aD0iMi40IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPCEtLSBhIGNvcmFsIGlubmVyIHBhZ2UgYXQgdGhlIHNwaW5lOiB0aGUgWmluZUl0IGFjY2VudCBhbmQgYSBub2QgdG8gdGhlIHNpbmdsZSBjdXQgLS0+CiAgPHBhdGggZD0iTTMyIDIwIEwzNyAyMiBMMzcgMzkgTDMyIDM4IFoiIGZpbGw9IiNGN0Y3RjUiLz4KICA8IS0tIHNwaW5lLCBkcmF3biBsYXN0IHNvIGl0IHJlYWRzIGNyaXNwIG92ZXIgdGhlIHBhZ2VzIC0tPgogIDxsaW5lIHgxPSIzMiIgeTE9IjE3IiB4Mj0iMzIiIHkyPSI0MSIgc3Ryb2tlPSIjRjdGN0Y1IiBzdHJva2Utd2lkdGg9IjIuNCIvPgo8L3N2Zz4K" alt="ZineIt logo" width="26" height="26">
+      <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJaaW5lSXQg4oCUIGEgWiBvcGVuaW5nIGxpa2UgYSBib29rIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0iIzFBMUExQSIvPjxwYXRoIGQ9Ik0xMiAxNyBMMzIgMjEgTDMyIDQ3IEwxMiA0NSBaIiBmaWxsPSIjRjZENzZCIi8+PHBhdGggZD0iTTUyIDE3IEwzMiAyMSBMMzIgNDcgTDUyIDQ1IFoiIGZpbGw9IiNCNjNBMkIiLz48bGluZSB4MT0iMzIiIHkxPSIyMSIgeDI9IjMyIiB5Mj0iNDciIHN0cm9rZT0iIzFBMUExQSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTIwIDIwIEg0NCBWMjYgTDI4IDQyIEg0NSBWNDggSDE5IFY0MiBMMzUgMjYgSDIwIFoiIGZpbGw9IiNGN0Y3RjUiLz48L3N2Zz4=" alt="ZineIt logo" width="26" height="26">
       <span class="mark">Zine<span>It</span></span>
       <a class="byline" href="https://storitellah.com" target="_blank" rel="noopener">by Storitellah</a>
-      <span class="ver" id="verBadge">v5.5.0</span>
+      <span class="ver" id="verBadge">v5.6.0</span>
     </div>
     <input id="projName" type="text" value="Untitled project" spellcheck="false" aria-label="Project title" title="Project title — click to edit">
     <div class="tbar">
@@ -1114,6 +1114,9 @@ body.android select{background-image:none}
       <h3>Export</h3>
       <label class="toggle"><input type="checkbox" id="pnPrintChk">Page numbers in print / PDF</label>
       <button class="btn primary wide" id="pdfBtn">Download A4 mini-zine PDF</button>
+      <button class="btn wide" id="pdfLetterBtn">Download US Letter mini-zine PDF</button>
+      <button class="btn wide" id="pdfA5Btn">Download A5 mini-zine PDF</button>
+      <button class="btn wide" id="pdfA3Btn">Download A3 mini-zine PDF</button>
       <button class="btn wide" id="pdfPrintBtn" title="Use the browser print dialog instead">Or export via the print dialog…</button>
       <button class="btn wide" id="printBtn">Print (highest quality)</button>
       <button class="btn wide" id="impBtn" style="display:none">Print mini-zine sheet (fold &amp; cut)</button>
@@ -1122,14 +1125,6 @@ body.android select{background-image:none}
       <button class="btn wide" id="pngBtn">Download this page as PNG</button>
       <button class="btn wide" id="pngTransBtn" title="Transparent background — for overlays and artwork proofs">Download this page as transparent PNG</button>
       <div class="hint">The A4 PDF is rendered at 300 DPI from your original photos and named after your project.</div>
-    </div>
-
-    <div class="sec" data-p="export">
-      <h3>Print &amp; colour (for a print shop)</h3>
-      <div class="printGuide">
-      </div>
-      <label class="toggle full"><input type="checkbox" id="cmykNoteChk">I'll hand this to a printer who wants CMYK</label>
-      <div class="hint" id="cmykHint" style="display:none">Browsers work in RGB and can't apply a print ICC profile accurately, so ZineIt exports true-to-screen RGB. For <b>CMYK with Coated GRACoL 2006 (ISO 12647-2) or FOGRA39</b>, open the exported PDF/JPGs in a prepress tool (Affinity Publisher, Scribus (free), or Acrobat Pro) and convert to the profile there — that's where accurate, vibrant CMYK actually happens. ZineIt gives that tool a clean 300 DPI, correctly-sized, bleed-ready file to start from.</div>
     </div>
 
     <div class="sec" data-p="export">
@@ -1456,7 +1451,7 @@ const FORMATS = {
   'book-3x2'   :{group:'Photobooks', name:'Photobook — 3:2 landscape (12 × 8 in)', w:12, h:8},
   'book-2x3'   :{group:'Photobooks', name:'Photobook — 2:3 portrait (8 × 12 in)',  w:8, h:12},
 };
-const APP_VER='5.5.0', FEEDBACK_EMAIL='hello@storitellah.com';
+const APP_VER='5.6.0', FEEDBACK_EMAIL='hello@storitellah.com';
 const GRID=0.125, MM=1/25.4;
 const FONTS = ['Inter','Manrope','Roboto','Open Sans','Lato','Montserrat','Poppins','Raleway','Work Sans','DM Sans','Nunito',
   'Rubik','Karla','Source Sans 3','Space Grotesk','Archivo','Archivo Black','IBM Plex Sans','Oswald','Bebas Neue','Anton',
@@ -2223,7 +2218,22 @@ const TEMPLATES={
                       TX(.345,.11,.31,.85,{key:'intro2',size:9,font:s.body,color:INK,role:'custom'}),
                       TX(.69,.11,.31,.85,{key:'intro3',size:9,font:s.body,color:INK,role:'custom'})],
                three:[IM(0,0,1,.44), IM(0,.48,.49,.28), IM(.51,.48,.49,.28),
-                      TX(0,.79,1,.16,{key:'caption',size:9,font:s.body,color:INK,role:'custom'})] }) }
+                      TX(0,.79,1,.16,{key:'caption',size:9,font:s.body,color:INK,role:'custom'})] }) },
+
+  boldposter:{ name:'Bold poster', cat:'Statement', note:'Big type, high contrast — a zine that shouts.',
+    style:{display:'Poppins',body:'Inter',caption:'Manrope',accent:CORAL,margin:0.28,align:'left',cover:'overlay',numbers:false},
+    over:s=>({ cover:[FBL(), TX(.06,.62,.88,.22,{key:'title',size:34,font:s.display,weight:'800',color:PAPER,role:'title'})],
+               intro:[TX(.06,.12,.88,.3,{key:'title',size:26,font:s.display,weight:'800',color:s.accent,role:'page-title'}),
+                      TX(.06,.46,.88,.4,{key:'intro',size:12,font:s.body,color:INK,role:'custom'})],
+               single:[IM(0,0,1,.8), TX(.06,.85,.88,.1,{key:'caption',size:11,font:s.display,weight:'700',color:INK,role:'caption'})],
+               quote:[TX(.08,.34,.84,.32,{key:'quote',size:24,font:s.display,weight:'800',align:'left',color:s.accent,role:'quote'})] }) },
+
+  duotone:{ name:'Duotone frames', cat:'Framed', note:'Inset photos on a warm ground, captions on colour bands.',
+    style:{display:'Poppins',body:'Source Serif 4',caption:'Manrope',accent:YELLOW,margin:0.35,align:'left',cover:'plate',numbers:true},
+    over:s=>({ single:[IM(.08,.08,.84,.66), TX(.08,.8,.84,.1,{key:'caption',size:10,font:s.caption,color:INK,role:'caption'})],
+               two:[IM(.06,.1,.42,.8), IM(.52,.1,.42,.8)],
+               grid:gridOf(2,2,.06),
+               caption:[IM(.08,.08,.84,.52), TX(.08,.64,.84,.28,{key:'caption',size:11,font:s.body,color:INK,role:'custom'})] }) }
 };
 function tplStyle(key){ const t=TEMPLATES[key]||TEMPLATES.blank; return Object.assign({},t.style); }
 
@@ -2770,7 +2780,20 @@ function updateSelectionDom(){
     r.addEventListener('pointerdown',ev=>startDrag(ev,selPg,e.id,'rot')); d.appendChild(r);
   }
 }
-function select(pg,id){ selPg=pg; selId=id; updateSelectionDom(); renderInspector(); }
+function select(pg,id){ selPg=pg; selId=id; updateSelectionDom(); renderInspector(); syncSelectedTab(id!=null); }
+/* The "Selected" tab only appears when a photo or text is actually selected,
+   so the tab row stays uncrowded. Clicking an element surfaces its Selection panel. */
+function syncSelectedTab(surface){
+  const tabBtn=[...$('rtabs').querySelectorAll('button')].find(b=>b.dataset.p==='props');
+  if(!tabBtn) return;
+  if(selId){
+    tabBtn.style.display='';
+    if(surface) setPane('props');
+  } else {
+    tabBtn.style.display='none';
+    if(ws.tab==='props') setPane('page');
+  }
+}
 
 /* progressive image hydration: tiny thumb instantly, mid-size preview when ready */
 function hydrate(imgEl,assetId,kind){
@@ -3333,7 +3356,7 @@ pageEl.addEventListener('drop',ev=>{
   }
   if(ev.dataTransfer.files&&ev.dataTransfer.files.length) importFiles(ev.dataTransfer.files);
 });
-pageEl.addEventListener('pointerdown',ev=>{ if(ev.target===pageEl||ev.target.classList.contains('guide')){ selId=null; updateSelectionDom(); renderInspector(); renderPageTag(); }});
+pageEl.addEventListener('pointerdown',ev=>{ if(ev.target===pageEl||ev.target.classList.contains('guide')){ selId=null; updateSelectionDom(); renderInspector(); renderPageTag(); syncSelectedTab(false); }});
 
 
 
@@ -3545,7 +3568,8 @@ function initPWA(){
    One window. Panels resize, collapse and remember where you left them. The main
    objective of this release: nothing essential hidden, nothing needing a scroll. */
 const WS_LS='zineit_ws';
-const WS_DEF={leftW:268, rightW:312, railH:150, noLeft:false, noRight:false, noRail:false, tab:'page'};
+const WS_DEF={leftW:300, rightW:344, railH:190, noLeft:false, noRight:false, noRail:false, tab:'page'};
+const WS_OLD_DEF={leftW:268, rightW:312, railH:150};   // pre-v5.6 sizes
 let ws=Object.assign({},WS_DEF);
 function applyWs(){
   const a=$('app'), s=a.style;
@@ -3557,11 +3581,16 @@ function applyWs(){
   a.classList.toggle('noRail', !!ws.noRail);
   $('tbFocus').classList.toggle('on', !!(ws.noLeft&&ws.noRight));
   setPane(ws.tab, true);
+  if(typeof syncSelectedTab==='function') syncSelectedTab(false);
   if(typeof state!=='undefined' && state) renderCanvas();   // re-fit the page to the new space
 }
 function saveWs(){ try{ localStorage.setItem(WS_LS, JSON.stringify(ws)); }catch(e){} }
 function loadWs(){
   try{ const r=localStorage.getItem(WS_LS); if(r) ws=Object.assign({},WS_DEF,JSON.parse(r)); }catch(e){}
+  // one-time nudge: anyone who never customised (still on the old defaults) gets the new, larger sizes
+  if(ws.leftW===WS_OLD_DEF.leftW) ws.leftW=WS_DEF.leftW;
+  if(ws.rightW===WS_OLD_DEF.rightW) ws.rightW=WS_DEF.rightW;
+  if(ws.railH===WS_OLD_DEF.railH) ws.railH=WS_DEF.railH;
   ws.leftW=Math.max(0,Math.min(ws.leftW,520)); ws.rightW=Math.max(0,Math.min(ws.rightW,560));
   ws.railH=Math.max(0,Math.min(ws.railH,400));
   applyWs();
@@ -4203,7 +4232,7 @@ function buildSequentialPrint(){
 /* classic 8-page one-sheet imposition:
    top row (rotated 180°) L→R: p5 p4 p3 p2 · bottom row L→R: p6 p7 back front
    Design sheet = 4×2.75 by 2×4.25 = 11 × 8.5 in, scaled uniformly onto Letter or A4. */
-const PAPERS={ letter:{name:'US Letter', w:11, h:8.5}, a4:{name:'A4', w:11.69291, h:8.26772}, a3:{name:'A3', w:16.53543, h:11.69291} };
+const PAPERS={ letter:{name:'US Letter', w:11, h:8.5}, a4:{name:'A4', w:11.69291, h:8.26772}, a3:{name:'A3', w:16.53543, h:11.69291}, a5:{name:'A5', w:8.26772, h:5.82677} };
 function impMode(imp){ return imp.mode || (imp.fit===false?'actual':'fit'); }  // old saves: fit boolean
 function buildImpSheet(){
   const f=fmt(), imp=state.settings.imp||{paper:'letter',mode:'fill',margins:false,fold:true,cut:true};
@@ -4515,17 +4544,19 @@ async function exportCurrentPagePng(transparent){
     toast('PNG saved ✓'+(transparent?' — transparency preserved, no background.':''),'ok');
   }catch(e){ toast('PNG export failed: '+(e&&e.message||e),'err'); }
 }
-async function downloadMiniZinePdf(){
+async function downloadMiniZinePdf(paperKey){
   try{
-    toast('Rendering your A4 mini-zine PDF at 300 DPI…');
     const imp=state.settings.imp||(state.settings.imp={});
-    if(!imp.paper) imp.paper='a4';
-    const paper=PAPERS[imp.paper]||PAPERS.a4;
-    const cv=await renderImposedSheetCanvas();
+    const key=(typeof paperKey==='string'&&PAPERS[paperKey])?paperKey:(imp.paper||'a4');
+    const paper=PAPERS[key]||PAPERS.a4;
+    toast('Rendering your '+paper.name+' mini-zine PDF at 300 DPI…');
+    const prev=imp.paper; imp.paper=key;                 // render at the requested sheet size
+    let cv;
+    try{ cv=await renderImposedSheetCanvas(); } finally { imp.paper=prev; }
     const blob=await canvasToJpeg(cv,0.92);
     const buf=new Uint8Array(await blob.arrayBuffer());
     const pdf=buildImagePdf(buf, paper.w, paper.h);
-    saveBlob(new Blob([pdf],{type:'application/pdf'}), fileName('export','pdf'));
+    saveBlob(new Blob([pdf],{type:'application/pdf'}), fileName('export-'+key,'pdf'));
     toast('PDF saved ✓ — '+paper.name+' mini-zine, borderless, named after your project.','ok');
   }catch(e){ toast('PDF export failed: '+(e&&e.message||e),'err'); }
 }
@@ -4870,7 +4901,7 @@ $('clearGuides').addEventListener('click',()=>{ if(!state.settings.userGuides.le
 $('marginSel').addEventListener('change',e=>{ state.settings.margin=parseFloat(e.target.value); renderCanvas(); touch(); });
 [['gMargins','margins'],['gSafe','safe'],['gBleed','bleedG'],['gFold','fold']].forEach(([id,k])=>{
   $(id).addEventListener('change',e=>{ state.settings.guides[k]=e.target.checked; renderCanvas(); touch(); }); });
-$('cmykNoteChk').addEventListener('change',e=>{ $('cmykHint').style.display=e.target.checked?'block':'none'; });
+/* Prepress/CMYK panel removed in v5.6 — export is simplified. */
 $('checkerChk').addEventListener('change',e=>{ document.body.classList.toggle('showChecker',e.target.checked); });
 $('pngBtn').addEventListener('click',()=>exportCurrentPagePng(false));
 $('pngTransBtn').addEventListener('click',()=>exportCurrentPagePng(true));
@@ -5000,7 +5031,10 @@ $('jpgGo').addEventListener('click',async()=>{
   catch(e){ toast('Export failed: '+escapeHtml(String(e.message||e)),'err'); }
   btn.disabled=false;
 });
-$('pdfBtn').addEventListener('click',downloadMiniZinePdf);   // real one-click A4 PDF, no print dialog
+$('pdfBtn').addEventListener('click',()=>downloadMiniZinePdf('a4'));   // real one-click A4 PDF, no print dialog
+$('pdfLetterBtn').addEventListener('click',()=>downloadMiniZinePdf('letter'));
+$('pdfA5Btn').addEventListener('click',()=>downloadMiniZinePdf('a5'));
+$('pdfA3Btn').addEventListener('click',()=>downloadMiniZinePdf('a3'));
 if($('pdfPrintBtn')) $('pdfPrintBtn').addEventListener('click',()=>{ toast('In the print dialog choose <b>Save as PDF</b> · margins <b>None</b> · scale <b>100%</b>.'); doPrint('seq'); });
 $('printBtn').addEventListener('click',()=>{ toast('For best quality: 100% scale, margins None, highest print quality in printer settings.'); doPrint('seq'); });
 $('impBtn').addEventListener('click',openImpModal);

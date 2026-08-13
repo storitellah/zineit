@@ -1,5 +1,29 @@
 # Changelog — Zineit by Storitellah
 
+## v5.6.0 — 2026-08-13
+UI declutter, new logo, simpler export, bigger workspace.
+
+### Changed
+- **New logo** — a bold **Z that opens like a book** (butter + tomato pages on an ink tile),
+  replacing the open-mini-zine mark. Regenerated favicon.svg/.ico, all PNG icons, and the showcase.
+- **"Selected" tab** now only appears when a photo or text is actually selected — clicking an
+  element surfaces its Selection panel; deselecting hides the tab so the tab row stays uncrowded.
+- **Bigger workspace** — larger default left/right panels and timeline, taller tab buttons. Anyone
+  still on the old defaults is nudged up automatically; custom sizes are left alone.
+- **README** fully redesigned around the Butter & Tomato brand and the new logo.
+
+### Added
+- **Download A5, A4, US Letter, and A3 mini-zine PDFs** — one click each, all 300 DPI, borderless.
+- Two new template themes: **Bold poster** and **Duotone frames** (library now 11 themes + 12 covers + 8 backs).
+
+### Removed
+- The **Print & colour (for a print shop)** panel — export is simpler now.
+
+### Notes
+- Text aligns and snaps to the 0.125″ grid and edges exactly like photos (Grid/Snap toggles in Guides).
+- Foldable A3/A4/Letter single-sheet zines, "Print the Zine", and the illustrated fold guide remain.
+- All 235 JS tests pass.
+
 ## v5.5.0 — 2026-08-12
 The "Butter & Tomato" rebrand.
 

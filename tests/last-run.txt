@@ -1,4 +1,4 @@
-ZineIt v5.5.0 test run — 2026-08-12T22:21:01.353Z
+ZineIt v5.6.0 test run — 2026-08-13T14:47:28.955Z
 PASS  boots into a valid A4 mini-zine project — borderless by default
 PASS  the classic US Letter mini zine is still available (the dimension tests below use it)
 PASS  spread model: cover alone · 3 interior pairs · back alone
@@ -226,7 +226,7 @@ PASS  a ?read deep-link opens the flipbook on load
 PASS  the reader scrolls when zoomed: book is not clamped and the stage uses safe centring
 PASS  the flipbook reads the current project only (no PDF/file open path)
 PASS  the header names the tool and links Storitellah
-PASS  the print & colour panel states the CMYK/ICC reality honestly
+PASS  the print & colour panel is removed (simplified export)
 PASS  bleed offers a 0.125in option and the model understands it
 PASS  toggling a placed photo to graphic re-ingests to recover transparency
 PASS  graphic elements render with no background, and a checkerboard can reveal transparency

@@ -982,7 +982,7 @@ T('physical favicon files ship in the repo with valid signatures', () => {
   ok(ico.length > 1000 && ico[0] === 0 && ico[1] === 0 && ico[2] === 1 && ico[3] === 0, 'favicon.ico is a real multi-image ICO');
   const svg = fs.readFileSync(path.join(root, 'favicon.svg'), 'utf8');
   ok(/^<svg /.test(svg), 'favicon.svg is an SVG');
-  // the open-mini-zine mark: an ink tile with warm + teal leaves and a coral spine page
+  // the Z-as-opening-book mark: an ink tile, butter + tomato pages, bold paper Z
   ok(/rx="14"[^>]*fill="#1A1A1A"|fill="#1A1A1A"/.test(svg), 'sits on the ink rounded tile so it reads on any tab colour');
   ok(/#F6D76B/.test(svg) && /#B63A2B/.test(svg) && /#F7F7F5/.test(svg), 'uses the ZineIt palette (Butter Pop + Tomato Vinyl leaves, paper spine)');
   ok(!/>Z</.test(svg) && !/<image /.test(svg), 'a drawn vector mark, not a letter Z or a wrapped bitmap');
@@ -1295,7 +1295,7 @@ T('the project title is compact but never truncated in the file', () => {
 });
 T('panels resize, collapse and remember where you left them', () => {
   Z.resetWs();
-  eq(Z.ws.leftW, 268); eq(Z.ws.rightW, 312); eq(Z.ws.railH, 150);
+  eq(Z.ws.leftW, 300); eq(Z.ws.rightW, 344); eq(Z.ws.railH, 190);
   Z.ws.leftW = 320; Z.ws.rightW = 260; Z.ws.railH = 200; Z.applyWs(); Z.saveWs();
   eq($('app').style.getPropertyValue('--leftW'), '320px', 'left width applied as a CSS variable');
   eq($('app').style.getPropertyValue('--rightW'), '260px');
@@ -1308,7 +1308,7 @@ T('panels resize, collapse and remember where you left them', () => {
   Z.loadWs();
   eq(Z.ws.leftW, 320, 'the arrangement survives a reload');
   Z.resetWs();
-  eq(Z.ws.leftW, 268, 'and reset puts it all back');
+  eq(Z.ws.leftW, 300, 'and reset puts it all back');
 });
 T('focus mode and preview-only hide the furniture, Esc brings it back', () => {
   click($('tbFocus'));
@@ -2284,8 +2284,8 @@ T('the right-panel tabs render full labels, not truncated icons', () => {
   ok(!/#rtabs button\{[^}]*text-overflow:ellipsis/.test(SRC2), 'no ellipsis truncation on the tabs');
 });
 T('the two side panels are balanced by default', () => {
-  eq(Z.WS_DEF ? Z.WS_DEF.leftW : 268, 268, 'left default');
-  ok(/var\(--leftW,268px\) 1fr var\(--rightW,312px\)/.test(SRC2), 'left and right defaults are close, right a touch wider for its five tabs');
+  eq(Z.WS_DEF ? Z.WS_DEF.leftW : 300, 300, 'left default');
+  ok(/var\(--leftW,300px\) 1fr var\(--rightW,344px\)/.test(SRC2), 'left and right defaults are close, right a touch wider for its tabs');
 });
 
 /* ============ 19t · v5.2: PDF export, flipbook, byline, print guidance ============ */
@@ -2367,10 +2367,9 @@ T('the header names the tool and links Storitellah', () => {
   eq(by.getAttribute('href'), 'https://storitellah.com', 'Storitellah links out');
   ok(/Storitellah/.test(by.textContent), 'reads “by Storitellah”');
 });
-T('the print & colour panel states the CMYK/ICC reality honestly', () => {
-  ok(/Coated GRACoL 2006/.test(SRC2) && /FOGRA39/.test(SRC2), 'names the standard ICC profiles');
-  ok(/Affinity Publisher/.test(SRC2) && /Scribus/.test(SRC2), 'points to prepress tools for CMYK');
-  ok(/300 DPI/.test(SRC2), '300 DPI stated in the CMYK note');
+T('the print & colour panel is removed (simplified export)', () => {
+  ok(!/Print &amp; colour \(for a print shop\)/.test(SRC2) && !/cmykNoteChk/.test(SRC2),
+    'the Print & colour section and its CMYK toggle are gone');
 });
 T('bleed offers a 0.125in option and the model understands it', () => {
   ok(/0\.125″|value="3\.175"/.test(SRC2), 'the 0.125 inch option exists');
