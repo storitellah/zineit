@@ -1,4 +1,4 @@
-ZineIt v5.6.0 test run — 2026-08-13T14:47:28.955Z
+ZineIt v6.0.0 test run — 2026-09-11T22:15:08.959Z
 PASS  boots into a valid A4 mini-zine project — borderless by default
 PASS  the classic US Letter mini zine is still available (the dimension tests below use it)
 PASS  spread model: cover alone · 3 interior pairs · back alone
@@ -84,7 +84,7 @@ PASS  no accidental zoom or selection during editing on touch devices
 PASS  touch drags stay glued to the finger: pointer capture engaged, mouse path unaffected
 PASS  mobile view bar scrolls horizontally instead of stacking
 PASS  feedback subject carries the running version
-PASS  UI type system follows the brand guidelines: Poppins display, Inter UI
+PASS  UI type system follows the brand guidelines: Generation 1970 display, DM Sans UI
 PASS  brand palette is applied, not approximated
 PASS  brand faces are offered for zine text too
 PASS  production shell: favicon, noscript, version badge, console banner

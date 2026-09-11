@@ -41,7 +41,7 @@ const PXDATA = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFc
 /* ============ 1 · boot & model ============ */
 T('boots into a valid A4 mini-zine project — borderless by default', () => {
   ok(Z && Z.state, 'test API present');
-  eq(Z.state.app, 'ZineIt'); eq(Z.state.ver, 4);
+  eq(Z.state.app, 'MakeZines'); eq(Z.state.ver, 4);
   eq(Z.state.format, 'mini-zine-a4', 'the default format is the A4 borderless mini zine');
   eq(Z.state.pages.length, 8, '8 fixed pages');
   eq(Z.state.pages[0].label, 'Front cover');
@@ -483,7 +483,7 @@ T('validator blocks corrupt backups with a reason', () => {
   const bad2 = JSON.parse(JSON.stringify(Z.state));
   bad2.pages[1].elements.push({ type: 'text', text: 'x', x: NaN, y: 0, w: 1, h: 1 });
   ok(/corrupt geometry/.test(Z.validateProject(bad2)));
-  eq(Z.validateProject({ app: 'NotZineIt' }), 'not a ZineIt project');
+  eq(Z.validateProject({ app: 'NotMakeZines' }), 'not a MakeZines project');
 });
 T('v1 .bak files migrate cleanly into v2', () => {
   const v1 = { app: 'ZineIt', ver: 1, meta: { name: 'old' }, format: 'quarter',
@@ -833,7 +833,7 @@ T('feedback channel: support card + view-bar button email bryanjaybee@gmail.com 
   ok(a && b, 'both entry points exist');
   [a, b].forEach(l => {
     ok(l.href.startsWith('mailto:hello@storitellah.com'), 'addressed correctly');
-    ok(/subject=/.test(l.href) && /ZineIt/.test(decodeURIComponent(l.href)), 'prefilled subject');
+    ok(/subject=/.test(l.href) && /MakeZines/.test(decodeURIComponent(l.href)), 'prefilled subject');
     ok(/bug/i.test(decodeURIComponent(l.href)), 'invites bug reports');
   });
   ok(/every one gets read/i.test(document.querySelector('#left .support').textContent), 'invitation text present');
@@ -916,26 +916,26 @@ T('feedback subject carries the running version', () => {
   // that disagrees with the code is.
   ok(/^\d+\.\d+(\.\d+)?$/.test(Z.APP_VER), 'version looks like a version');
   eq($('verBadge').textContent, 'v' + Z.APP_VER, 'the badge in the header matches the code');
-  ok(decodeURIComponent($('fbBtn').href).includes('ZineIt v' + Z.APP_VER), 'mailto subject carries it too');
+  ok(decodeURIComponent($('fbBtn').href).includes('MakeZines v' + Z.APP_VER), 'mailto subject carries it too');
   ok($('fbBtn').href.startsWith('mailto:hello@storitellah.com'), 'feedback goes to the right address');
 });
 
 /* ============ 17 · v3.2: type system + production readiness ============ */
 const SRC2 = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-T('UI type system follows the brand guidelines: Poppins display, Inter UI', () => {
-  ok(/--display:'Poppins'/.test(SRC2), 'display face is Poppins (ExtraBold for the wordmark)');
-  ok(/--sans:'Inter'/.test(SRC2), 'UI face is Inter');
+T('UI type system follows the brand guidelines: Generation 1970 display, DM Sans UI', () => {
+  ok(/--display:'Generation 1970'/.test(SRC2), 'display face is Generation 1970 (the mother font for headers/titles)');
+  ok(/--sans:'DM Sans'/.test(SRC2), 'UI face is DM Sans');
   ok(/--serif:'Source Serif 4'/.test(SRC2), 'body face is Source Serif 4');
   ok(/--caption-font:'Manrope'/.test(SRC2), 'captions are Manrope');
-  ok(/family=Poppins:wght@700;800/.test(SRC2), 'Poppins Bold + ExtraBold loaded');
+  ok(/@font-face\{font-family:'Generation 1970'/.test(SRC2), 'Generation 1970 embedded as @font-face');
   ok(/family=Inter:/.test(SRC2) && /family=Manrope:/.test(SRC2), 'Inter and Manrope loaded');
-  ok(/\.brand \.mark\{font-family:var\(--display\);font-weight:800/.test(SRC2), 'wordmark is Poppins ExtraBold');
+  ok(/\.brand \.mark\{font-family:var\(--display\);font-weight:700/.test(SRC2), 'wordmark is Generation 1970 Bold');
   ok(/#clock\{font-family:var\(--mono\)/.test(SRC2), 'numeric readouts stay monospaced');
 });
 T('brand palette is applied, not approximated', () => {
-  ok(/--ink:#1A1A1A/.test(SRC2) && /--paper-white:#F7F7F5/.test(SRC2) && /--yellow:#F6D76B/.test(SRC2),
+  ok(/--ink:#1F1A17/.test(SRC2) && /--paper-white:#F7F7F5/.test(SRC2) && /--yellow:#F6D76B/.test(SRC2),
     'primary palette exact');
-  ok(/--teal:#00B4A6/.test(SRC2) && /--coral:#B63A2B/.test(SRC2) && /--indigo:#3D5AFE/.test(SRC2) && /--forest:#2F8A5F/.test(SRC2),
+  ok(/--teal:#6B7A3A/.test(SRC2) && /--coral:#B63A2B/.test(SRC2) && /--indigo:#D97B29/.test(SRC2) && /--forest:#6B7A3A/.test(SRC2),
     'secondary palette exact');
   ok(/--accent:var\(--yellow\)/.test(SRC2), 'Warm Yellow is the primary accent');
   ok(/\.btn\.primary\{background:var\(--yellow\)[^}]*color:var\(--ink\)/.test(SRC2),
@@ -950,7 +950,7 @@ T('production shell: favicon, noscript, version badge, console banner', () => {
   ok(icon && icon.href.startsWith('data:image/svg+xml'), 'inline SVG favicon — no 404 in production');
   ok(document.querySelector('noscript'), 'noscript message for JS-disabled visitors');
   eq($('verBadge').textContent, 'v' + Z.APP_VER, 'header shows the running version (useful in bug reports)');
-  ok(/console\.info\('ZineIt v'/.test(SRC2), 'version banner logged for support');
+  ok(/console\.info\('MakeZines v'/.test(SRC2), 'version banner logged for support');
 });
 T('uncaught errors surface gently and route users to feedback', async () => {
   window.dispatchEvent(new window.ErrorEvent('error', { message: 'synthetic-test-explosion' }));
@@ -966,7 +966,7 @@ T('uncaught errors surface gently and route users to feedback', async () => {
 });
 T('boot is guarded: startup failure shows a readable message, never a blank page', () => {
   ok(/try\{ boot\(\);/.test(SRC2), 'boot wrapped');
-  ok(/ZineIt could not start/.test(SRC2), 'fallback screen present');
+  ok(/MakeZines could not start/.test(SRC2), 'fallback screen present');
   ok(/hello@storitellah\.com/.test(SRC2), 'failure screen points to support');
 });
 T('accessibility: icon-only controls are labelled; reduced motion respected', () => {
@@ -983,7 +983,7 @@ T('physical favicon files ship in the repo with valid signatures', () => {
   const svg = fs.readFileSync(path.join(root, 'favicon.svg'), 'utf8');
   ok(/^<svg /.test(svg), 'favicon.svg is an SVG');
   // the Z-as-opening-book mark: an ink tile, butter + tomato pages, bold paper Z
-  ok(/rx="14"[^>]*fill="#1A1A1A"|fill="#1A1A1A"/.test(svg), 'sits on the ink rounded tile so it reads on any tab colour');
+  ok(/rx="14"[^>]*fill="#1A1A1A"|fill="#1A1A1A"|fill="#1F1A17"/.test(svg), 'sits on the ink rounded tile so it reads on any tab colour');
   ok(/#F6D76B/.test(svg) && /#B63A2B/.test(svg) && /#F7F7F5/.test(svg), 'uses the ZineIt palette (Butter Pop + Tomato Vinyl leaves, paper spine)');
   ok(!/>Z</.test(svg) && !/<image /.test(svg), 'a drawn vector mark, not a letter Z or a wrapped bitmap');
   ok(fs.existsSync(path.join(root, 'logo.png')), 'the full-resolution logo ships in the repo');
@@ -1231,7 +1231,7 @@ T('text colour is part of the model, rendered and exported', () => {
   Z.newProject('half-letter');
   Z.goPage(1);
   const e = Z.addTextEl('Hello', 12, 'title', 1);
-  eq(e.color, '#1A1A1A', 'defaults to ink');
+  eq(e.color, '#1F1A17', 'defaults to ink');
   e.color = '#FF5C5C';
   Z.select(1, e.id); Z.renderAll();
   const n = document.querySelector(`#page .el[data-id="${e.id}"]`);
@@ -1455,12 +1455,12 @@ T('hex parsing accepts what people actually type, rejects what it cannot read', 
 });
 T('the brand palette is offered as presets', () => {
   const hexes = Z.BRAND_COLORS.map(c => c[1]);
-  ['#1A1A1A', '#F7F7F5', '#F6D76B', '#00B4A6', '#B63A2B', '#3D5AFE', '#2F8A5F']
+  ['#1F1A17', '#F3E7CE', '#F6D76B', '#B63A2B', '#6B7A3A', '#D97B29', '#C9A227', '#8C3A24']
     .forEach(c => ok(hexes.includes(c), `${c} is a preset`));
   Z.newProject('half-letter'); Z.goPage(1);
   const e = Z.addTextEl('Hello', 12, 'title', 1);
   Z.select(1, e.id); Z.setPane('props');
-  eq(document.querySelectorAll('#swatches .sw').length, 7, 'all seven swatches shown');
+  eq(document.querySelectorAll('#swatches .sw').length, 8, 'all eight 70s swatches shown');
 });
 T('setting a colour updates the text, the picker and the recent list', () => {
   const e = Z.state.pages[1].elements.at(-1);
@@ -1487,7 +1487,7 @@ T('colour can be applied by scope, to matching roles only', () => {
     if (e.role === 'caption') caps.push(e.color);
   }));
   ok(titles.length >= 3 && titles.every(c => c === '#FF5C5C'), 'every title recoloured across the publication');
-  ok(caps.every(c => c === '#1A1A1A'), 'captions left alone — scope respects the role');
+  ok(caps.every(c => c === '#1F1A17'), 'captions left alone — scope respects the role');
 });
 
 /* ============ 20 · v4.0: non-destructive image engine ============ */
@@ -1636,10 +1636,10 @@ T('3:2 photobook formats exist in both orientations', () => {
 T('file naming: exports and backups follow the house scheme, sanitised', () => {
   Z.newProject('half-letter');
   Z.state.meta.name = 'My First Photo Story';
-  ok(/^My First Photo Story_Made with ZineIt_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}\.jpg$/.test(Z.fileName('export', 'jpg')),
-    'export: Title_Made with ZineIt_Date_Time');
-  ok(/^My First Photo Story_ZineIt_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}\.bak$/.test(Z.fileName('backup', 'bak')),
-    'backup: Title_ZineIt_Date_Time');
+  ok(/^My First Photo Story_Made with MakeZines_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}\.jpg$/.test(Z.fileName('export', 'jpg')),
+    'export: Title_Made with MakeZines_Date_Time');
+  ok(/^My First Photo Story_MakeZines_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}\.bak$/.test(Z.fileName('backup', 'bak')),
+    'backup: Title_MakeZines_Date_Time');
   eq(Z.sanitizeName('a/b\\c:d*e?f"g<h>i|j'), 'a b c d e f g h i j', 'filesystem-hostile characters stripped');
   eq(Z.sanitizeName('   '), 'Untitled project', 'empty names get a real fallback');
   eq(Z.sanitizeName('Kibera: Stories!'), 'Kibera Stories');

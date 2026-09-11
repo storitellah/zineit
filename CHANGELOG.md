@@ -1,4 +1,28 @@
-# Changelog — Zineit by Storitellah
+# Changelog — MakeZines by Storitellah
+
+## v6.0.0 — 2026-09-11
+**ZineIt is now MakeZines.** A full rebrand: new name, new identity, new type, new palette.
+
+### Changed — identity
+- **Name:** ZineIt → **MakeZines** throughout the app, icons, showcase, and README.
+- **Logo:** the Z-book becomes the **M-zine** — a bold Generation 1970 "M" in paper over an open
+  zine (butter left page, tomato right page) on an ink tile. Vectorised from the actual font;
+  regenerated favicon.svg/.ico, icon-192/512, apple-touch, logo.png, and the showcase assets.
+- **Type:** Poppins/Inter → **Generation 1970** (the mother font — all headers, titles, tabs,
+  labels) + **DM Sans** (body/UI, with Manrope as alternate). Generation 1970 is subset and
+  embedded as base64 WOFF2 (~46KB) so MakeZines stays a single offline file.
+- **Palette → "Palette '70":** the Butter Pop + Tomato Vinyl anchors widened into a full seventies
+  range — Avocado, Burnt Orange, Mustard, Rust, warm Ink `#1F1A17`, Cream `#F3E7CE` — with the UI
+  greys warmed toward brown-black and a Butter→Burnt→Tomato→Rust sunset gradient. The content
+  swatch set is now the eight-colour Palette '70.
+
+### Compatibility
+- Projects and templates saved by **ZineIt open in MakeZines unchanged** — the loaders accept both
+  `MakeZines` and legacy `ZineIt` files. All internal identifiers, storage keys, and the domain are
+  unchanged, so no user data is lost.
+
+### Notes
+- All 235 JS tests pass (brand/font/palette assertions updated for the new identity).
 
 ## v5.6.0 — 2026-08-13
 UI declutter, new logo, simpler export, bigger workspace.
