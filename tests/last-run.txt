@@ -1,4 +1,4 @@
-ZineIt v6.1.0 test run — 2026-09-25T15:10:28.041Z
+MakeZines v6.2.0 test run — 2026-09-25T15:27:09.678Z
 PASS  boots into a valid A4 mini-zine project — borderless by default
 PASS  the classic US Letter mini zine is still available (the dimension tests below use it)
 PASS  spread model: cover alone · 3 interior pairs · back alone
@@ -48,6 +48,9 @@ PASS  v6.1: tab bar toggles its drawer and lights the active tab
 PASS  v6.1: Export opens the export drawer on phones (was a no-op)
 PASS  v6.1: cover template text roles appear in the role picker
 PASS  v6.1: modern layer — the centre column can never force horizontal overflow
+PASS  v6.2: DEVOTTE replaces Generation 1970 and never gets a synthetic bold
+PASS  v6.2: "Made to support This is where we're from" links to thisiswherewearefrom.com
+PASS  v6.2: the MZ favicon is bold DEVOTTE outlines in the brand colours
 PASS  timeline panel collapses/expands from the toolbar
 PASS  text editor panel toggles from the toolbar
 PASS  tap-to-edit: selecting a block shows the Edit chip; chip opens the tools drawer
@@ -88,7 +91,7 @@ PASS  no accidental zoom or selection during editing on touch devices
 PASS  touch drags stay glued to the finger: pointer capture engaged, mouse path unaffected
 PASS  mobile view bar scrolls horizontally instead of stacking
 PASS  feedback subject carries the running version
-PASS  UI type system follows the brand guidelines: Generation 1970 display, DM Sans UI
+PASS  UI type system follows the brand guidelines: DEVOTTE display, DM Sans UI
 PASS  brand palette is applied, not approximated
 PASS  brand faces are offered for zine text too
 PASS  production shell: favicon, noscript, version badge, console banner
@@ -239,4 +242,4 @@ PASS  page rendering can skip the white paper fill for transparent PNG export
 PASS  transparent import auto-detects alpha and marks the asset as a graphic
 PASS  no page errors or uncaught exceptions across the whole run
 
-239 passed · 0 failed
+242 passed · 0 failed

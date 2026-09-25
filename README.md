@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" width="120" alt="MakeZines — the M-zine mark">
+  <img src="logo.png" width="120" alt="MakeZines — the MZ mark">
 </p>
 
 <h1 align="center">MakeZines</h1>
@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://zineit.app"><img alt="Open the app" src="https://img.shields.io/badge/Open-the%20app-F6D76B?style=for-the-badge&labelColor=1A1A1A"></a>
-  <img alt="Version" src="https://img.shields.io/badge/version-6.1.0-1A1A1A?style=for-the-badge">
+  <img alt="Version" src="https://img.shields.io/badge/version-6.2.0-1A1A1A?style=for-the-badge">
   <img alt="Print" src="https://img.shields.io/badge/print-300%20DPI-B63A2B?style=for-the-badge&labelColor=1A1A1A">
 </p>
 
@@ -27,7 +27,7 @@
 </p>
 
 <p align="center">
-  <sub>🧡 Made to support <a href="https://instagram.com/thisiswherewearefrom"><b><i>This is where we're from</i></b></a> — a photography project telling the stories of the places that shaped us.</sub>
+  <sub>🧡 Made to support <a href="https://thisiswherewearefrom.com/"><b><i>This is where we're from</i></b></a> — a photography project telling the stories of the places that shaped us.</sub>
 </p>
 
 ---
@@ -71,10 +71,10 @@ No sign-up. No cloud. No subscription. Open the page and start.
 MakeZines wears a warm, printerly, unmistakably-analog identity.
 
 **Type**
-- **Generation 1970** — the *mother font*. A chunky, retro display serif used for the logo,
-  every heading and title. It carries the whole personality.
-- **DM Sans** (with **Manrope** as an alternate) — the clean geometric sans for body copy,
-  UI labels, and captions. It gets out of the way so the retro headers and the photos lead.
+- **DEVOTTE** — the display face. A hand-cut, all-caps typeface used for the logo, the wordmark,
+  and every heading, title and tab. It carries the whole personality.
+- **DM Sans** (with **Manrope** as an alternate) — the clean sans for body copy, UI labels and
+  captions, so the headers and the photos lead.
 
 **Colour — "Butter &amp; Tomato"**
 
@@ -85,8 +85,8 @@ MakeZines wears a warm, printerly, unmistakably-analog identity.
 | ⬛ | **Ink** | `#1A1A1A` | Text, dark UI, logo ground |
 | ⬜ | **Paper** | `#F7F7F5` | Page background, text on dark |
 
-**Mark** — a bold Generation 1970 **"M"** in paper, set over an open zine (butter left page,
-tomato right page) on an ink tile. It reads as a letter and a little folded book at once.
+**Mark** — a bold **MZ** set in DEVOTTE on an ink tile: paper M, Butter Pop Z, and a
+Tomato Vinyl bar beneath. Built from the typeface's own letter outlines, so it stays crisp at any size.
 
 ---
 
@@ -142,7 +142,7 @@ cd tests && npm install jsdom && node run-tests.js
 ## Links
 
 - 📸 **Storitellah:** [@storitellah](https://instagram.com/storitellah)
-- 🧡 **This is where we're from:** [@thisiswherewearefrom](https://instagram.com/thisiswherewearefrom)
+- 🧡 **This is where we're from:** [thisiswherewearefrom.com](https://thisiswherewearefrom.com/) · [@thisiswherewearefrom](https://instagram.com/thisiswherewearefrom)
 - ✉️ **Feedback:** hello@storitellah.com
 
 <p align="center"><sub>Built by Storitellah · free &amp; open · your photos never leave your device.</sub></p>

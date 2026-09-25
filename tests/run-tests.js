@@ -553,6 +553,29 @@ T('v6.1: modern layer — the centre column can never force horizontal overflow'
   ok(/#app\{grid-template-columns:minmax\(0,1fr\);/.test(SRC2), 'phone single column is minmax(0,1fr)');
   ok(/\.tbar\{flex:0 1 auto;min-width:0;overflow-x:auto/.test(SRC2), 'header toolbar scrolls instead of overflowing');
 });
+T('v6.2: DEVOTTE replaces Generation 1970 and never gets a synthetic bold', () => {
+  ok(!/Generation 1970/.test(SRC2), 'the old display font is fully removed');
+  ok(/@font-face\{font-family:'DEVOTTE';font-style:normal;font-weight:100 900/.test(SRC2),
+    'one face covers every weight, so the browser never fakes a blurry bold');
+});
+T('v6.2: "Made to support This is where we\'re from" links to thisiswherewearefrom.com', () => {
+  const top = $('missionLink');
+  ok(top && top.closest('header'), 'the link sits at the top of the page, in the header');
+  eq(top.getAttribute('href'), 'https://thisiswherewearefrom.com/', 'points at the project site');
+  eq(top.getAttribute('target'), '_blank', 'opens in a new tab so work is never lost');
+  ok(/noopener/.test(top.getAttribute('rel')), 'rel=noopener');
+  ok(/Made to support/.test(top.textContent) && /This is where we.re from/.test(top.textContent), 'reads as asked');
+  ok(document.querySelector('header .missionM[href="https://thisiswherewearefrom.com/"]'), 'phones get the same link under the title');
+  ok(document.querySelector('.support a.missionH[href="https://thisiswherewearefrom.com/"]'), 'the support card heading links there too');
+});
+T('v6.2: the MZ favicon is bold DEVOTTE outlines in the brand colours', () => {
+  const svg = fs.readFileSync(path.join(__dirname, '..', 'favicon.svg'), 'utf8');
+  ok(/aria-label="MakeZines — MZ"/.test(svg), 'labelled MZ');
+  eq((svg.match(/<path /g) || []).length, 2, 'two letterforms, M and Z, as vector outlines (not <text>)');
+  ok(!/<text/.test(svg), 'no live text — renders identically everywhere');
+  ok(/stroke-linejoin="round"/.test(svg) && /stroke-width="58"/.test(svg), 'outlines thickened for a bold weight');
+  ok(/#F7F7F5/.test(svg) && /#F6D76B/.test(svg) && /#B63A2B/.test(svg), 'paper M, butter Z, tomato bar');
+});
 T('timeline panel collapses/expands from the toolbar', () => {
   ok(!document.body.classList.contains('railOpen'), 'collapsed by default on mobile');
   click($('mtbRail')); ok(document.body.classList.contains('railOpen'), 'expanded');
@@ -954,14 +977,14 @@ T('feedback subject carries the running version', () => {
 
 /* ============ 17 · v3.2: type system + production readiness ============ */
 const SRC2 = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-T('UI type system follows the brand guidelines: Generation 1970 display, DM Sans UI', () => {
-  ok(/--display:'Generation 1970'/.test(SRC2), 'display face is Generation 1970 (the mother font for headers/titles)');
+T('UI type system follows the brand guidelines: DEVOTTE display, DM Sans UI', () => {
+  ok(/--display:'DEVOTTE'/.test(SRC2), 'display face is DEVOTTE (headers, titles and the logo)');
   ok(/--sans:'DM Sans'/.test(SRC2), 'UI face is DM Sans');
   ok(/--serif:'Source Serif 4'/.test(SRC2), 'body face is Source Serif 4');
   ok(/--caption-font:'Manrope'/.test(SRC2), 'captions are Manrope');
-  ok(/@font-face\{font-family:'Generation 1970'/.test(SRC2), 'Generation 1970 embedded as @font-face');
+  ok(/@font-face\{font-family:'DEVOTTE'/.test(SRC2), 'DEVOTTE embedded as @font-face');
   ok(/family=Inter:/.test(SRC2) && /family=Manrope:/.test(SRC2), 'Inter and Manrope loaded');
-  ok(/\.brand \.mark\{font-family:var\(--display\);font-weight:700/.test(SRC2), 'wordmark is Generation 1970 Bold');
+  ok(/\.brand \.mark\{font-family:var\(--display\);font-weight:700/.test(SRC2), 'wordmark is set in the display face');
   ok(/#clock\{font-family:var\(--mono\)/.test(SRC2), 'numeric readouts stay monospaced');
 });
 T('brand palette is applied, not approximated', () => {
@@ -2449,10 +2472,10 @@ T('no page errors or uncaught exceptions across the whole run', () => {
 /* ============ report ============ */
 chain.then(() => {
   const stamp = new Date().toISOString();
-  console.log(`ZineIt v${Z.APP_VER} test run — ${stamp}`);
+  console.log(`MakeZines v${Z.APP_VER} test run — ${stamp}`);
   for (const [s, n] of results) console.log(`  ${s === 'PASS' ? '✓' : '✗'} ${s}  ${n}`);
   console.log(`\n${pass} passed · ${fail} failed · ${pass + fail} total`);
   fs.writeFileSync(path.join(__dirname, 'last-run.txt'),
-    `ZineIt v${Z.APP_VER} test run — ${stamp}\n` + results.map(([s, n]) => `${s}  ${n}`).join('\n') + `\n\n${pass} passed · ${fail} failed\n`);
+    `MakeZines v${Z.APP_VER} test run — ${stamp}\n` + results.map(([s, n]) => `${s}  ${n}`).join('\n') + `\n\n${pass} passed · ${fail} failed\n`);
   process.exit(fail ? 1 : 0);
 }).catch(e => { console.error('suite crashed:', e); process.exit(1); });

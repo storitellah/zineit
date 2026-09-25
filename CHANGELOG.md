@@ -1,5 +1,29 @@
 # Changelog — MakeZines by Storitellah
 
+## v6.2.0 — 2026-09-25
+New display typeface, a new MZ mark, and a direct link to *This is where we're from*.
+
+### Changed
+- **Display type is now DEVOTTE** — a hand-cut, all-caps face for the logo, the MAKEZINES wordmark,
+  and every heading, title and tab (body text stays DM Sans). Subset to Latin and embedded as a
+  16 KB WOFF2 so MakeZines stays a single offline file; declared across the full weight range so
+  the browser never fakes a blurry bold. Generation 1970 is removed entirely.
+- **New MZ mark** — a bold "MZ" built from DEVOTTE's own letter outlines (thickened with a rounded
+  stroke, since the face ships in one weight): paper M, Butter Pop Z, Tomato Vinyl bar, on an ink
+  tile. Regenerated favicon.svg/.ico, icon-192/512, apple-touch-icon, logo.png and the showcase assets.
+
+### Added
+- **"Made to support *This is where we're from*"** now links to https://thisiswherewearefrom.com/
+  from the top of the page — a slim line under the wordmark on desktop (the header keeps its height)
+  and under the project title on phones. The support-card heading and the showcase link there too.
+
+### Fixed
+- Header toolbar no longer hides tools at common desktop widths (1280–1920px): the title yields
+  space first, labels switch to icons below 1560px, and the byline/version pill step aside when tight.
+
+### Notes
+- 242/242 tests pass (3 new: font swap without synthetic bold, the mission links, the MZ favicon).
+
 ## v6.1.0 — 2026-09-25
 A modern, polished finish — and MakeZines now genuinely works on phones.
 
