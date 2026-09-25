@@ -1,4 +1,4 @@
-ZineIt v6.0.0 test run — 2026-09-11T22:15:08.959Z
+ZineIt v6.1.0 test run — 2026-09-25T15:10:28.041Z
 PASS  boots into a valid A4 mini-zine project — borderless by default
 PASS  the classic US Letter mini zine is still available (the dimension tests below use it)
 PASS  spread model: cover alone · 3 interior pairs · back alone
@@ -44,6 +44,10 @@ PASS  validator blocks corrupt backups with a reason
 PASS  v1 .bak files migrate cleanly into v2
 PASS  narrow viewport activates the mobile shell; wide deactivates it
 PASS  mobile toolbar opens the Photos and Tools drawers; backdrop closes them
+PASS  v6.1: tab bar toggles its drawer and lights the active tab
+PASS  v6.1: Export opens the export drawer on phones (was a no-op)
+PASS  v6.1: cover template text roles appear in the role picker
+PASS  v6.1: modern layer — the centre column can never force horizontal overflow
 PASS  timeline panel collapses/expands from the toolbar
 PASS  text editor panel toggles from the toolbar
 PASS  tap-to-edit: selecting a block shows the Edit chip; chip opens the tools drawer
@@ -235,4 +239,4 @@ PASS  page rendering can skip the white paper fill for transparent PNG export
 PASS  transparent import auto-detects alpha and marks the asset as a graphic
 PASS  no page errors or uncaught exceptions across the whole run
 
-235 passed · 0 failed
+239 passed · 0 failed

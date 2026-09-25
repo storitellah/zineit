@@ -1,5 +1,36 @@
 # Changelog — MakeZines by Storitellah
 
+## v6.1.0 — 2026-09-25
+A modern, polished finish — and MakeZines now genuinely works on phones.
+
+### Fixed — mobile layout
+- **The app was wider than the phone.** The workspace's centre column was `1fr`, which in CSS grid
+  can't shrink below its content, so the header's toolbar forced it to 835px on a 390px phone and the
+  browser zoomed everything out (page off-screen, format picker clipped, 2 of 5 tab-bar buttons
+  visible). The column is now `minmax(0,1fr)` and the header toolbar scrolls instead of overflowing.
+  Verified at 11 sizes from a 320px phone to a 1920px desktop, including landscape phone and iPad.
+- **Export did nothing on phones** — it switched a panel that is a hidden drawer on mobile. It now
+  opens the export drawer.
+- **The bottom tab bar couldn't close what it opened.** Tapping Photos or Tools again now closes the
+  drawer, the open tab is highlighted, and the phone back button clears the highlight too.
+- **Blank role dropdown after any cover template** — `cover-title` / `cover-byline` were missing from
+  the role list. Added; every role now reads as a label ("Cover title", not `cover-title`).
+
+### Changed — modern finish
+- New additive `mz-modern` stylesheet layered over the base styles (base rules untouched):
+  frosted-glass header, pill Export button, side panels grouped into rounded cards, a segmented tab
+  control, consistent buttons/inputs/dropdowns with custom chevrons, one clear butter focus ring,
+  a warmly lit dot-grid canvas "desk" with deeper page shadows, round selection handles, lifting
+  timeline pages, blurred-backdrop modals that pop in, glass toasts, and native form controls
+  (checkboxes, colour picker) that match the dark UI.
+- **Phones:** drawers slide in as rounded sheets, a frosted tab bar with an active pill, every
+  control at least 44px, landscape and notch safe areas handled, a trimmed header (logo · title ·
+  undo/redo/pan · Export) with every other tool still reachable in the drawers and timeline.
+- Showcase screenshots re-captured; the mobile shot now shows the real app.
+
+### Notes
+- 239/239 tests pass (4 new: tab-bar toggle, Export on phones, cover roles, overflow guard).
+
 ## v6.0.0 — 2026-09-11
 **ZineIt is now MakeZines.** A full rebrand: new name, new identity, new type, new palette.
 

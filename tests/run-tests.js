@@ -521,6 +521,38 @@ T('mobile toolbar opens the Photos and Tools drawers; backdrop closes them', () 
   click($('drawerBk'));
   ok(!document.body.classList.contains('dRight') && !$('drawerBk').classList.contains('show'), 'backdrop tap closes');
 });
+T('v6.1: tab bar toggles its drawer and lights the active tab', () => {
+  Z.closeDrawers();
+  click($('mtbPhotos'));
+  ok(document.body.classList.contains('dLeft') && $('mtbPhotos').classList.contains('on'), 'Photos opens its drawer and lights up');
+  click($('mtbPhotos'));
+  ok(!document.body.classList.contains('dLeft') && !$('mtbPhotos').classList.contains('on'), 'tapping the open tab again closes it');
+  click($('mtbTools'));
+  ok($('mtbTools').classList.contains('on') && !$('mtbPhotos').classList.contains('on'), 'only the open drawer is lit');
+  click($('drawerBk'));
+  ok(!$('mtbTools').classList.contains('on'), 'backdrop close clears the highlight');
+});
+T('v6.1: Export opens the export drawer on phones (was a no-op)', () => {
+  Z.closeDrawers();
+  click($('tbExport'));
+  ok(document.body.classList.contains('dRight'), 'the right drawer opens');
+  ok(document.querySelector('#rtabs button[data-p="export"]').classList.contains('on'), 'on the Export tab');
+  Z.closeDrawers();
+});
+T('v6.1: cover template text roles appear in the role picker', () => {
+  const pg = Z.curPage, before = Z.state.pages[pg].elements.length;   // leave shared state exactly as found
+  const e = Z.addTextEl('Cover', 30, 'cover-title', pg); Z.select(pg, e.id);
+  eq($('txtRole').value, 'cover-title', 'the role is selectable, not blank');
+  eq($('txtRole').options[$('txtRole').selectedIndex].text, 'Cover title', 'shown as a readable label');
+  Z.deleteSel();
+  eq(Z.state.pages[pg].elements.length, before, 'test element removed again');
+});
+T('v6.1: modern layer — the centre column can never force horizontal overflow', () => {
+  ok(/id="mz-modern"/.test(SRC2), 'modern stylesheet present');
+  ok(/#app\{grid-template-columns:var\(--leftW,300px\) minmax\(0,1fr\) var\(--rightW,344px\)\}/.test(SRC2), 'desktop centre column is minmax(0,1fr)');
+  ok(/#app\{grid-template-columns:minmax\(0,1fr\);/.test(SRC2), 'phone single column is minmax(0,1fr)');
+  ok(/\.tbar\{flex:0 1 auto;min-width:0;overflow-x:auto/.test(SRC2), 'header toolbar scrolls instead of overflowing');
+});
 T('timeline panel collapses/expands from the toolbar', () => {
   ok(!document.body.classList.contains('railOpen'), 'collapsed by default on mobile');
   click($('mtbRail')); ok(document.body.classList.contains('railOpen'), 'expanded');
