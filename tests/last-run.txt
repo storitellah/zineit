@@ -1,4 +1,4 @@
-MakeZines v6.2.0 test run — 2026-09-25T15:27:09.678Z
+MakeZines v6.2.1 test run — 2026-10-19T08:56:46.582Z
 PASS  boots into a valid A4 mini-zine project — borderless by default
 PASS  the classic US Letter mini zine is still available (the dimension tests below use it)
 PASS  spread model: cover alone · 3 interior pairs · back alone
@@ -103,6 +103,10 @@ PASS  icons are cache-controlled on Cloudflare; the app itself stays always-fres
 PASS  single-file use keeps working: inline data-URI icon retained, no file-based icon links
 PASS  plug-in .bak passes ZineIt's own verifier
 PASS  plug-in .bak carries every photo as an embedded data URL
+PASS  v6.2.1: iPad/iPhone/Android are detected so the backup picker never greys files out
+PASS  v6.2.1: the restore picker drops its file-type filter on iPad and keeps it on desktop
+PASS  v6.2.1: a .bak picked on iPad (no MIME type) restores end-to-end
+PASS  v6.2.1: picking a photo instead of a backup is refused before anything changes
 PASS  ZineIt restores the plug-in project: pages, photos, captions, title all land
 PASS  restored plug-in project renders and prints like any other ZineIt project
 PASS  thumbless importer projects still show photos everywhere
@@ -242,4 +246,4 @@ PASS  page rendering can skip the white paper fill for transparent PNG export
 PASS  transparent import auto-detects alpha and marks the asset as a graphic
 PASS  no page errors or uncaught exceptions across the whole run
 
-242 passed · 0 failed
+246 passed · 0 failed

@@ -1091,6 +1091,49 @@ T('plug-in .bak carries every photo as an embedded data URL', () => {
     eq(bytes[0], 0xFF); eq(bytes[1], 0xD8, 'JPEG SOI marker — the base64 round-trip is byte-exact');
   });
 });
+T('v6.2.1: iPad/iPhone/Android are detected so the backup picker never greys files out', () => {
+  const IPAD13 = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15';
+  ok(Z.isTouchOS(IPAD13, 'MacIntel', 5), 'iPadOS 13+ (reports itself as a Mac, but has touch)');
+  ok(Z.isTouchOS('Mozilla/5.0 (iPad; CPU OS 12_5 like Mac OS X)', 'iPad', 5), 'older iPadOS');
+  ok(Z.isTouchOS('Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)', 'iPhone', 5), 'iPhone');
+  ok(Z.isTouchOS('Mozilla/5.0 (Linux; Android 14; Pixel 8)', 'Linux armv8l', 5), 'Android');
+  ok(!Z.isTouchOS(IPAD13, 'MacIntel', 0), 'a real Mac (no touch) keeps the filter');
+  ok(!Z.isTouchOS('Mozilla/5.0 (Windows NT 10.0; Win64; x64)', 'Win32', 0), 'Windows keeps the filter');
+});
+T('v6.2.1: the restore picker drops its file-type filter on iPad and keeps it on desktop', () => {
+  const nav = window.navigator, inp = $('bakInput');
+  Z.applyBakAccept();
+  eq(inp.getAttribute('accept'), '.bak,.zineit,.json', 'desktop: filtered to backups');
+  Object.defineProperty(nav, 'platform', { value: 'MacIntel', configurable: true });
+  Object.defineProperty(nav, 'maxTouchPoints', { value: 5, configurable: true });
+  Object.defineProperty(nav, 'userAgent', { value: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/18.0 Safari/605.1.15', configurable: true });
+  Z.applyBakAccept();
+  ok(!inp.hasAttribute('accept'), 'iPad: no accept filter, so .bak / .zineit files are selectable');
+  delete nav.platform; delete nav.maxTouchPoints; delete nav.userAgent;   // back to the prototype values
+  Z.applyBakAccept();
+  eq(inp.getAttribute('accept'), '.bak,.zineit,.json', 'and back to filtered on desktop');
+});
+T('v6.2.1: a .bak picked on iPad (no MIME type) restores end-to-end', async () => {
+  const json = fs.readFileSync(LR_BAK, 'utf8');
+  const file = new window.File([json], 'Kibera Stories_MakeZines_2026-10-19_11-50.bak', { type: '' });
+  let n = 0; const oldConfirm = window.confirm;
+  window.confirm = () => (++n === 1);   // yes to "restore?", no to "adapt to current format?" — keep it as saved
+  await Z.restoreBak(file);
+  await new Promise(r => setTimeout(r, 120));
+  window.confirm = oldConfirm;
+  eq(Z.state.meta.name, 'Kibera Stories', 'project restored from the type-less .bak');
+  eq(Z.state.pages.length, 8, 'all pages back');
+  eq(Z.state.format, 'mini-zine', 'restored in the format it was saved in');
+});
+T('v6.2.1: picking a photo instead of a backup is refused before anything changes', async () => {
+  const before = JSON.stringify(Z.state.pages);
+  let asked = false; const oldConfirm = window.confirm; window.confirm = () => { asked = true; return true; };
+  await Z.restoreBak(new window.File([new Uint8Array([0xFF, 0xD8, 0xFF])], 'IMG_0001.jpg', { type: 'image/jpeg' }));
+  await new Promise(r => setTimeout(r, 30));
+  window.confirm = oldConfirm;
+  ok(!asked, 'no "replace your project?" prompt for a photo');
+  eq(JSON.stringify(Z.state.pages), before, 'the project is untouched');
+});
 T('ZineIt restores the plug-in project: pages, photos, captions, title all land', async () => {
   const json = fs.readFileSync(LR_BAK, 'utf8');
   const oldConfirm = window.confirm; window.confirm = () => true;

@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://zineit.app"><img alt="Open the app" src="https://img.shields.io/badge/Open-the%20app-F6D76B?style=for-the-badge&labelColor=1A1A1A"></a>
-  <img alt="Version" src="https://img.shields.io/badge/version-6.2.0-1A1A1A?style=for-the-badge">
+  <img alt="Version" src="https://img.shields.io/badge/version-6.2.1-1A1A1A?style=for-the-badge">
   <img alt="Print" src="https://img.shields.io/badge/print-300%20DPI-B63A2B?style=for-the-badge&labelColor=1A1A1A">
 </p>
 

@@ -1,5 +1,23 @@
 # Changelog — MakeZines by Storitellah
 
+## v6.2.1 — 2026-10-19
+Restoring backups on iPad.
+
+### Fixed
+- **.bak and .zineit backups were greyed out on iPad, so they couldn't be restored.** The restore
+  picker was limited to `.bak,.zineit,.json`. iPadOS turns each extension into a system file type,
+  and `.bak` / `.zineit` aren't registered types there, so Files greyed them out (only `.json` was
+  selectable). On iPad, iPhone and Android the picker now shows every file; desktop keeps the
+  backup-only filter. Every chosen file is still parsed and validated before anything is replaced,
+  and picking a photo or video by mistake now gets a clear message instead of an attempted restore.
+- Detection covers iPadOS 13+, which reports itself as a Mac (it's told apart by touch support).
+
+### Notes
+- 246/246 tests pass (4 new: device detection, filter dropped on iPad and kept on desktop, a type-less
+  `.bak` restoring end to end, a photo being refused). Also checked in Chromium emulating iPad
+  (iPadOS 18 and older), iPhone and Android: the backup saved on one emulated iPad restored, photo
+  included, on a fresh one through Export → Restore.
+
 ## v6.2.0 — 2026-09-25
 New display typeface, a new MZ mark, and a direct link to *This is where we're from*.
 

@@ -1068,7 +1068,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
         <div class="brandRow">
           <span class="mark">Make<span>Zines</span></span>
           <a class="byline" href="https://storitellah.com" target="_blank" rel="noopener">by Storitellah</a>
-          <span class="ver" id="verBadge">v6.2.0</span>
+          <span class="ver" id="verBadge">v6.2.1</span>
         </div>
         <a class="mission" id="missionLink" href="https://thisiswherewearefrom.com/" target="_blank" rel="noopener" title="Visit thisiswherewearefrom.com">Made to support <b>This is where we're from</b><span class="arr" aria-hidden="true">&#8599;</span></a>
       </div>
@@ -1765,7 +1765,7 @@ const FORMATS = {
   'book-3x2'   :{group:'Photobooks', name:'Photobook — 3:2 landscape (12 × 8 in)', w:12, h:8},
   'book-2x3'   :{group:'Photobooks', name:'Photobook — 2:3 portrait (8 × 12 in)',  w:8, h:12},
 };
-const APP_VER='6.2.0', FEEDBACK_EMAIL='hello@storitellah.com';
+const APP_VER='6.2.1', FEEDBACK_EMAIL='hello@storitellah.com';
 const GRID=0.125, MM=1/25.4;
 const FONTS = ['Inter','Manrope','Roboto','Open Sans','Lato','Montserrat','Poppins','Raleway','Work Sans','DM Sans','Nunito',
   'Rubik','Karla','Source Sans 3','Space Grotesk','Archivo','Archivo Black','IBM Plex Sans','Oswald','Bebas Neue','Anton',
@@ -2105,8 +2105,11 @@ function convertGuard(p, targetKey){
   return null;
 }
 function restoreBak(file){
+  if(file && /^(image|video|audio)\//.test(file.type||'')){
+    toast('That’s a '+file.type.split('/')[0]+', not a backup — choose a MakeZines <b>.bak</b> or <b>.zineit</b> file.','err'); return;
+  }
   const r=new FileReader();
-  r.onload=async()=>{ let p; try{ p=JSON.parse(r.result); }catch(e){ toast('Not a valid .bak file','err'); return; }
+  r.onload=async()=>{ let p; try{ p=JSON.parse(r.result); }catch(e){ toast('That file isn’t a MakeZines backup — choose a <b>.bak</b> or <b>.zineit</b> file.','err'); return; }
     const err=validateProject(p);
     if(err){ toast('Restore blocked: '+err,'err'); return; }
     const info=`"${p.meta&&p.meta.name||'Untitled'}" · ${p.pages.length} pages · ${FORMATS[p.format]?FORMATS[p.format].name:p.format}\nLast modified ${p.meta&&p.meta.modified?new Date(p.meta.modified).toLocaleString():'unknown'}`;
@@ -5384,7 +5387,26 @@ $('howFoldClose').addEventListener('click',()=>$('howFoldBk').classList.remove('
 
 /* backup */
 $('bakBtn').addEventListener('click',downloadBak);
-$('restoreBtn').addEventListener('click',()=>$('bakInput').click());
+/* iPadOS / iOS map each extension in a file input's `accept` list to a system file type (UTI).
+   ".bak" and ".zineit" have no registered UTI there, so Files greys those backups out and they
+   cannot be picked. Android Chrome does the same via MIME types. On those systems we drop the
+   filter and let any file be chosen — restoreBak() parses and validates every file anyway. */
+function isTouchOS(ua, platform, touchPoints){
+  ua = ua==null ? (navigator.userAgent||'') : ua;
+  platform = platform==null ? (navigator.platform||'') : platform;
+  touchPoints = touchPoints==null ? (navigator.maxTouchPoints||0) : touchPoints;
+  if(/iPad|iPhone|iPod/.test(ua)) return true;                       // iPhone, older iPadOS
+  if(/Macintosh|MacIntel/.test(ua+platform) && touchPoints>1) return true;   // iPadOS 13+ reports as a Mac
+  if(/Android/i.test(ua)) return true;
+  return false;
+}
+const BAK_ACCEPT='.bak,.zineit,.json';
+function applyBakAccept(){
+  const inp=$('bakInput'); if(!inp) return;
+  if(isTouchOS()) inp.removeAttribute('accept'); else inp.setAttribute('accept',BAK_ACCEPT);
+}
+applyBakAccept();
+$('restoreBtn').addEventListener('click',()=>{ applyBakAccept(); $('bakInput').click(); });
 $('bakInput').addEventListener('change',e=>{ if(e.target.files[0])restoreBak(e.target.files[0]); e.target.value=''; });
 $('refBakBtn').addEventListener('click',downloadRefBak);
 $('relinkBtn').addEventListener('click',()=>$('relinkInput').click());
@@ -5511,7 +5533,7 @@ window.__zineit={
   loadCustomTemplates, basePages, gridOf, openTplModal,
   applyMobile, isMobile, openDrawer, closeDrawers, toggleDrawer, toggleRail, toggleFS,
   renderAll, renderTextEditor, persist,
-  assetStore, buildBakJson, restoreBak, ingestLegacy, printSrc, usedAssetIds, isHeic, dataURLtoBlob,
+  assetStore, buildBakJson, restoreBak, isTouchOS, applyBakAccept, ingestLegacy, printSrc, usedAssetIds, isHeic, dataURLtoBlob,
   hydrate, openLightbox, APP_VER, FEEDBACK_EMAIL,
   setAsset:(id,a)=>{ const src=a.src||a.thumb||'';
     state.assets[id]={name:a.name||'test',w:a.w||100,h:a.h||100,thumb:src};
