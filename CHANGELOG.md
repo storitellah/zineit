@@ -1,5 +1,69 @@
 # Changelog — MakeZines by Storitellah
 
+## v6.3.0 — 2026-10-20
+A redesign around Adobe's Spectrum principles, a timeline that shows the whole book, photos dropped
+straight onto pages, 18 page layouts, and layouts tuned for phones, iPads and Android tablets.
+
+### Added
+- **Drop photos straight onto pages.** Drag photos from Finder, Files or Explorer onto a frame
+  (fills it, or swaps its photo), onto a page (fills its empty frames in reading order, then adds
+  new frames at the drop point), or anywhere on the desk (goes to the current page). Spreads are
+  handled: the drop lands on the page you let go over. While you drag, the desk shows where the
+  photos will go, and a stray drop can no longer navigate away from your work.
+- **18 system page layouts**, up from 5: full bleed, single, caption, gallery, centred square,
+  bleed top + story, stacked, side by side, large + detail, hero + 2, hero left, triptych, grid of 4,
+  mosaic, grid of 6, contact sheet of 9, text page and quote. Each tile is drawn at your page's real
+  shape and margin. Applying a layout re-flows the photos already on the page into the new frames
+  and keeps your text and artwork.
+- **Device detection.** MakeZines works out whether it is on a phone, tablet or desktop (including
+  iPads that identify as a Mac) and adapts. iPads and Android tablets in portrait, and phones held
+  sideways (even wide ones), get the touch layout with drawers. Tablets in landscape get the full
+  workspace with slimmer panels and touch-sized controls; the panel sizes follow you when you rotate.
+  A phone held upright opens in single-page view so the page is big enough to work on. Feedback
+  emails now include the device type.
+
+### Changed
+- **The whole book fits on one screen on a MacBook Pro 14".** The timeline picks the largest
+  thumbnails that show every spread at once, using up to three rows and a compact strip (page
+  numbers only) when the book is long. A 24-page landscape book or a 40-page square book is fully
+  visible next to the page preview at 1512×982. It re-fits when you resize the window or the panels,
+  and only scrolls when the book can't fit at a usable size.
+- **Spectrum-inspired redesign.** Neutral grey surfaces so your photos carry the colour; flat
+  controls with clear hover, pressed and selected states; quiet toolbar buttons; underline tabs in
+  the right panel; panels divided by hairlines instead of floating cards; a single accent (Butter
+  Pop) for the main action and your current selection, and Tomato for destructive actions; a blue
+  keyboard-focus ring. DEVOTTE stays for the wordmark and headings.
+- The view bar is shorter (Layout · Text · Read) and fits at laptop widths. On narrow desks it
+  tightens itself instead of cutting off controls. In Text and Read it hides the page and zoom
+  controls, which only apply to the layout canvas.
+- Spreads have one name everywhere: the page tag and the timeline both say "cover", "spread 2/11",
+  "back".
+- The backup reminder now sits below the view bar instead of covering it.
+
+### Removed (duplicates, so every control does something unique)
+- Header zoom group (the view bar has zoom), header "Add spread" and format picker (in the Selected
+  tab and the Project panel), the second "Browse templates" button, the duplicate Pan toggle,
+  Forward/Backward in the Selected tab (they're in Layers), Duplicate/Delete in Layers (they're in
+  Selected), a second "Print / Save as PDF" button, the mobile "Text" tab, the flipbook's "Read my
+  current project" button (the reader now opens your zine automatically), and the view-bar Feedback
+  button (feedback is under "Support this work").
+
+### Fixed
+- On phones, a spread could render wider than the screen. Fit now always fits the page on compact
+  screens.
+- The Margin menu was blank for full-bleed formats; it now offers "None — full bleed".
+- Clicking a layer row no longer jumps you away from the Layers panel.
+
+### Notes
+- 255/255 tests pass (9 new: drop placement order and swapping, file-drag detection, all 18 layouts
+  staying inside the live area, timeline fit-all planning, spread naming, device detection for
+  iPhone/iPad/Android/Mac, CSS and JS agreeing on the compact layout, Text/Read hiding the
+  layout-only controls, and the Spectrum layer with the removed duplicates).
+- Checked in Chromium at MacBook Pro 14" (1512×982 and 1512×902), 1352×798, 1280×800, 1440×900 and
+  1728×1117; iPad portrait and landscape (Air, Pro 12.9", mini, 9.7"); iPhone portrait and
+  landscape (including Pro Max); Pixel; and an Android tablet in both orientations. A click audit
+  confirmed that all 124 buttons in the panels, modals, reader and editor do something.
+
 ## v6.2.1 — 2026-10-19
 Restoring backups on iPad.
 

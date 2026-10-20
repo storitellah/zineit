@@ -89,7 +89,7 @@ html,body{height:100%}
 html{-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;overflow:hidden;
      -webkit-tap-highlight-color:transparent;overscroll-behavior:none}
-button,.btn,.vbtn,.tpl,.thumb,.tlPage,.toggle,#mtb button{touch-action:manipulation}
+button,.btn,.vbtn,.lyt,.thumb,.tlPage,.toggle,#mtb button{touch-action:manipulation}
 .el,.el *,.hd{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 button{font-family:inherit;cursor:pointer}
 input,select,textarea{font-family:inherit;color:var(--text)}
@@ -278,20 +278,6 @@ textarea{resize:vertical;min-height:56px}
 .supBtn.kofi:hover{background:rgba(19,163,221,.14);border-color:#13A3DD;color:#5cc7ee}
 .supBtn.patreon:hover{background:rgba(255,66,77,.14);border-color:#FF424D;color:#ff7a82}
 
-/* templates */
-.tpls{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.tpl{aspect-ratio:.78;border:1px solid var(--line);border-radius:4px;background:var(--panel-2);padding:4px;display:grid;gap:2px;cursor:pointer;transition:border-color .12s}
-.tpl:nth-child(1):hover{border-color:var(--pop-pink)}
-.tpl:nth-child(2):hover{border-color:var(--pop-amber)}
-.tpl:nth-child(3):hover{border-color:var(--pop-teal)}
-.tpl:nth-child(4):hover{border-color:var(--pop-violet)}
-.tpl:nth-child(5):hover{border-color:var(--pop-coral)}
-.tpl i{background:var(--faint);border-radius:1px;display:block}
-.tpl[data-t=full]{grid-template:1fr/1fr}
-.tpl[data-t=inset]{padding:8px;grid-template:1fr/1fr}
-.tpl[data-t=v2]{grid-template:1fr 1fr/1fr}
-.tpl[data-t=h2]{grid-template:1fr/1fr 1fr}
-.tpl[data-t=g4]{grid-template:1fr 1fr/1fr 1fr}
 
 /* ============ CENTER WORKSPACE ============ */
 /* A calm, neutral studio backdrop — a soft central pool of light so the page reads as the
@@ -408,7 +394,7 @@ body.panning .el.img:active{cursor:grabbing}
 .flipQrCode svg{width:100%;height:100%;display:block}
 .flipQrUrl,#flipQrUrl{font-family:var(--mono);font-size:12px;color:var(--yellow);margin-bottom:10px;word-break:break-all}
 .flipQrNote{font-family:var(--caption-font);font-size:11px;color:var(--muted);line-height:1.45}
-@media(max-width:820px){ .flipStage{padding:12px} .flipHead{padding:10px 12px} .flipTools{gap:6px} }
+@media (max-width:820px), (pointer:coarse) and (orientation:portrait) and (max-width:1100px), (pointer:coarse) and (max-height:600px){ .flipStage{padding:12px} .flipHead{padding:10px 12px} .flipTools{gap:6px} }
 #textEditor.show{display:block}
 .teWrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
 .teHead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
@@ -491,7 +477,7 @@ body.panning .el.img:active{cursor:grabbing}
   .impPanel{position:absolute;overflow:hidden}
   .impRot{transform:rotate(180deg)}
 }
-@media (max-width:1120px) and (min-width:821px){ #app{grid-template-columns:222px 1fr 252px} }
+@media (max-width:1120px) and (min-width:821px) and (pointer:fine), (max-width:1120px) and (min-width:821px) and (pointer:none), (max-width:1120px) and (min-width:821px) and (orientation:landscape) and (min-height:601px), (max-width:1120px) and (min-width:1101px) and (min-height:601px){ #app{grid-template-columns:222px 1fr 252px} }
 
 /* ---- shared print classes (also used by the on-screen imposition preview) ---- */
 .pp{position:relative;overflow:hidden;background:#fff}
@@ -550,7 +536,7 @@ body.fs #canvasScroll{padding:14px}
   .btn,.vbtn{padding:9px 12px}
 }
 
-@media (max-width:820px){
+@media (max-width:820px), (pointer:coarse) and (orientation:portrait) and (max-width:1100px), (pointer:coarse) and (max-height:600px){
   #app{grid-template-rows:calc(46px + env(safe-area-inset-top,0px)) 1fr calc(54px + env(safe-area-inset-bottom,0px));grid-template-columns:1fr;grid-template-areas:"hdr" "canvas" "mtb"}
   header{gap:8px;padding-top:env(safe-area-inset-top,0px);padding-left:max(10px,env(safe-area-inset-left,0px));padding-right:max(10px,env(safe-area-inset-right,0px))}
   #mtb{display:flex;padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -783,7 +769,7 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 /* ---------- root layout: the centre column may never force overflow ---------- */
 #app{grid-template-columns:var(--leftW,300px) minmax(0,1fr) var(--rightW,344px)}
 header,#canvasWrap,#viewBar,#canvasScroll,#rail,.side{min-width:0}
-@media (max-width:1120px) and (min-width:821px){ #app{grid-template-columns:232px minmax(0,1fr) 264px} }
+@media (max-width:1120px) and (min-width:821px) and (pointer:fine), (max-width:1120px) and (min-width:821px) and (pointer:none), (max-width:1120px) and (min-width:821px) and (orientation:landscape) and (min-height:601px), (max-width:1120px) and (min-width:1101px) and (min-height:601px){ #app{grid-template-columns:232px minmax(0,1fr) 264px} }
 body.fs #app{grid-template-columns:minmax(0,1fr)}
 
 /* ---------- scrollbars: thin, rounded, quiet ---------- */
@@ -833,11 +819,11 @@ header::after{height:2px;bottom:-1px;opacity:.9}
 .tbar>*{flex:0 0 auto}
 .hdr-spacer{flex:1 1 0;min-width:0}
 .exportBtn{flex:0 0 auto}
-@media (max-width:1360px) and (min-width:821px){
+@media (max-width:1360px) and (min-width:821px) and (pointer:fine), (max-width:1360px) and (min-width:821px) and (pointer:none), (max-width:1360px) and (min-width:821px) and (orientation:landscape) and (min-height:601px), (max-width:1360px) and (min-width:1101px) and (min-height:601px){
   .tbar{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent);padding-right:18px}
   .brand .byline{display:none}
 }
-@media (max-width:1120px) and (min-width:821px){ #projName{flex-basis:150px} .brand .ver{display:none} }
+@media (max-width:1120px) and (min-width:821px) and (pointer:fine), (max-width:1120px) and (min-width:821px) and (pointer:none), (max-width:1120px) and (min-width:821px) and (orientation:landscape) and (min-height:601px), (max-width:1120px) and (min-width:1101px) and (min-height:601px){ #projName{flex-basis:150px} .brand .ver{display:none} }
 
 /* ---------- side panels: grouped cards ---------- */
 .side{background:linear-gradient(180deg,var(--n-850),var(--n-900));gap:14px;padding:14px}
@@ -939,7 +925,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
 .cropWin{border-radius:var(--mz-r-xl);border-color:var(--mz-hair-2);box-shadow:var(--mz-shadow-3)}
 
 /* ---------- gentle entrance on load ---------- */
-@media (prefers-reduced-motion:no-preference) and (min-width:821px){
+@media (prefers-reduced-motion:no-preference) and (min-width:821px) and (pointer:fine), (prefers-reduced-motion:no-preference) and (min-width:821px) and (pointer:none), (prefers-reduced-motion:no-preference) and (min-width:821px) and (orientation:landscape) and (min-height:601px), (prefers-reduced-motion:no-preference) and (min-width:1101px) and (min-height:601px){
   /* opacity-only so it can never fight a drawer's transform */
   #app>header,#left,#right,#rail{animation:mzFade .5s var(--mz-spring) both}
   @keyframes mzFade{from{opacity:0}to{opacity:1}}
@@ -948,7 +934,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
 /* =====================================================================
    PHONES & SMALL TABLETS
    ===================================================================== */
-@media (max-width:820px){
+@media (max-width:820px), (pointer:coarse) and (orientation:portrait) and (max-width:1100px), (pointer:coarse) and (max-height:600px){
   /* the root fix: a single column that can shrink to the screen */
   #app{grid-template-columns:minmax(0,1fr);
     grid-template-rows:calc(56px + env(safe-area-inset-top,0px)) minmax(0,1fr) calc(64px + env(safe-area-inset-bottom,0px))}
@@ -1011,7 +997,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
   .brand .mark{display:none}          /* logo carries the brand; the title gets the room */
   .exportBtn .i{display:none}
 }
-@media (max-width:820px) and (orientation:landscape) and (max-height:500px){
+@media (max-width:820px) and (orientation:landscape) and (max-height:500px), (pointer:coarse) and (orientation:landscape) and (max-height:600px){
   #app{grid-template-rows:calc(48px + env(safe-area-inset-top,0px)) minmax(0,1fr) calc(52px + env(safe-area-inset-bottom,0px))}
   .side{top:calc(48px + env(safe-area-inset-top,0px));bottom:calc(52px + env(safe-area-inset-bottom,0px))}
   #rail{bottom:calc(52px + env(safe-area-inset-bottom,0px));height:150px}
@@ -1036,11 +1022,11 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
 .missionH{color:inherit;text-decoration:none} .missionH:hover em{text-decoration:underline;text-underline-offset:3px}
 .sec h3,#rtabs button,.modal h2,.modal h3{letter-spacing:1.2px}
 .titleCol{flex-shrink:6}                     /* the title yields space before any tool does */
-@media (max-width:1600px) and (min-width:821px){ .brand .byline{display:none} }
-@media (max-width:1560px) and (min-width:821px){ .tb.lbl .t{display:none} .tb.lbl{padding:0 9px} }
-@media (max-width:1300px) and (min-width:821px){ .brand .ver{display:none} .tb{min-width:32px;padding:0 6px} .tbar .sep{margin:0 2px} .tbar{gap:1px} }
-@media (max-width:1120px) and (min-width:821px){ .titleCol{flex-basis:150px} }
-@media (max-width:820px){
+@media (max-width:1600px) and (min-width:821px) and (pointer:fine), (max-width:1600px) and (min-width:821px) and (pointer:none), (max-width:1600px) and (min-width:821px) and (orientation:landscape) and (min-height:601px), (max-width:1600px) and (min-width:1101px) and (min-height:601px){ .brand .byline{display:none} }
+@media (max-width:1560px) and (min-width:821px) and (pointer:fine), (max-width:1560px) and (min-width:821px) and (pointer:none), (max-width:1560px) and (min-width:821px) and (orientation:landscape) and (min-height:601px), (max-width:1560px) and (min-width:1101px) and (min-height:601px){ .tb.lbl .t{display:none} .tb.lbl{padding:0 9px} }
+@media (max-width:1300px) and (min-width:821px) and (pointer:fine), (max-width:1300px) and (min-width:821px) and (pointer:none), (max-width:1300px) and (min-width:821px) and (orientation:landscape) and (min-height:601px), (max-width:1300px) and (min-width:1101px) and (min-height:601px){ .brand .ver{display:none} .tb{min-width:32px;padding:0 6px} .tbar .sep{margin:0 2px} .tbar{gap:1px} }
+@media (max-width:1120px) and (min-width:821px) and (pointer:fine), (max-width:1120px) and (min-width:821px) and (pointer:none), (max-width:1120px) and (min-width:821px) and (orientation:landscape) and (min-height:601px), (max-width:1120px) and (min-width:1101px) and (min-height:601px){ .titleCol{flex-basis:150px} }
+@media (max-width:820px), (pointer:coarse) and (orientation:portrait) and (max-width:1100px), (pointer:coarse) and (max-height:600px){
   .brand .mission{display:none}
   .brand .mark{font-size:20px}
   .titleCol{flex:1 1 auto;min-width:0}
@@ -1053,7 +1039,293 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
 @media (max-width:400px){ .missionM{font-size:9.5px} .exportBtn{padding:0 12px} }
 @media (max-width:370px){ .missionM{font-size:9px;padding-left:6px} }
 @media (max-width:380px){ .exportBtn{font-size:0;width:44px;padding:0;justify-content:center} .exportBtn .i{display:inline!important;font-size:19px} }
-@media (max-width:820px){ .brandText{display:none} }   /* on phones the MZ logo carries the brand; the title + link get the room */
+@media (max-width:820px), (pointer:coarse) and (orientation:portrait) and (max-width:1100px), (pointer:coarse) and (max-height:600px){ .brandText{display:none} }   /* on phones the MZ logo carries the brand; the title + link get the room */
+</style>
+<style id="mz-spectrum">
+/* =====================================================================
+   MakeZines · Spectrum layer (v6.3)
+   The workspace follows Adobe's Spectrum principles: neutral grey
+   surfaces so the photos carry the colour, flat controls with clear
+   states, quiet action buttons, underline tabs, one accent (Butter Pop)
+   for the primary action and the current selection, Tomato for
+   destructive actions. DEVOTTE stays for the wordmark and headings.
+   Additive: sits after the base + modern layers; nothing above is removed.
+   ===================================================================== */
+:root{
+  --n-900:#161616; --n-850:#1c1c1c; --n-800:#232323; --n-750:#2a2a2a; --n-700:#313131;
+  --n-600:#3b3b3b; --n-500:#4a4a4a; --n-400:#717171; --n-300:#959595; --n-200:#bdbdbd; --n-100:#ececec;
+  --s-bg-0:#141414;          /* pasteboard */
+  --s-bg-1:#1d1d1d;          /* app bar, timeline */
+  --s-bg-2:#232323;          /* panels */
+  --s-field:#1a1a1a;         /* text fields */
+  --s-fill:#2f2f2f;          /* default action button */
+  --s-fill-h:#3a3a3a;        /* hover */
+  --s-fill-d:#454545;        /* down / selected neutral */
+  --s-quiet-h:rgba(255,255,255,.07);
+  --s-quiet-d:rgba(255,255,255,.12);
+  --s-border:#3c3c3c; --s-border-h:#5a5a5a; --s-divider:#2e2e2e;
+  --s-text:#ececec; --s-text-2:#b3b3b3; --s-text-3:#8a8a8a;
+  --s-accent:#F6D76B; --s-accent-h:#FBE38C; --s-accent-ink:#1F1A17;
+  --s-neg:#E0624C; --s-neg-bg:rgba(182,58,43,.16);
+  --s-r-s:4px; --s-r:8px; --s-r-l:12px; --s-r-xl:16px;
+  --s-h:32px; --s-h-s:28px;
+  --s-shadow-pop:0 4px 16px rgba(0,0,0,.36),0 0 0 1px rgba(255,255,255,.04);
+  --s-shadow-dlg:0 24px 64px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05);
+  --s-focus:0 0 0 2px var(--s-bg-2),0 0 0 4px #6e9fff;
+  --line:var(--s-border); --line-soft:var(--s-divider);
+  --text:var(--s-text); --muted:var(--s-text-2); --faint:var(--s-text-3);
+  --panel:var(--s-bg-2); --panel-2:var(--s-fill); --bg:var(--s-bg-0);
+  --mz-hair:var(--s-divider); --mz-hair-2:var(--s-border);
+  --mz-glow:var(--s-focus); --ring:var(--s-focus);
+}
+body{background:var(--s-bg-0);color:var(--s-text);font-size:13px;letter-spacing:0}
+::selection{background:rgba(246,215,107,.32)}
+*{scrollbar-color:rgba(255,255,255,.18) transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.28);background-clip:padding-box}
+/* Spectrum focus indicator: a blue ring, offset from the control, only for keyboard focus */
+:where(button,a,select,input,textarea,[tabindex]):focus-visible{outline:none;box-shadow:var(--s-focus)!important}
+
+/* ---------- app bar ---------- */
+header{background:var(--s-bg-1);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:1px solid var(--s-divider);gap:12px;padding-inline:12px}
+header::after{display:none}
+.brand .logo{height:28px;border-radius:7px;box-shadow:none}
+.brand .mark{font-size:21px;letter-spacing:.4px}
+.brand .mark span{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--s-accent)}
+.brand .ver{background:transparent;border:1px solid var(--s-border);color:var(--s-text-3);font-size:10px;padding:1px 6px;border-radius:var(--s-r-s)}
+.mission{color:var(--s-text-3)} .mission b{color:var(--s-text-2);font-weight:600}
+.mission:hover{color:var(--s-text)} .mission:hover b{color:var(--s-accent)}
+#projName{height:var(--s-h);border-radius:var(--s-r);font-size:13px;font-weight:600;color:var(--s-text);border:1px solid transparent;background:transparent}
+#projName:hover{background:var(--s-quiet-h);border-color:transparent}
+#projName:focus{background:var(--s-field);border-color:var(--s-border-h);box-shadow:none}
+.tbar{gap:2px}
+.tbar .sep{height:20px;width:1px;background:var(--s-border);margin:0 6px}
+/* Spectrum quiet action buttons */
+.tb{height:var(--s-h);min-width:var(--s-h);padding:0 8px;border-radius:var(--s-r);border:none;background:transparent;color:var(--s-text-2);
+  font-family:var(--sans);font-size:12.5px;font-weight:500;box-shadow:none;transition:background .13s,color .13s}
+.tb:hover:not(:disabled){background:var(--s-quiet-h);color:var(--s-text)}
+.tb:active:not(:disabled){background:var(--s-quiet-d);transform:none}
+.tb.on,.tb.on:hover{background:var(--s-fill-d);color:var(--s-text);box-shadow:inset 0 -2px 0 var(--s-accent)}
+.tb:disabled{opacity:.32}
+.tb.lbl .i{font-size:14px;opacity:.9}
+/* the one call to action: accent, pill-shaped */
+.exportBtn,.exportBtn:hover{height:var(--s-h);padding:0 16px;border-radius:999px;background:var(--s-accent);color:var(--s-accent-ink);
+  font-family:var(--sans);font-weight:700;font-size:13px;box-shadow:none;transform:none;filter:none;border:none}
+.exportBtn:hover{background:var(--s-accent-h)}
+.exportBtn:active{background:#EBC955;transform:none}
+
+/* ---------- panels: flat, divided — no cards, no glows ---------- */
+.side{background:var(--s-bg-2);padding:0;gap:0}
+#left{border-right:1px solid var(--s-divider)} #right{border-left:1px solid var(--s-divider)}
+.side>.sec,#rbody>.sec.show{background:transparent;border:none;border-radius:0;box-shadow:none;padding:16px;border-bottom:1px solid var(--s-divider)}
+#left>.sec:last-of-type{border-bottom:none}
+#rbody{padding:0;gap:0}
+.sec{gap:10px}
+.sec h3{font-family:var(--display);font-size:12.5px;font-weight:400;letter-spacing:.9px;text-transform:uppercase;color:var(--s-text);
+  border:none;padding:0;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+.sec h3::before{display:none}
+.sec h3 .dotc{display:none}
+label.small{font-size:12px;color:var(--s-text-2)}
+.hint{color:var(--s-text-3);font-size:11.5px;line-height:1.5}
+.kv{color:var(--s-text-3);font-size:11px}
+#panelFoot{background:var(--s-bg-2);border-top:1px solid var(--s-divider);padding:8px 16px}
+
+/* right panel: Spectrum tabs — text with an underline indicator */
+#rtabs{gap:4px;margin:0;padding:0 12px;border:none;border-bottom:1px solid var(--s-divider);border-radius:0;background:transparent;flex:0 0 auto}
+#rtabs button,#rtabs button:hover{height:44px;border:none;border-radius:0;background:transparent;box-shadow:none;
+  font-family:var(--sans);font-weight:600;letter-spacing:0;text-transform:none;font-size:clamp(11.5px,1vw,13px);color:var(--s-text-3);position:relative;padding:0 2px}
+#rtabs button:hover{color:var(--s-text)}
+#rtabs button.on{color:var(--s-text);background:transparent;box-shadow:none}
+#rtabs button.on::after{content:"";position:absolute;left:2px;right:2px;bottom:-1px;height:2px;border-radius:2px;background:var(--s-accent)}
+
+/* ---------- controls ---------- */
+.btn{min-height:var(--s-h);padding:0 14px;border-radius:var(--s-r);border:1px solid transparent;background:var(--s-fill);color:var(--s-text);
+  font-family:var(--sans);font-size:12.5px;font-weight:600;box-shadow:none;transition:background .13s,border-color .13s,color .13s}
+.btn:hover:not(:disabled){background:var(--s-fill-h);border-color:transparent}
+.btn:active:not(:disabled){background:var(--s-fill-d);transform:none}
+.btn.primary,.btn.primary:hover{background:var(--s-accent);color:var(--s-accent-ink);border:none;box-shadow:none;font-weight:700}
+.btn.primary:hover:not(:disabled){background:var(--s-accent-h)}
+.btn.danger{background:transparent;color:var(--s-neg);border-color:rgba(224,98,76,.45)}
+.btn.danger:hover:not(:disabled){background:var(--s-neg-bg);border-color:var(--s-neg)}
+.btn.warn{border-color:rgba(246,215,107,.4)}
+.btn.ghost{background:transparent}
+.btn.ghost:hover:not(:disabled){background:var(--s-quiet-h)}
+.btn.on{background:var(--s-fill-d);color:var(--s-text);border-color:transparent;box-shadow:inset 0 -2px 0 var(--s-accent)}
+.segBtns .seg.on,.segBtns .seg.on:hover{background:var(--s-fill-d);color:var(--s-text);box-shadow:inset 0 -2px 0 var(--s-accent)}
+#viewBar.notLayout>*:not(#tabLayout):not(#tabText):not(#tabRead){display:none}
+.btn.seg{border-radius:0} .segBtns{border-radius:var(--s-r);overflow:hidden;gap:1px;background:var(--s-divider)}
+.segBtns .btn:first-child{border-radius:var(--s-r) 0 0 var(--s-r)} .segBtns .btn:last-child{border-radius:0 var(--s-r) var(--s-r) 0}
+.row{gap:8px}
+select,input[type=text],input[type=number],input[type=search],textarea{min-height:var(--s-h);border-radius:var(--s-r);background-color:var(--s-field);
+  border:1px solid var(--s-border);color:var(--s-text);font-size:13px;padding:5px 10px;box-shadow:none}
+textarea{padding:8px 10px}
+select{padding-right:30px;background-position:right 10px center;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23B3B3B3' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+select:hover,input[type=text]:hover,input[type=number]:hover,textarea:hover{border-color:var(--s-border-h)}
+select:focus,input[type=text]:focus,input[type=number]:focus,textarea:focus{border-color:#8c8c8c;box-shadow:none}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--s-accent)}
+input[type=color]{border-radius:var(--s-r);border-color:var(--s-border);background:var(--s-field);height:var(--s-h)}
+.toggle{color:var(--s-text-2);font-size:12.5px}
+.toggle:hover{color:var(--s-text)}
+
+/* photos */
+#dropzone{border:1px dashed var(--s-border-h);border-radius:var(--s-r-l);background:transparent;padding:18px 12px;color:var(--s-text-2);transform:none}
+#dropzone:hover{border-color:var(--s-text-3);background:rgba(255,255,255,.025)}
+#dropzone.over{border:2px solid var(--s-accent);background:rgba(246,215,107,.08);color:var(--s-text);transform:none}
+#library{gap:6px}
+.thumb{border-radius:var(--s-r);border:1px solid var(--s-divider);background:#0f0f0f}
+.thumb:hover{transform:none;box-shadow:none;border-color:var(--s-border-h)}
+.thumb.used{border-color:rgba(246,215,107,.35)}
+
+/* layers: Spectrum list rows */
+#layers{gap:2px}
+.ly{border:none;border-radius:var(--s-r-s);background:transparent;padding:6px 8px;font-size:12.5px;color:var(--s-text-2);min-height:32px}
+.ly:hover{background:var(--s-quiet-h);color:var(--s-text)}
+.ly.on{background:rgba(246,215,107,.12);color:var(--s-text);box-shadow:inset 2px 0 0 var(--s-accent)}
+.ly.drop{box-shadow:inset 0 2px 0 var(--s-accent)}
+.ly button{border-radius:var(--s-r-s);min-width:24px;min-height:24px;color:var(--s-text-3)}
+.ly button:hover{background:var(--s-quiet-d);color:var(--s-text)}
+
+/* support card: flat, quiet */
+.support{background:var(--s-bg-1);border:1px solid var(--s-divider);border-radius:var(--s-r-l);padding:14px;gap:10px}
+.support a.slink{background:transparent;border:1px solid var(--s-border);border-radius:var(--s-r)}
+.support a.slink:hover{background:var(--s-quiet-h);border-color:var(--s-border-h)}
+.support .ico{border:none;width:auto}
+.supBtn{background:var(--s-fill);border:1px solid transparent;border-radius:var(--s-r);min-height:var(--s-h);padding:0 10px}
+.supBtn:hover{background:var(--s-fill-h)}
+
+/* ---------- system layouts: real page-shaped previews ---------- */
+.lyts{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:8px}
+.lyt{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 6px 6px;border:1px solid transparent;border-radius:var(--s-r);
+  background:transparent;color:var(--s-text-3);cursor:pointer;transition:background .13s,border-color .13s,color .13s;min-width:0}
+.lyt:hover{background:var(--s-quiet-h);color:var(--s-text)}
+.lyt:active{background:var(--s-quiet-d)}
+.lytPage{position:relative;display:block;width:100%;max-width:56px;max-height:64px;background:#f4f2ee;border-radius:2px;
+  box-shadow:0 1px 3px rgba(0,0,0,.5);overflow:hidden}
+.lyt:hover .lytPage{box-shadow:0 0 0 2px var(--s-accent),0 1px 3px rgba(0,0,0,.5)}
+.lytPage i{position:absolute;display:block}
+.lytPage i.ph{background:#9a958c;border-radius:1px}
+.lyt:hover .lytPage i.ph{background:#7f7a70}
+.lytPage i.tx{background:repeating-linear-gradient(180deg,#b9b4aa 0 1.5px,transparent 1.5px 4px);border-radius:0}
+.lytName{font-size:10.5px;font-weight:600;line-height:1.2;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+
+/* ---------- view bar: grouped, compact ---------- */
+#viewBar{background:var(--s-bg-1);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:1px solid var(--s-divider);
+  gap:2px;padding:6px 10px;min-height:44px;-webkit-mask-image:none;mask-image:none}
+#viewBar .vsep{height:18px;width:1px;background:var(--s-border);margin:0 6px}
+.vbtn{height:var(--s-h-s);padding:0 9px;border-radius:var(--s-r);border:none;background:transparent;color:var(--s-text-2);
+  font-family:var(--sans);font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;box-shadow:none;text-decoration:none}
+.vbtn:hover{background:var(--s-quiet-h);color:var(--s-text);border-color:transparent}
+.vbtn.on,.vbtn.on:hover{background:var(--s-fill-d);color:var(--s-text);border:none;box-shadow:none}
+#tabLayout.on,#tabText.on,#tabRead.on{box-shadow:inset 0 -2px 0 var(--s-accent)}
+#navPrevSpread,#navPrevPage,#navNextPage,#navNextSpread,#zoomOut,#zoomIn{min-width:var(--s-h-s);padding:0 6px;font-size:15px}
+#zoomPct{color:var(--s-text-2);font-family:var(--sans);font-size:12px;min-width:44px;font-variant-numeric:tabular-nums}
+.vtoggle{font-size:12.5px;white-space:nowrap;gap:7px;padding:0 6px;color:var(--s-text-2)}
+.vtoggle .vi{display:none;font-weight:700}
+#canvasWrap{container-type:inline-size;container-name:desk}
+@container desk (max-width:760px){ .vtoggle .vt{display:none} .vtoggle .vi{display:inline} #viewBar .vsep{margin:0 3px} .vbtn{padding:0 7px} }
+@container desk (max-width:660px){ #navPrevSpread,#navNextSpread{display:none} #viewBar{gap:1px} #viewBar .vsep{margin:0 2px} }   /* page ‹ › and the timeline still step through spreads */
+@container desk (max-width:600px){ html.touch #zoom100{display:none} html.touch.lay-full .vbtn{min-width:36px} .vbtn{padding:0 6px} #viewBar{padding:6px} }   /* touch: pinch zooms to any size */
+
+/* ---------- canvas: a neutral pasteboard ---------- */
+#canvasWrap{background:var(--s-bg-0)}
+#canvasScroll{background:var(--s-bg-0)}
+#page{box-shadow:0 2px 12px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.5);border-radius:0}
+#pageTag{color:var(--s-text-3);font-family:var(--sans);font-size:11px;letter-spacing:0}
+.el.sel{outline:2px solid #6e9fff;outline-offset:0}
+.hd{width:11px;height:11px;border-radius:2px;border:1.5px solid #6e9fff;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.rsz:hover,.rsz.on{background:#6e9fff}
+/* dropping photos from Finder / Files: the whole desk says "drop here" */
+#canvasScroll.fileOver{box-shadow:inset 0 0 0 2px var(--s-accent);background:rgba(246,215,107,.04)}
+#canvasWrap{position:relative}
+#canvasWrap:has(#canvasScroll.fileOver)::after{content:"Drop to place photos on this page — or onto a frame to fill it";position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
+  background:var(--s-accent);color:var(--s-accent-ink);font-weight:700;font-size:12.5px;padding:8px 16px;border-radius:999px;pointer-events:none;z-index:40;
+  box-shadow:var(--s-shadow-pop);white-space:nowrap;max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis}
+.el.dropTarget{outline:3px solid var(--s-accent)!important;outline-offset:-3px}
+
+/* ---------- timeline ---------- */
+#rail{background:var(--s-bg-1);background-image:none;border-top:1px solid var(--s-divider);gap:12px;padding:10px 16px}
+#rail{align-items:center}
+#rail.tlWrap{flex-wrap:wrap;align-content:center;row-gap:6px;overflow-y:auto;overflow-x:hidden}
+#rail.tlScroll{justify-content:flex-start}
+.spreadItem{border-radius:var(--s-r);padding:6px 8px;gap:4px;border:1px solid transparent}
+.spreadItem.cur{background:rgba(255,255,255,.045);border-color:transparent}
+.tlPage{border-radius:2px;border:none;outline:2px solid transparent;outline-offset:1px;box-shadow:0 1px 4px rgba(0,0,0,.5);transition:outline-color .13s}
+.tlPage:hover{transform:none;outline-color:var(--s-border-h);box-shadow:0 1px 4px rgba(0,0,0,.5)}
+.tlPage.cur{outline-color:var(--s-accent);box-shadow:0 1px 4px rgba(0,0,0,.5)}
+.tlPage.dragOver{outline-color:#6e9fff}
+.tlLbl{font-family:var(--sans);font-size:10.5px;font-weight:600;color:var(--s-text-3)}
+.spreadItem.cur .tlLbl{color:var(--s-text)}
+.tlMeta .tag{border-color:var(--s-border);border-radius:var(--s-r-s)}
+.railOps button{border-radius:var(--s-r-s);color:var(--s-text-3);font-size:11px;min-width:22px;min-height:20px}
+.railOps button:hover{background:var(--s-quiet-d);color:var(--s-text)}
+#railAdd{border:1px dashed var(--s-border-h);border-radius:var(--s-r);color:var(--s-text-3);background:transparent}
+#railAdd:hover{border-color:var(--s-accent);color:var(--s-accent);background:rgba(246,215,107,.06)}
+/* compact timeline: every page visible at once, page number only */
+#rail.tlCompact{gap:8px;padding:8px 12px}
+#rail.tlCompact .spreadItem{padding:3px 4px;gap:2px;position:relative}
+#rail.tlCompact .tlMeta{display:none}
+#rail.tlCompact .tlLbl{font-size:9.5px;line-height:12px}
+#rail.tlCompact .railOps{position:absolute;left:50%;top:2px;transform:translateX(-50%);background:rgba(20,20,20,.85);border-radius:var(--s-r-s);
+  padding:1px;gap:0;opacity:0;transition:opacity .13s;z-index:4}
+#rail.tlCompact .spreadItem:hover .railOps,#rail.tlCompact .spreadItem:focus-within .railOps{opacity:1}
+#rail.tlCompact #railAdd{width:36px;font-size:16px}
+@media (hover:none){ #rail.tlCompact .railOps{opacity:1;position:static;transform:none;background:transparent;padding:0} }
+
+/* ---------- overlays ---------- */
+.modalBk{background:rgba(0,0,0,.5);-webkit-backdrop-filter:none;backdrop-filter:none}
+.modal{background:var(--s-bg-2);border:none;border-radius:var(--s-r-xl);box-shadow:var(--s-shadow-dlg);padding:24px}
+.modal h2{font-family:var(--display);font-weight:400;letter-spacing:.6px}
+#toast{background:#3a3a3a;border:none;border-radius:var(--s-r);box-shadow:var(--s-shadow-pop);color:var(--s-text);padding:10px 16px}
+#toast::before{background:var(--s-accent)}
+.cropWin{border:none;border-radius:var(--s-r-xl);box-shadow:var(--s-shadow-dlg)}
+.cropSide,.cropHead,.cropFoot{background:var(--s-bg-2);border-color:var(--s-divider)}
+.tplCard,.coverItem,.fmItem{border-radius:var(--s-r);border-color:var(--s-divider);background:var(--s-bg-1)}
+.tplCard:hover,.coverItem:hover,.fmItem:hover{border-color:var(--s-border-h)}
+#textEditor{background:var(--s-bg-0)}
+/* backup reminder: an in-app alert that sits below the view bar, never over a control */
+#banner{top:100px;background:#2f2f2f;border:none;border-left:4px solid var(--s-accent);border-radius:var(--s-r);box-shadow:var(--s-shadow-pop);padding:8px 8px 8px 14px;max-width:calc(100vw - 24px)}
+#banner .btn{min-height:30px}
+#flipReader{background:var(--s-bg-0)}
+
+/* ---------- tablets in landscape (iPad, Android): full workspace, touch-sized ---------- */
+html.touch.lay-full .tb,html.touch.lay-full .vbtn{min-height:40px;min-width:40px}
+html.touch.lay-full .btn{min-height:40px}
+html.touch.lay-full .lyt{padding:10px 6px 8px}
+html.touch.lay-full #rtabs button{height:48px}
+html.touch.lay-full .ly{min-height:40px}
+html.touch.lay-full .rsz.v{width:12px} html.touch.lay-full .rsz.h{height:12px}
+html.touch.lay-full #leftRsz{right:-4px} html.touch.lay-full #rightRsz{left:-4px}
+
+/* ---------- compact layout (phones, tablets in portrait, short touch screens) ---------- */
+@media (max-width:820px), (pointer:coarse) and (orientation:portrait) and (max-width:1100px), (pointer:coarse) and (max-height:600px){
+  header{background:var(--s-bg-1)}
+  .side{background:var(--s-bg-2);box-shadow:0 0 40px rgba(0,0,0,.55)}
+  #left{border-radius:0 var(--s-r-xl) var(--s-r-xl) 0} #right{border-radius:var(--s-r-xl) 0 0 var(--s-r-xl)}
+  #rail{border-radius:var(--s-r-xl) var(--s-r-xl) 0 0;box-shadow:0 -12px 40px -12px rgba(0,0,0,.6)}
+  #viewBar{gap:4px;padding:6px 10px}
+  .vbtn{border-radius:999px;border:1px solid var(--s-border);min-height:36px;padding:0 13px}
+  .vbtn.on,.vbtn.on:hover{border:1px solid var(--s-fill-d)}
+  #mtb{background:var(--s-bg-1);-webkit-backdrop-filter:none;backdrop-filter:none;border-top:1px solid var(--s-divider)}
+  #mtb button{color:var(--s-text-3)}
+  #mtb button.on{color:var(--s-text)}
+  #mtb button.on .ic{background:var(--s-fill-d)}
+  #mtb button:active .ic{background:var(--s-quiet-d)}
+  #mobEdit{background:var(--s-accent);box-shadow:var(--s-shadow-pop)}
+  .modal{border-radius:var(--s-r-xl) var(--s-r-xl) 0 0}
+  #banner{top:calc(118px + env(safe-area-inset-top,0px));flex-wrap:wrap;justify-content:flex-end}
+  .lyts{grid-template-columns:repeat(auto-fill,minmax(72px,1fr))}
+  .btn{min-height:44px}
+}
+/* a tablet in portrait has room for wider drawers than a phone — and for the page tools in the app bar */
+@media (pointer:coarse) and (orientation:portrait) and (min-width:700px) and (max-width:1100px){
+  .tbar>#tbAddPage:not(#_a):not(#_b):not(#_c),.tbar>#tbTpl:not(#_a):not(#_b):not(#_c),.tbar>.sep:nth-of-type(1):not(#_a):not(#_b):not(#_c){display:inline-flex!important}
+  .tbar .tb.lbl .t{display:inline}
+  .tbar .tb.lbl{padding:0 10px}
+  .side{width:min(56vw,400px)}
+  #rail{height:220px}
+  body.railOpen #canvasScroll{padding-bottom:236px}
+}
 </style>
 
 </head>
@@ -1068,7 +1340,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
         <div class="brandRow">
           <span class="mark">Make<span>Zines</span></span>
           <a class="byline" href="https://storitellah.com" target="_blank" rel="noopener">by Storitellah</a>
-          <span class="ver" id="verBadge">v6.2.1</span>
+          <span class="ver" id="verBadge">v6.3.0</span>
         </div>
         <a class="mission" id="missionLink" href="https://thisiswherewearefrom.com/" target="_blank" rel="noopener" title="Visit thisiswherewearefrom.com">Made to support <b>This is where we're from</b><span class="arr" aria-hidden="true">&#8599;</span></a>
       </div>
@@ -1081,17 +1353,10 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
       <button class="tb lbl" id="tbUndo" title="Undo (Ctrl/Cmd Z)" disabled><span class="i">&#8630;</span><span class="t">Undo</span></button>
       <button class="tb lbl" id="tbRedo" title="Redo (Ctrl/Cmd Shift Z)" disabled><span class="i">&#8631;</span><span class="t">Redo</span></button>
       <span class="sep"></span>
-      <select class="tbsel" id="tbFormat" title="Page size and orientation" aria-label="Page size"></select>
       <button class="tb lbl" id="tbAddPage" title="Add a new page"><span class="i">&#43;</span><span class="t">Add page</span></button>
-      <button class="tb lbl" id="tbAddSpread" title="Make the selected photo a double-page spread"><span class="i">&#8660;</span><span class="t">Spread</span></button>
       <button class="tb lbl" id="tbTpl" title="Browse layout and cover templates"><span class="i">&#9636;</span><span class="t">Templates</span></button>
       <span class="sep"></span>
       <button class="tb lbl" id="tbPan" title="Pan mode — drag to move a photo inside its frame"><span class="i">&#9995;</span><span class="t">Pan</span></button>
-      <span class="zoomGrp">
-        <button class="tb" id="tbZoomOut" title="Zoom out" aria-label="Zoom out">&#8722;</button>
-        <button class="tb" id="tbZoomFit" title="Fit the page to the window">Fit</button>
-        <button class="tb" id="tbZoomIn" title="Zoom in" aria-label="Zoom in">&#43;</button>
-      </span>
       <span class="sep"></span>
       <button class="tb lbl" id="tbFocus" title="Focus mode — hide the side panels (Esc to exit)"><span class="i">&#9713;</span><span class="t">Focus</span></button>
       <button class="tb lbl" id="tbPreview" title="Preview only — just the pages (Esc to exit)"><span class="i">&#9654;</span><span class="t">Preview</span></button>
@@ -1151,9 +1416,9 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
   <!-- CENTER -->
   <main id="canvasWrap">
     <div id="viewBar">
-      <button class="vbtn on" id="tabLayout">Layout</button>
-      <button class="vbtn" id="tabText">Text editor</button>
-      <button class="vbtn" id="tabRead" title="Read your zine as a page-turning flipbook">Read (flipbook)</button>
+      <button class="vbtn on" id="tabLayout" title="Design your pages">Layout</button>
+      <button class="vbtn" id="tabText" title="Every word in the zine, in one place">Text</button>
+      <button class="vbtn" id="tabRead" title="Read your zine as a page-turning flipbook">Read</button>
       <span class="vsep"></span>
       <button class="vbtn" id="navPrevSpread" title="Previous spread" aria-label="Previous spread">«</button>
       <button class="vbtn" id="navPrevPage" title="Previous page" aria-label="Previous page">‹</button>
@@ -1169,9 +1434,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
       <span id="zoomPct">—</span>
       <button class="vbtn" id="zoomIn">+</button>
       <span class="vsep"></span>
-      <label class="toggle" style="font-size:11.5px"><input type="checkbox" id="pnPreviewChk">Page numbers</label>
-      <span class="vsep"></span>
-      <a class="vbtn" id="fbBtn" href="#" title="Report a bug or suggest an improvement">✉ Feedback</a>
+      <label class="toggle vtoggle" title="Show page numbers on the pages"><input type="checkbox" id="pnPreviewChk"><span class="vt">Page numbers</span><span class="vi" aria-hidden="true">#</span></label>
     </div>
 
     <div id="canvasScroll">
@@ -1207,7 +1470,6 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
       <div class="flipHead">
         <h2>Read as a flipbook</h2>
         <div class="flipTools">
-          <button class="btn" id="flipProject" title="Render the zine you're designing into the reader">Read my current project</button>
           <div class="segBtns" role="group" aria-label="View">
             <button class="btn seg" id="flipSingle" title="One page at a time">Single</button>
             <button class="btn seg on" id="flipDouble" title="Two facing pages, like an open book">Double</button>
@@ -1221,7 +1483,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
         </div>
       </div>
       <div class="flipStage" id="flipStage">
-        <div class="flipBook" id="flipBook"><div class="flipEmpty">Nothing loaded yet — tap “Read my current project”.</div></div>
+        <div class="flipBook" id="flipBook"><div class="flipEmpty">Opening your zine…</div></div>
       </div>
       <div class="flipBar">
         <button class="btn" id="flipPrev" aria-label="Previous">‹ Prev</button>
@@ -1254,14 +1516,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
     <div id="rbody">
     <div class="sec" data-p="page">
       <h3>Layout system</h3>
-      <div class="tpls">
-        <div class="tpl" data-t="full" title="Full bleed"><i></i></div>
-        <div class="tpl" data-t="inset" title="Single, inside margins"><i></i></div>
-        <div class="tpl" data-t="v2" title="Two up, stacked"><i></i><i></i></div>
-        <div class="tpl" data-t="h2" title="Two up, side by side"><i></i><i></i></div>
-        <div class="tpl" data-t="g4" title="Grid of four"><i></i><i></i><i></i><i></i></div>
-      </div>
-      <button class="btn wide" id="tplBrowseBtn">Browse professional templates…</button>
+      <div class="lyts" id="layoutTiles" role="group" aria-label="Page layouts"></div>
       <div class="row">
         <button class="btn" id="coverFrontBtn" style="flex:1" title="Design the front cover">Front cover…</button>
         <button class="btn" id="coverBackBtn" style="flex:1" title="Design the back cover">Back cover…</button>
@@ -1269,6 +1524,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
       <div class="row">
         <label class="small" style="flex:0 0 auto">Margin</label>
         <select id="marginSel">
+          <option value="0">None — full bleed</option>
           <option value="0.125">⅛ in</option>
           <option value="0.25" selected>¼ in</option>
           <option value="0.375">⅜ in</option>
@@ -1329,10 +1585,6 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
         <button class="btn" id="lyBack" title="Move backward">&#8595;</button>
         <button class="btn" id="lyBottom" title="Send to back">&#10515;</button>
       </div>
-      <div class="row">
-        <button class="btn" id="lyDup">Duplicate</button>
-        <button class="btn danger" id="lyDel">Delete</button>
-      </div>
       <div id="layers"></div>
       <div class="hint">Every element on this page, front to back. Drag to reorder &middot; click to select &middot; double-click a name to rename &middot; the eye hides &middot; the padlock locks. Hidden and locked layers stay in your file — hiding is not deleting, and nothing here touches your photos.</div>
     </div>
@@ -1382,7 +1634,6 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
           <div class="hint">A panorama is never stretched: these tools move the crop window, not the pixels. The fold physically removes a strip — keep faces and horizons out of it.</div>
         </div>
         <div class="hint">The frame is a mask: ⇧ drag (or Pan mode) moves the photo <b>anywhere</b>, even outside the frame · scroll or pinch to zoom · the round handle rotates · resize crops, never stretches · nothing is ever written to your original file.<br><b>F</b> fit · <b>⇧F</b> fill · <b>C</b> centre · <b>R</b> reset crop · <b>⇧R</b> reset frame</div>
-        <button class="btn" id="panModeBtn">Pan mode: off</button>
       </div>
       <div id="inspTxt" style="display:none;flex-direction:column;gap:8px">
         <textarea id="txtContent" rows="3" spellcheck="false"></textarea>
@@ -1415,10 +1666,6 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
         </div>
       </div>
       <div class="row">
-        <button class="btn" id="fwdBtn">Forward</button>
-        <button class="btn" id="backBtn">Backward</button>
-      </div>
-      <div class="row">
         <button class="btn" id="dupBtn">Duplicate</button>
         <button class="btn danger" id="delBtn">Delete</button>
       </div>
@@ -1431,8 +1678,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
       <button class="btn wide" id="pdfLetterBtn">Download US Letter mini-zine PDF</button>
       <button class="btn wide" id="pdfA5Btn">Download A5 mini-zine PDF</button>
       <button class="btn wide" id="pdfA3Btn">Download A3 mini-zine PDF</button>
-      <button class="btn wide" id="pdfPrintBtn" title="Use the browser print dialog instead">Or export via the print dialog…</button>
-      <button class="btn wide" id="printBtn">Print (highest quality)</button>
+      <button class="btn wide" id="printBtn" title="Opens the print dialog — choose your printer, or Save as PDF">Print / Save as PDF…</button>
       <button class="btn wide" id="impBtn" style="display:none">Print mini-zine sheet (fold &amp; cut)</button>
       <button class="btn wide" id="saddleBtn" style="display:none">Print 16-page sheets (saddle stitch)</button>
       <button class="btn wide" id="jpgBtn">Download all pages as high-res JPGs</button>
@@ -1466,8 +1712,7 @@ input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
     <button id="mtbPhotos"><span class="ic">▧</span>Photos</button>
     <button id="mtbTools"><span class="ic">✎</span>Tools</button>
     <button id="mtbRail"><span class="ic">▤</span>Timeline</button>
-    <button id="mtbText"><span class="ic">T</span>Text</button>
-    <button id="mtbFS"><span class="ic">⛶</span>Full</button>
+    <button id="mtbFS" title="Full-screen preview"><span class="ic">⛶</span>Preview</button>
   </nav>
 </div>
 
@@ -1765,7 +2010,7 @@ const FORMATS = {
   'book-3x2'   :{group:'Photobooks', name:'Photobook — 3:2 landscape (12 × 8 in)', w:12, h:8},
   'book-2x3'   :{group:'Photobooks', name:'Photobook — 2:3 portrait (8 × 12 in)',  w:8, h:12},
 };
-const APP_VER='6.2.1', FEEDBACK_EMAIL='hello@storitellah.com';
+const APP_VER='6.3.0', FEEDBACK_EMAIL='hello@storitellah.com';
 const GRID=0.125, MM=1/25.4;
 const FONTS = ['Inter','Manrope','Roboto','Open Sans','Lato','Montserrat','Poppins','Raleway','Work Sans','DM Sans','Nunito',
   'Rubik','Karla','Source Sans 3','Space Grotesk','Archivo','Archivo Black','IBM Plex Sans','Oswald','Bebas Neue','Anton',
@@ -2278,15 +2523,51 @@ async function importFiles(files){
   const list=[...files].filter(f=>(f.type&&f.type.startsWith('image/'))||ACCEPT_EXT.test(f.name||''));
   if(!list.length){ toast('No image files found in that drop.','err'); return; }
   toast('Importing '+list.length+' photo'+(list.length>1?'s':'')+'…');
-  let done=0,fail=0,heicFail=false;
+  let done=0,fail=0,heicFail=false; const ids=[];
   for(const f of list){                     // sequential — one decode at a time caps peak memory
-    try{ await ingestFile(f); done++; renderLibrary(); }
+    try{ ids.push(await ingestFile(f)); done++; renderLibrary(); }
     catch(e){ fail++; if(isHeic(f))heicFail=true; }
   }
   renderCanvas(); renderTimeline(); touch();
   if(done) toast(done+' photo'+(done>1?'s':'')+' imported ✓ — originals stored at full quality, light previews on screen'
     +(fail?` · ${fail} failed${heicFail?' (HEIC conversion needs internet once)':''}`:''), fail?'err':'ok');
   else toast('Import failed'+(heicFail?' — HEIC conversion needs an internet connection the first time':''),'err');
+  return ids;
+}
+/* ---------- drop photos from Finder / Files / the desktop straight onto a page ----------
+   Each photo is imported (originals kept at full quality) and placed where it was dropped:
+   onto the frame under the pointer, then into the page's other empty frames in reading
+   order, and only then as new frames cascading from the drop point. Nothing is stretched. */
+function isFileDrag(ev){ const t=ev&&ev.dataTransfer&&ev.dataTransfer.types; return !!t && [...t].indexOf('Files')>=0; }
+function fillFrame(e,id){
+  e.asset=id; const a=state.assets[id]; e.graphic=!!(a&&a.graphic);
+  if(state.settings.keepAspect!==false && !e.spread && !e.graphic) applyAspectToFrame(e);
+  ensureImg(e); if(e.graphic) imgFit(e); else imgFill(e);
+}
+async function importFilesToPage(files,pg,cx,cy,targetId){
+  const ids=await importFiles(files); if(!ids||!ids.length) return [];
+  return placeAssetsOnPage(ids,pg,cx,cy,targetId);
+}
+/* Put photos on a page: the frame under the pointer first, then the page's empty frames in reading
+   order, then new frames cascading from the drop point. Shared by drag-and-drop from the desktop. */
+function placeAssetsOnPage(ids,pg,cx,cy,targetId){
+  if(pg==null||!pageAt(pg)) pg=curPage;
+  const page=pageAt(pg), f=fmt();
+  if(cx==null){ cx=f.w/2; cy=f.h/2; }
+  const empties=page.elements.filter(e=>e.type==='image'&&!e.asset&&e.id!==targetId)
+    .sort((a,b)=>(a.y-b.y)||(a.x-b.x));
+  const tgt=targetId&&page.elements.find(e=>e.id===targetId&&e.type==='image');
+  if(tgt) empties.unshift(tgt);        // the frame under the pointer first — filled, or its photo swapped
+  const placed=[]; let k=0;
+  for(const id of ids){
+    const fr=empties.shift();
+    if(fr){ fillFrame(fr,id); placed.push(fr); continue; }
+    const e=addImageEl(id, cx+k*0.25, cy+k*0.25, pg); placed.push(e); k++;   // cascade so nothing hides another
+  }
+  curPage=pg; selPg=pg; selId=placed.length?placed[placed.length-1].id:null;
+  renderAll(); touch();
+  toast(placed.length+' photo'+(placed.length>1?'s':'')+' placed on '+escapeHtml(page.label)+' ✓','ok');
+  return placed;
 }
 async function importGraphics(files){
   const list=[...files].filter(f=>(f.type&&f.type.startsWith('image/'))||/\.(png|webp|svg|gif)$/i.test(f.name||''));
@@ -2421,18 +2702,94 @@ function duplicateSel(){ const e=el(); if(!e)return; const c=JSON.parse(JSON.str
   c.id=uid(); c.x=snapV(c.x+0.25); c.y=snapV(c.y+0.25); clampEl(c);
   pageAt(selPg).elements.push(c); selId=c.id;
   renderCanvas(); renderInspector(); renderTimeline(); renderTextEditor(); touch(); }
-function applyTemplate(t){
-  const f=fmt(), m=state.settings.margin, g=Math.max(GRID,m/2);
-  const W=f.w-2*m, H=f.h-2*m, mk=(x,y,w,h)=>({id:uid(),type:'image',asset:null,spread:false,x,y,w,h,home:{x,y,w,h}});
-  let fr=[];
-  if(t==='full')  fr=[mk(0,0,f.w,f.h)];
-  if(t==='inset') fr=[mk(m,m,W,H)];
-  if(t==='v2')    fr=[mk(m,m,W,(H-g)/2), mk(m,m+(H-g)/2+g,W,(H-g)/2)];
-  if(t==='h2')    fr=[mk(m,m,(W-g)/2,H), mk(m+(W-g)/2+g,m,(W-g)/2,H)];
-  if(t==='g4')    fr=[mk(m,m,(W-g)/2,(H-g)/2), mk(m+(W-g)/2+g,m,(W-g)/2,(H-g)/2),
-                      mk(m,m+(H-g)/2+g,(W-g)/2,(H-g)/2), mk(m+(W-g)/2+g,m+(H-g)/2+g,(W-g)/2,(H-g)/2)];
-  pageAt(curPage).elements.push(...fr); selPg=curPage; selId=fr[0]&&fr[0].id||null;
-  renderCanvas(); renderInspector(); renderTimeline(); touch();
+/* ================= QUICK PAGE LAYOUTS =================
+   One table drives both the layout tiles and the frames they create. Boxes are fractions
+   of the page's live area (inside the margins) — or of the whole page when the box is
+   marked bleed — so every layout fits any trim size. Applying a layout re-flows the
+   photos already on the page into the new frames in reading order; text, artwork and
+   double-page spreads are left exactly where they are. One step to undo. */
+const LAYOUTS=[
+  {k:'full',   n:'Full bleed',               g:'Single', f:[{b:[0,0,1,1],bleed:1}]},
+  {k:'inset',  n:'Single, inside margins',   g:'Single', f:[{b:[0,0,1,1]}]},
+  {k:'cap',    n:'Photo + caption',          g:'Single', f:[{b:[0,0,1,.84]}], t:[{b:[0,.88,1,.1],role:'caption',text:'Caption'}]},
+  {k:'gallery',n:'Gallery — framed, airy',   g:'Single', f:[{b:[.12,.14,.76,.56]}], t:[{b:[.12,.76,.76,.08],role:'caption',text:'Caption',align:'center'}]},
+  {k:'square', n:'Centred square',           g:'Single', f:[{sq:1}]},
+  {k:'topbleed',n:'Bleed top + story',       g:'Single', f:[{b:[0,0,1,.58],bleed:1}], t:[{b:[0,.66,1,.1],role:'page-title',text:'Heading',size:16},{b:[0,.78,1,.2],role:'custom',text:'Your story begins here.',size:9}]},
+  {k:'v2',     n:'Two, stacked',             g:'Two',    f:[{b:[0,0,1,.5,'top']},{b:[0,.5,1,.5,'bot']}]},
+  {k:'h2',     n:'Two, side by side',        g:'Two',    f:[{b:[0,0,.5,1,'l']},{b:[.5,0,.5,1,'r']}]},
+  {k:'bigsmall',n:'Large + detail',          g:'Two',    f:[{b:[0,0,1,.66,'top']},{b:[.5,.66,.5,.34,'br']}]},
+  {k:'hero2',  n:'Hero + two',               g:'Three',  f:[{b:[0,0,1,.6,'top']},{b:[0,.6,.5,.4,'bl']},{b:[.5,.6,.5,.4,'br']}]},
+  {k:'heroL',  n:'Hero left + two',          g:'Three',  f:[{b:[0,0,.62,1,'l']},{b:[.62,0,.38,.5,'tr']},{b:[.62,.5,.38,.5,'br']}]},
+  {k:'trip',   n:'Triptych',                 g:'Three',  f:[{b:[0,0,1/3,1,'l']},{b:[1/3,0,1/3,1,'m']},{b:[2/3,0,1/3,1,'r']}]},
+  {k:'g4',     n:'Grid of four',             g:'Grid',   f:[{b:[0,0,.5,.5,'tl']},{b:[.5,0,.5,.5,'tr']},{b:[0,.5,.5,.5,'bl']},{b:[.5,.5,.5,.5,'br']}]},
+  {k:'mosaic', n:'Mosaic — one large, three small', g:'Grid', f:[{b:[0,0,.66,1,'l']},{b:[.66,0,.34,1/3,'tr']},{b:[.66,1/3,.34,1/3,'mr']},{b:[.66,2/3,.34,1/3,'br']}]},
+  {k:'g6',     n:'Grid of six',              g:'Grid',   grid:[2,3]},
+  {k:'g9',     n:'Contact sheet — nine',     g:'Grid',   grid:[3,3]},
+  {k:'text',   n:'Text page',                g:'Text',   f:[], t:[{b:[0,.06,1,.12],role:'page-title',text:'Heading',size:18},{b:[0,.22,1,.7],role:'custom',text:'Write your story here.',size:10}]},
+  {k:'quote',  n:'Quote + small photo',      g:'Text',   f:[{b:[.3,.62,.4,.3]}], t:[{b:[.06,.16,.88,.36],role:'quote',text:'“A line that stays with you.”',size:16,align:'center'}]}
+];
+function layoutBoxes(L,f,m){
+  // returns [{x,y,w,h}] in inches for every frame of layout L on a page of format f with margin m
+  const W=f.w-2*m, H=f.h-2*m, g=Math.max(GRID, Math.min(f.w,f.h)*0.025);
+  let boxes=[];
+  if(L.grid){ const [c,r]=L.grid;
+    for(let j=0;j<r;j++) for(let i=0;i<c;i++) boxes.push({b:[i/c,j/r,1/c,1/r,'g'+i+j]}); }
+  else boxes=L.f||[];
+  return boxes.map(fr=>{
+    if(fr.sq){ const s=Math.min(W,H)*0.8; return {x:m+(W-s)/2, y:m+(H-s)/2.4, w:s, h:s}; }
+    const [bx,by,bw,bh]=fr.b;
+    if(fr.bleed) return {x:bx*f.w, y:by*f.h, w:bw*f.w, h:bh*f.h};
+    // gutters: shave half a gutter off every interior edge so neighbours sit g apart
+    const l=bx>1e-6?g/2:0, t=by>1e-6?g/2:0, r=(bx+bw)<1-1e-6?g/2:0, b=(by+bh)<1-1e-6?g/2:0;
+    return {x:m+bx*W+l, y:m+by*H+t, w:bw*W-l-r, h:bh*H-t-b};
+  });
+}
+function applyTemplate(t,pgIdx){
+  const L=LAYOUTS.find(x=>x.k===t); if(!L) return;
+  if(pgIdx==null) pgIdx=curPage;
+  const f=fmt(), m=state.settings.margin, page=pageAt(pgIdx);
+  // photos currently laid out on the page (not artwork, not spreads) carry over, in reading order
+  const isPhotoFrame=e=>e.type==='image'&&!e.spread&&!e.graphic&&!e.locked;
+  const carried=page.elements.filter(e=>isPhotoFrame(e)&&e.asset).sort((a,b)=>(a.y-b.y)||(a.x-b.x)).map(e=>e.asset);
+  const keep=page.elements.filter(e=>!isPhotoFrame(e));
+  const frames=layoutBoxes(L,f,m).map(r=>{ const x=r.x,y=r.y,w=r.w,h=r.h;   // exact — snapping each side alone could push a frame past the margin
+    return {id:uid(),type:'image',asset:null,spread:false,x,y,w,h,home:{x,y,w,h}}; });
+  frames.forEach(fr=>{ const a=carried.shift(); if(a){ fr.asset=a; ensureImg(fr); imgFill(fr); } });
+  const texts=[];
+  if(L.t && !keep.some(e=>e.type==='text')){                // placeholder text only on a page without any
+    const W=f.w-2*m, H=f.h-2*m;
+    L.t.forEach(s=>{ const [bx,by,bw,bh]=s.b;
+      texts.push({id:uid(),type:'text',text:s.text,size:s.size||9,align:s.align||'left',weight:s.role==='page-title'?'700':'400',
+        font:s.role==='page-title'||s.role==='quote'?'Poppins':'Inter',color:INK,role:s.role,
+        x:m+bx*W, y:m+by*H, w:bw*W, h:Math.max(0.3,bh*H)}); });
+  }
+  page.elements=[...keep.filter(e=>e.type!=='text'), ...frames, ...keep.filter(e=>e.type==='text'), ...texts];  // photos under the words
+  selPg=pgIdx; selId=frames[0]?frames[0].id:(texts[0]?texts[0].id:null);
+  renderCanvas(); renderInspector(); renderTimeline(); if(texts.length)renderTextEditor(); touch();
+  if(carried.length) toast(carried.length+' photo'+(carried.length>1?'s':'')+' didn’t fit this layout — still in your Photos panel. Undo (⌘Z) brings them back.','ok');
+  return frames;
+}
+const LAYOUT_SHORT={full:'Full bleed',inset:'Single',cap:'Caption',gallery:'Gallery',square:'Square',topbleed:'Bleed top',
+  v2:'Stacked',h2:'Side by side',bigsmall:'Large + detail',hero2:'Hero + 2',heroL:'Hero left',trip:'Triptych',g4:'Grid of 4',
+  mosaic:'Mosaic',g6:'Grid of 6',g9:'Contact 9',text:'Text',quote:'Quote'};
+function renderLayoutTiles(){
+  const host=$('layoutTiles'); if(!host) return;
+  const f=fmt(), m=state.settings.margin, ar=f.w/f.h;
+  host.innerHTML='';
+  LAYOUTS.forEach(L=>{
+    const b=document.createElement('button'); b.className='lyt'; b.type='button'; b.dataset.t=L.k;
+    b.title=L.n; b.setAttribute('aria-label','Layout: '+L.n);
+    const pg=document.createElement('span'); pg.className='lytPage'; pg.style.aspectRatio=ar;
+    const box=(r,cls)=>{ const i=document.createElement('i'); i.className=cls;
+      i.style.left=(r.x/f.w*100)+'%'; i.style.top=(r.y/f.h*100)+'%'; i.style.width=(r.w/f.w*100)+'%'; i.style.height=(r.h/f.h*100)+'%'; pg.appendChild(i); };
+    layoutBoxes(L,f,m||0.12).forEach(r=>box(r,'ph'));
+    (L.t||[]).forEach(s=>{ const W=f.w-2*(m||0.12), H=f.h-2*(m||0.12), mm=m||0.12;
+      box({x:mm+s.b[0]*W, y:mm+s.b[1]*H+s.b[3]*H*0.25, w:s.b[2]*W*(s.align==='center'?1:0.8), h:Math.max(0.04*f.h,s.b[3]*H*0.35)},'tx'); });
+    b.appendChild(pg);
+    const lb=document.createElement('span'); lb.className='lytName'; lb.textContent=LAYOUT_SHORT[L.k]||L.n; b.appendChild(lb);
+    b.addEventListener('click',()=>applyTemplate(L.k));
+    host.appendChild(b);
+  });
 }
 
 
@@ -3065,7 +3422,7 @@ function computeScale(){
   if(view.zoom==='fit'){
     const pad=document.body.classList.contains('fs')?30:(isMobile()?26:70);
     const availW=Math.max(100,wrap.clientWidth-pad), availH=Math.max(100,wrap.clientHeight-pad);
-    scale=Math.max(30,Math.min(availW/cs.w, availH/cs.h, 110));
+    scale=Math.max(isMobile()?8:30,Math.min(availW/cs.w, availH/cs.h, 110));   // compact screens: always fit the whole page
   } else if(view.zoom==='100'){ scale=96; }
   else scale=96*view.zf;
   $('zoomPct').textContent=Math.round(scale/96*100)+'%';
@@ -3099,7 +3456,7 @@ function updateSelectionDom(){
     r.addEventListener('pointerdown',ev=>startDrag(ev,selPg,e.id,'rot')); d.appendChild(r);
   }
 }
-function select(pg,id){ selPg=pg; selId=id; updateSelectionDom(); renderInspector(); syncSelectedTab(id!=null); }
+function select(pg,id,opt){ selPg=pg; selId=id; updateSelectionDom(); renderInspector(); syncSelectedTab(id!=null && !(opt&&opt.stay)); }
 /* The "Selected" tab only appears when a photo or text is actually selected,
    so the tab row stays uncrowded. Clicking an element surfaces its Selection panel. */
 function syncSelectedTab(surface){
@@ -3487,6 +3844,9 @@ function renderEl(P,e,pgIdx,dxIn,z,interactive){
       d.addEventListener('dragover',ev=>{ ev.preventDefault(); d.classList.add('dropTarget'); });
       d.addEventListener('dragleave',()=>d.classList.remove('dropTarget'));
       d.addEventListener('drop',ev=>{ d.classList.remove('dropTarget');
+        if(isFileDrag(ev) && ev.dataTransfer.files && ev.dataTransfer.files.length){
+          ev.preventDefault(); ev.stopPropagation(); clearFileOver();
+          importFilesToPage(ev.dataTransfer.files, pgIdx, e.x+e.w/2, e.y+e.h/2, e.id); return; }   // that frame takes (or swaps to) the first photo
         const id=ev.dataTransfer.getData('text/zineit-asset');
         if(id){ ev.preventDefault(); ev.stopPropagation(); e.asset=id;
           if(state.settings.keepAspect!==false && !e.spread) applyAspectToFrame(e);
@@ -3498,7 +3858,7 @@ function renderEl(P,e,pgIdx,dxIn,z,interactive){
 function renderPageTag(){
   const f=fmt(), vps=viewPages();
   const names=vps.map(v=>pageAt(v.pi).label).join('  ·  ');
-  const sp=spreadIndexOf(curPage)+1, total=buildSpreads().length;
+  const sps=buildSpreads(), si=spreadIndexOf(curPage);
   let warn='';
   const e=el();
   if(e&&e.type==='image'&&e.asset){
@@ -3507,7 +3867,7 @@ function renderPageTag(){
     const cp=imgCropPct(e); if(cp>0) warn+=` · crop ${cp}%`;
     if(e.img&&e.img.rot) warn+=` · ${Math.round(e.img.rot)}°`;
   }
-  $('pageTag').innerHTML=`<b>${escapeHtml(names)}</b> · page ${curPage+1}/${state.pages.length} · spread ${sp}/${total} · ${f.w}″×${f.h}″${warn}`;
+  $('pageTag').innerHTML=`<b>${escapeHtml(names)}</b> · page ${curPage+1}/${state.pages.length} · ${spreadName(si,sps)} · ${f.w}″×${f.h}″${warn}`;
 }
 
 /* ---------- drag / resize / pan ---------- */
@@ -3673,8 +4033,32 @@ pageEl.addEventListener('drop',ev=>{
       else pg=sp.left!=null?sp.left:sp.right; }
     addImageEl(id,cx,cy,pg); return;
   }
-  if(ev.dataTransfer.files&&ev.dataTransfer.files.length) importFiles(ev.dataTransfer.files);
+  if(ev.dataTransfer.files&&ev.dataTransfer.files.length){
+    ev.stopPropagation(); clearFileOver();
+    let pg=curPage;
+    if(view.mode==='spread'){ const sp=curSpread();
+      if(fullSpread(sp)){ if(cx>=fmt().w){ pg=sp.right; cx-=fmt().w; } else pg=sp.left; }
+      else pg=sp.left!=null?sp.left:sp.right; }
+    importFilesToPage(ev.dataTransfer.files, pg, cx, cy, null);
+  }
 });
+/* the grey desk around the page takes drops too (placed on the current page), and shows
+   a clear target while files are dragged over the workspace */
+const deskEl=$('canvasScroll');
+function clearFileOver(){ deskEl.classList.remove('fileOver'); }
+deskEl.addEventListener('dragenter',ev=>{ if(isFileDrag(ev)) deskEl.classList.add('fileOver'); });
+deskEl.addEventListener('dragover',ev=>{ if(ev.target===deskEl&&ev.dataTransfer&&[...ev.dataTransfer.types].indexOf('text/zineit-asset')>=0) ev.preventDefault();
+  if(isFileDrag(ev)){ ev.preventDefault(); ev.dataTransfer.dropEffect='copy'; deskEl.classList.add('fileOver'); } });
+deskEl.addEventListener('dragleave',ev=>{ if(!deskEl.contains(ev.relatedTarget)) clearFileOver(); });
+deskEl.addEventListener('drop',ev=>{
+  const aid=ev.dataTransfer&&ev.dataTransfer.getData('text/zineit-asset');
+  if(aid&&ev.target===deskEl){ ev.preventDefault(); addImageEl(aid,null,null,curPage); return; }   // library photo dropped beside the page
+  if(!isFileDrag(ev))return; ev.preventDefault(); clearFileOver();
+  if(ev.dataTransfer.files&&ev.dataTransfer.files.length) importFilesToPage(ev.dataTransfer.files, curPage, null, null, null); });
+/* a file dropped anywhere else must never make the browser navigate away from your work */
+window.addEventListener('dragover',ev=>{ if(isFileDrag(ev)) ev.preventDefault(); });
+window.addEventListener('drop',ev=>{ if(isFileDrag(ev)&&!ev.defaultPrevented){ ev.preventDefault(); clearFileOver();
+  if(ev.dataTransfer.files&&ev.dataTransfer.files.length) importFiles(ev.dataTransfer.files); } });
 pageEl.addEventListener('pointerdown',ev=>{ if(ev.target===pageEl||ev.target.classList.contains('guide')){ selId=null; updateSelectionDom(); renderInspector(); renderPageTag(); syncSelectedTab(false); }});
 
 
@@ -3742,24 +4126,14 @@ function initLayerBtns(){
   $('lyFwd').addEventListener('click',()=>lyShift('fwd'));
   $('lyBack').addEventListener('click',()=>lyShift('bwd'));
   $('lyBottom').addEventListener('click',()=>lyShift('back'));
-  $('lyDup').addEventListener('click',()=>duplicateSel());
-  $('lyDel').addEventListener('click',()=>deleteSel());
 }
 function initToolbar(){
-  const f=$('tbFormat');
-  f.innerHTML=$('fmtSel').innerHTML;                 // same options, one source of truth
-  f.value=state.format;
-  f.addEventListener('change',()=>{ $('fmtSel').value=f.value;
-    $('fmtSel').dispatchEvent(new Event('change',{bubbles:true})); });
   $('tbUndo').addEventListener('click',undo);
   $('tbRedo').addEventListener('click',redo);
   $('tbAddPage').addEventListener('click',()=>{ const b=$('railAdd'); if(b)b.click();
     else toast('This format has a fixed page count.','err'); });
-  $('tbAddSpread').addEventListener('click',()=>$('spreadBtn').click());
   $('tbTpl').addEventListener('click',openTplModal);
   $('tbExport').addEventListener('click',()=>{ setPane('export'); if(typeof isMobile==='function'&&isMobile()) openDrawer('right'); });   // on phones the panel is a drawer — open it
-  ['tbZoomIn','tbZoomOut','tbZoomFit'].forEach((id,i)=>
-    $(id).addEventListener('click',()=>$(['zoomIn','zoomOut','zoomFit'][i]).click()));
   // pan toggle in the toolbar mirrors the one in Properties
   $('tbPan').addEventListener('click',()=>{ setPanMode(!panMode); });
   $('projName').addEventListener('focus',()=>$('projName').select());
@@ -3813,7 +4187,7 @@ function renderLayers(){
   }).reverse().join('');
   [...box.querySelectorAll('.ly')].forEach(n=>{
     const id=n.dataset.id;
-    n.addEventListener('click',ev=>{ if(ev.target.dataset.a)return; select(curPage,id); renderLayers(); });
+    n.addEventListener('click',ev=>{ if(ev.target.dataset.a)return; select(curPage,id,{stay:true}); renderLayers(); });
     n.querySelector('[data-a=vis]').addEventListener('click',ev=>{
       ev.stopPropagation(); const e=elById(id); if(!e)return;
       e.hidden=!e.hidden; renderCanvas(); renderLayers(); touch();
@@ -3892,8 +4266,10 @@ const WS_OLD_DEF={leftW:268, rightW:312, railH:150};   // pre-v5.6 sizes
 let ws=Object.assign({},WS_DEF);
 function applyWs(){
   const a=$('app'), s=a.style;
-  s.setProperty('--leftW', ws.leftW+'px');
-  s.setProperty('--rightW', ws.rightW+'px');
+  // a touch tablet in landscape gets slimmer default panels so the page keeps the room (user sizes are respected)
+  const tab=(()=>{ try{ const d=detectDevice(); return d.kind==='tablet'&&d.layout==='full'; }catch(e){ return false; } })();
+  s.setProperty('--leftW', (tab&&ws.leftW===WS_DEF.leftW?252:ws.leftW)+'px');
+  s.setProperty('--rightW', (tab&&ws.rightW===WS_DEF.rightW?296:ws.rightW)+'px');
   s.setProperty('--railH', ws.railH+'px');
   a.classList.toggle('noLeft', !!ws.noLeft);
   a.classList.toggle('noRight', !!ws.noRight);
@@ -3947,8 +4323,8 @@ let railRszEl=null;
 function initWorkspace(){
   railRszEl=$('railRsz');
   loadWs();
-  panelDrag('leftRsz', ()=>ws.leftW, v=>ws.leftW=Math.max(0,Math.min(v,520)), 'x', false);
-  panelDrag('rightRsz',()=>ws.rightW,v=>ws.rightW=Math.max(0,Math.min(v,560)),'x', true);
+  panelDrag('leftRsz', ()=>Math.round($('left').getBoundingClientRect().width)||ws.leftW, v=>ws.leftW=Math.max(0,Math.min(v,520)), 'x', false);
+  panelDrag('rightRsz',()=>Math.round($('right').getBoundingClientRect().width)||ws.rightW,v=>ws.rightW=Math.max(0,Math.min(v,560)),'x', true);
   panelDrag('railRsz', ()=>ws.railH, v=>ws.railH=Math.max(0,Math.min(v,400)), 'y', true);
   [...$('rtabs').querySelectorAll('button')].forEach(b=>b.addEventListener('click',()=>setPane(b.dataset.p)));
   $('tbFocus').addEventListener('click',()=>{
@@ -4129,7 +4505,6 @@ $('coverApply').addEventListener('click',()=>{
   applyCoverTemplate(coverKind,coverPick,$('coverKeep').checked);
   $('coverModalBk').classList.remove('show');
 });
-$('tplBrowseBtn').addEventListener('click',openTplModal);
 $('tplClose').addEventListener('click',()=>$('tplModalBk').classList.remove('show'));
 $('tplApply').addEventListener('click',()=>{
   if(!tplPick){ toast('Pick a template first.','err'); return; }
@@ -4215,11 +4590,58 @@ function pageIndicators(pi){
   if(!p.elements.length)tags.push('<span class="tag warn">empty</span>');
   return tags.join('');
 }
+/* The timeline sizes its thumbnails so the WHOLE sequence is visible at once — on one row
+   when it fits, wrapping onto a second or third row for long books — instead of a fixed
+   96px strip you have to scroll. Below a readable floor it falls back to scrolling. */
+const TL_MIN=34, TL_MAX=112, TL_COMFY=64;
+/* Pick the largest thumbnail height that shows EVERY spread at once: 1–3 rows, roomy (labels + tags)
+   or compact (page number only). Falls back to a scrolling strip only when even compact won't fit. */
+/* one name for a spread everywhere (timeline label, page tag): cover · spread n/N · back */
+function spreadName(si,sps){ const sp=sps[si]; if(!sp) return '';
+  if(sp.left==null) return 'cover';
+  if(sp.right==null) return sp.left===state.pages.length-1?'back':'p'+(sp.left+1);
+  return `spread ${si}/${sps.length-2||1}`; }
+function timelinePlan(R,sps,f){
+  const cs=getComputedStyle(R), padX=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight), padY=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom);
+  const W=R.clientWidth-padX-4, H=R.clientHeight-padY-4;
+  if(W<120||H<60) return {th:96, wrap:false, compact:false};
+  const ar=f.w/f.h, items=sps.map(sp=>(sp.left!=null)+(sp.right!=null)), total=items.reduce((a,b)=>a+b,0);
+  const fit=(mode)=>{ let best={th:0,wrap:false,rows:1,compact:mode.compact};
+    for(let rows=1; rows<=3; rows++){
+      const per=Math.ceil(total/rows), runs=[[]]; let u=0;
+      items.forEach(n=>{ if(u+n>per && runs[runs.length-1].length && runs.length<rows){ runs.push([]); u=0; } runs[runs.length-1].push(n); u+=n; });
+      let thW=Infinity;
+      runs.forEach((run,ri)=>{ const units=run.reduce((a,b)=>a+b,0),
+          fixed=run.length*mode.pad+(run.length-1)*mode.gap+(ri===runs.length-1&&!f.fixed?(mode.compact?36:56)+mode.gap:0)+(units-run.length)*2;
+        thW=Math.min(thW,(W-fixed)/(units*ar)); });
+      const thH=(H-(runs.length-1)*mode.rowGap)/runs.length-mode.meta;
+      const th=Math.floor(Math.min(thW,thH,TL_MAX));
+      if(th>best.th*1.12) best={th,wrap:runs.length>1,rows:runs.length,compact:mode.compact};   // a new row must earn its keep
+    }
+    return best; };
+  const roomy=fit({meta:40,pad:20,gap:16,rowGap:8,compact:false});
+  if(roomy.th>=TL_COMFY) return roomy;
+  const compact=fit({meta:16,pad:10,gap:8,rowGap:6,compact:true});
+  const best=compact.th>roomy.th?compact:roomy;
+  if(best.th<TL_MIN) return {th:Math.max(TL_MIN,Math.min(96,H-40)), wrap:false, compact:false, scroll:true};
+  return best;
+}
 function renderTimeline(){
+  const R=$('rail'), f=fmt(), sps=buildSpreads();
+  const plan=timelinePlan(R,sps,f);
+  R.classList.toggle('tlWrap',!!plan.wrap); R.classList.toggle('tlCompact',!!plan.compact); R.classList.toggle('tlScroll',!!plan.scroll);
+  let th=plan.th; buildTimeline(th,plan.wrap);
+  for(let i=0;i<8 && th>TL_MIN && (R.scrollHeight>R.clientHeight+2 || (!plan.scroll && R.scrollWidth>R.clientWidth+2));i++){
+    th=Math.max(TL_MIN,Math.floor(th*0.92)); buildTimeline(th,plan.wrap); }
+  R.dataset.th=th;
+  if(plan.scroll){ const cur=R.querySelector('.spreadItem.cur'); if(cur&&cur.scrollIntoView) cur.scrollIntoView({inline:'nearest',block:'nearest'}); }
+}
+function buildTimeline(th,wrap){
   const R=$('rail'); R.innerHTML='';
   R.appendChild(railRszEl);        // the handle is ours; innerHTML must not eat it
   const f=fmt(), sps=buildSpreads(), curS=spreadIndexOf(curPage);
-  const th=96, tw=Math.max(30,Math.min(120,th*f.w/f.h));
+  const tw=Math.max(24,th*f.w/f.h);
+  R.style.flexWrap=wrap?'wrap':'nowrap';
   sps.forEach((sp,si)=>{
     const it=document.createElement('div'); it.className='spreadItem'+(si===curS?' cur':'');
     const pgs=document.createElement('div'); pgs.className='spreadPages';
@@ -4230,7 +4652,7 @@ function renderTimeline(){
     const meta=document.createElement('div'); meta.className='tlMeta';
     meta.innerHTML=[sp.left,sp.right].filter(p=>p!=null).map(pageIndicators).join('<span style="opacity:.35">|</span>');
     const lb=document.createElement('div'); lb.className='tlLbl';
-    lb.textContent= sp.left==null?'cover': sp.right==null?(sp.left===state.pages.length-1?'back':'p'+(sp.left+1)) : `spread ${si}/${sps.length-2||1}`;
+    lb.textContent=spreadName(si,sps);
     it.appendChild(pgs); it.appendChild(meta); it.appendChild(lb);
     if(si===curS && !fmt().fixed){
       const ops=document.createElement('div'); ops.className='railOps';
@@ -4245,6 +4667,7 @@ function renderTimeline(){
   });
   if(!fmt().fixed){
     const add=document.createElement('button'); add.id='railAdd'; add.textContent='+'; add.title='Add page before back cover';
+    add.setAttribute('aria-label','Add page'); add.style.height=th+'px';
     add.onclick=()=>{ state.pages.splice(state.pages.length-1,0,blankPage('Page')); relabel();
       curPage=state.pages.length-2; selId=null; renderAll(); touch(); };
     R.appendChild(add);
@@ -4382,13 +4805,14 @@ function openTextInEditor(eid){
   setTimeout(()=>row.classList.remove('teFocus'),1600);
 }
 function setTab(t){ view.tab=t;
+  $('viewBar').classList.toggle('notLayout',t!=='layout');   // page/zoom controls only exist for the layout canvas
   $('tabLayout').classList.toggle('on',t==='layout'); $('tabText').classList.toggle('on',t==='text');
   if($('tabRead'))$('tabRead').classList.toggle('on',t==='read');
   $('canvasScroll').style.display=t==='layout'?'grid':'none';
   $('textEditor').classList.toggle('show',t==='text');
   if($('flipReader'))$('flipReader').classList.toggle('show',t==='read');
   if(t==='text')renderTextEditor();
-  else if(t==='read'){ /* reader draws on demand */ }
+  else if(t==='read'){ if(flip.renderedAt!==state.meta.modified) flipFromProject(); }   // always the current project, no extra tap
   else renderCanvas();
 }
 
@@ -4407,7 +4831,7 @@ async function flipFromProject(){
       const cv=await renderPageCanvas(pi,{bleed:false});
       imgs.push(cv.toDataURL('image/jpeg',0.86));
     }
-    flip.pages=imgs; flip.i=0; if(flip.zoom==null)flip.zoom=1;
+    flip.pages=imgs; flip.i=0; if(flip.zoom==null)flip.zoom=1; flip.renderedAt=state.meta.modified;
     renderFlip();
     toast('Ready — '+imgs.length+' pages. Tap the halves or use arrow keys.','ok');
   }catch(e){ stage.innerHTML='<div class="flipEmpty">Could not render: '+escapeHtml(e.message||String(e))+'</div>'; }
@@ -4971,6 +5395,7 @@ function renderFormatInfo(){
   $('fmtSel').value=state.format;
 }
 function renderAll(){
+  renderLayoutTiles();                       // tiles take the page's real proportions
   $('projName').value=state.meta.name;
   $('projName').title=state.meta.name||'Project title';   // full title on hover, never truncated in the file
   if($('tbFormat'))$('tbFormat').value=state.format;
@@ -5035,7 +5460,37 @@ const UA=navigator.userAgent||'';
 const IS_IOS = /iPad|iPhone|iPod/.test(UA) || (/Macintosh/.test(UA) && navigator.maxTouchPoints>1);
 const IS_ANDROID = /Android/.test(UA);
 const IS_TOUCH = (navigator.maxTouchPoints||0)>0 || 'ontouchstart' in window;
-function isPhone(){ try{ return window.matchMedia('(max-width:820px)').matches; }catch(e){ return (window.innerWidth||1024)<=820; } }
+/* One definition of "compact layout", shared with the CSS media queries: a narrow window, a touch
+   tablet held in portrait (iPad, Android tablet), or any touch screen too short for side panels
+   (a phone on its side, even a wide one). Keep this string in sync with the @media lists above. */
+const PHONE_MQ='(max-width:820px), (pointer:coarse) and (orientation:portrait) and (max-width:1100px), (pointer:coarse) and (max-height:600px)';
+function mqMatch(q){ try{ return !!window.matchMedia(q).matches; }catch(e){ return null; } }
+function isPhone(){ const m=mqMatch(PHONE_MQ); return m==null ? (window.innerWidth||1024)<=820 : m; }
+/* What are we running on? Phone / tablet / desktop from the touch OS + the screen's short side,
+   so an iPad in landscape is still a tablet and a narrow desktop window is still a desktop. */
+function detectDevice(ua, scr, touchPoints){
+  ua = ua==null ? (navigator.userAgent||'') : ua;
+  scr = scr || { w:(window.screen&&screen.width)||window.innerWidth||1024, h:(window.screen&&screen.height)||window.innerHeight||768 };
+  const touchOS = isTouchOS(ua, null, touchPoints);
+  const coarse = mqMatch('(pointer:coarse)')===true;
+  const shortSide = Math.min(scr.w, scr.h);
+  const os = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && (touchOS||coarse)) ? 'ios' : /Android/i.test(ua) ? 'android' : 'other';
+  const kind = (touchOS||coarse) ? (shortSide<600 ? 'phone' : 'tablet') : 'desktop';
+  return { kind, os, touch: touchOS||coarse, layout: isPhone() ? 'compact' : 'full',
+           orientation: (window.innerWidth||1024) >= (window.innerHeight||768) ? 'landscape' : 'portrait' };
+}
+let device=null;
+function applyDevice(){
+  device=detectDevice();
+  const c=document.documentElement.classList;
+  ['phone','tablet','desktop'].forEach(k=>c.toggle('dev-'+k, device.kind===k));
+  ['ios','android'].forEach(k=>c.toggle('os-'+k, device.os===k));
+  c.toggle('touch', device.touch);
+  c.toggle('lay-compact', device.layout==='compact'); c.toggle('lay-full', device.layout==='full');
+  c.toggle('portrait', device.orientation==='portrait'); c.toggle('landscape', device.orientation==='landscape');
+  document.documentElement.dataset.device=device.kind;
+  return device;
+}
 function isStandalone(){
   try{ if(window.matchMedia('(display-mode:standalone)').matches)return true; }catch(e){}
   return navigator.standalone===true;
@@ -5152,15 +5607,15 @@ function boot(){
   if(!state)newProject('mini-zine-a4');   // A4 is the default worldwide paper — borderless out of the box
   const fb='mailto:'+FEEDBACK_EMAIL
     +'?subject='+encodeURIComponent('MakeZines v'+APP_VER+' — bug report / idea')
-    +'&body='+encodeURIComponent('Hi Brian,\n\nWhat happened (or what I wish MakeZines did):\n\n\nSteps to reproduce (for a bug):\n1.\n2.\n\n—\nMakeZines v'+APP_VER+' · format: '+state.format+' · '+(navigator.userAgent||''));
-  $('feedbackLink').href=fb; $('fbBtn').href=fb;
+    +'&body='+encodeURIComponent('Hi Brian,\n\nWhat happened (or what I wish MakeZines did):\n\n\nSteps to reproduce (for a bug):\n1.\n2.\n\n—\nMakeZines v'+APP_VER+' · format: '+state.format+' · device: '+(()=>{ const d=detectDevice(); return d.kind+'/'+d.os+'/'+d.layout; })()+' · '+(navigator.userAgent||''));
+  $('feedbackLink').href=fb;
   initToolbar(); initLayerBtns(); initWorkspace(); initPWA(); initRulers(); initCropEditor(); initMobile(); initCanvasPinch();
   renderAll(); applyMobile(); dailyCheck(); setSaveState('saved','autosave on');
   undoReset();
   // deep-link: ?read (or #read) opens the flipbook straight away — used by the phone QR
   try{
     const wantRead = /(^|[?&])read(=|&|$)/.test(location.search) || location.hash.replace('#','')==='read';
-    if(wantRead){ setTab('read'); flipFromProject(); }
+    if(wantRead){ setTab('read'); }   // opening the Read tab renders the current project itself
   }catch(e){}
   window.__zineitReady=(async()=>{      // storage warm-up continues in the background
     await assetStore.open();
@@ -5210,7 +5665,6 @@ $('aspectChk').addEventListener('change',e=>{ state.settings.keepAspect=e.target
   toast(e.target.checked?'Photos keep their original aspect ratio when placed and reset.':'Free cropping — frames can be any shape.'); });
 
 /* layout + guides */
-document.querySelectorAll('.tpl').forEach(t=>t.addEventListener('click',()=>applyTemplate(t.dataset.t)));
 $('snapChk').addEventListener('change',e=>{ state.settings.snap=e.target.checked; touch(); });
 $('gridChk').addEventListener('change',e=>{ state.settings.grid=e.target.checked; renderCanvas(); touch(); });
 $('rulerChk').addEventListener('change',e=>{ state.settings.rulers=e.target.checked; renderCanvas(); touch(); });
@@ -5218,7 +5672,7 @@ $('snapObjChk').addEventListener('change',e=>{ state.settings.snapObjects=e.targ
 $('addGuideH').addEventListener('click',()=>{ state.settings.userGuides.push({axis:'h',pos:canvasSize().h/2}); if(!state.settings.rulers){state.settings.rulers=true;$('rulerChk').checked=true;} renderCanvas(); touch(); });
 $('addGuideV').addEventListener('click',()=>{ state.settings.userGuides.push({axis:'v',pos:canvasSize().w/2}); if(!state.settings.rulers){state.settings.rulers=true;$('rulerChk').checked=true;} renderCanvas(); touch(); });
 $('clearGuides').addEventListener('click',()=>{ if(!state.settings.userGuides.length){toast('No guides to clear.');return;} state.settings.userGuides=[]; renderCanvas(); touch(); toast('Guides cleared.'); });
-$('marginSel').addEventListener('change',e=>{ state.settings.margin=parseFloat(e.target.value); renderCanvas(); touch(); });
+$('marginSel').addEventListener('change',e=>{ state.settings.margin=parseFloat(e.target.value); renderLayoutTiles(); renderCanvas(); touch(); });
 [['gMargins','margins'],['gSafe','safe'],['gBleed','bleedG'],['gFold','fold']].forEach(([id,k])=>{
   $(id).addEventListener('change',e=>{ state.settings.guides[k]=e.target.checked; renderCanvas(); touch(); }); });
 /* Prepress/CMYK panel removed in v5.6 — export is simplified. */
@@ -5284,9 +5738,6 @@ $('rotL').addEventListener('click',()=>imgAction(e=>{ensureImg(e).rot-=90;}));
 $('rotR').addEventListener('click',()=>imgAction(e=>{ensureImg(e).rot+=90;}));
 $('rotReset').addEventListener('click',()=>imgAction(e=>{ensureImg(e).rot=0;}));
 $('spreadBtn').addEventListener('click',()=>{ const e=el(); if(!e)return; e.spread?unSpread():makeSpread(); });
-$('panModeBtn').addEventListener('click',()=>setPanMode(!panMode));
-$('fwdBtn').addEventListener('click',()=>reorderSel(1));
-$('backBtn').addEventListener('click',()=>reorderSel(-1));
 $('dupBtn').addEventListener('click',duplicateSel);
 $('delBtn').addEventListener('click',deleteSel);
 $('txtContent').addEventListener('input',e=>{ const t=el(); if(t){t.text=e.target.value;renderCanvas();renderTimeline();touch();} });
@@ -5301,7 +5752,6 @@ $('txtRole').addEventListener('change',e=>{ const t=el(); if(t){t.role=e.target.
 $('tabLayout').addEventListener('click',()=>setTab('layout'));
 $('tabText').addEventListener('click',()=>setTab('text'));
 $('tabRead').addEventListener('click',()=>{ setTab('read'); if(!flip.pages.length) flipFromProject(); });
-$('flipProject').addEventListener('click',flipFromProject);
 $('flipSingle').addEventListener('click',()=>flipSetView('single'));
 $('flipDouble').addEventListener('click',()=>flipSetView('double'));
 $('flipZoomIn').addEventListener('click',()=>flipZoom(1.25));
@@ -5355,7 +5805,6 @@ $('pdfBtn').addEventListener('click',()=>downloadMiniZinePdf('a4'));   // real o
 $('pdfLetterBtn').addEventListener('click',()=>downloadMiniZinePdf('letter'));
 $('pdfA5Btn').addEventListener('click',()=>downloadMiniZinePdf('a5'));
 $('pdfA3Btn').addEventListener('click',()=>downloadMiniZinePdf('a3'));
-if($('pdfPrintBtn')) $('pdfPrintBtn').addEventListener('click',()=>{ toast('In the print dialog choose <b>Save as PDF</b> · margins <b>None</b> · scale <b>100%</b>.'); doPrint('seq'); });
 $('printBtn').addEventListener('click',()=>{ toast('For best quality: 100% scale, margins None, highest print quality in printer settings.'); doPrint('seq'); });
 $('impBtn').addEventListener('click',openImpModal);
 $('saddleBtn').addEventListener('click',()=>{
@@ -5421,23 +5870,34 @@ $('lbClose').addEventListener('click',closeLightbox);
 window.addEventListener('keydown',ev=>{ if(ev.key==='Escape'){ closeLightbox(); closeDrawers();
   $('foldModalBk').classList.remove('show');
   if(document.body.classList.contains('fs'))toggleFS(false); }});
-window.addEventListener('resize',()=>{ if(!state)return; applyMobile(); if(view.tab==='layout')renderCanvas(); });
+window.addEventListener('resize',()=>{ if(!state)return; const was=device&&(device.kind+device.layout); applyMobile();
+  if(device&&device.kind==='tablet'&&was!==device.kind+device.layout) applyWs();   // iPad rotated: re-pick panel sizes
+  if(view.tab==='layout')renderCanvas(); });
+/* the timeline re-fits its thumbnails whenever its own box changes size (window, panel drag, drawer) */
+if(window.ResizeObserver){ let rt=0, last='';
+  new ResizeObserver(ents=>{ const r=ents[0].contentRect, key=Math.round(r.width)+'x'+Math.round(r.height);
+    if(key===last) return; last=key; clearTimeout(rt); rt=setTimeout(()=>{ if(state) renderTimeline(); },80); }).observe($('rail')); }
 
 /* production error reporting — never a silent white screen */
 let lastErrToast=0;
 function reportError(msg){
   const now=Date.now(); if(now-lastErrToast<8000)return; lastErrToast=now;
   try{ toast('Something went wrong ('+escapeHtml(String(msg||'unknown').slice(0,90))
-    +'). Your work is autosaved. If this keeps happening, tap ✉ Feedback and tell '
+    +'). Your work is autosaved. If this keeps happening, use “Email us” in the left panel and tell '
     +FEEDBACK_EMAIL+' what you were doing.','err'); }catch(e){}
 }
 window.addEventListener('error',ev=>{ if(state)reportError(ev&&ev.message); });
 window.addEventListener('unhandledrejection',ev=>{ if(state)reportError(ev&&ev.reason&&(ev.reason.message||ev.reason)); });
 
 /* ---------- mobile: responsive shell, drawers, fullscreen, swipe, tap-to-edit ---------- */
-function isMobile(){ return window.innerWidth<=820; }
+function isMobile(){ return isPhone(); }
+let autoSingleDone=false;
 function applyMobile(){
+  applyDevice();
   const m=isMobile();
+  // a phone held upright shows one page at a time (a spread would be postage-stamp sized); once per session, the user can switch back
+  if(m && device.kind==='phone' && device.orientation==='portrait' && !autoSingleDone && view.mode==='spread'){
+    autoSingleDone=true; view.mode='single'; if(typeof syncViewBar==='function') syncViewBar(); }
   document.body.classList.toggle('mobile',m);
   if(!m){ closeDrawers(); document.body.classList.remove('railOpen'); $('mtbRail').classList.remove('on'); }
   updateMobEdit();
@@ -5480,7 +5940,6 @@ function updateMobEdit(){ $('mobEdit').classList.toggle('show', isMobile()&&!doc
 $('mtbPhotos').addEventListener('click',()=>toggleDrawer('left'));
 $('mtbTools').addEventListener('click',()=>toggleDrawer('right'));
 $('mtbRail').addEventListener('click',toggleRail);
-$('mtbText').addEventListener('click',()=>setTab(view.tab==='text'?'layout':'text'));
 $('mtbFS').addEventListener('click',()=>toggleFS());
 $('drawerBk').addEventListener('click',closeDrawers);
 $('mobEdit').addEventListener('click',()=>{ const e=el(); if(!e)return;
@@ -5533,7 +5992,7 @@ window.__zineit={
   loadCustomTemplates, basePages, gridOf, openTplModal,
   applyMobile, isMobile, openDrawer, closeDrawers, toggleDrawer, toggleRail, toggleFS,
   renderAll, renderTextEditor, persist,
-  assetStore, buildBakJson, restoreBak, isTouchOS, applyBakAccept, ingestLegacy, printSrc, usedAssetIds, isHeic, dataURLtoBlob,
+  assetStore, buildBakJson, restoreBak, LAYOUTS, layoutBoxes, renderLayoutTiles, placeAssetsOnPage, spreadName, isTouchOS, detectDevice, applyDevice, PHONE_MQ, isPhone, timelinePlan, applyBakAccept, importFilesToPage, isFileDrag, ingestLegacy, printSrc, usedAssetIds, isHeic, dataURLtoBlob,
   hydrate, openLightbox, APP_VER, FEEDBACK_EMAIL,
   setAsset:(id,a)=>{ const src=a.src||a.thumb||'';
     state.assets[id]={name:a.name||'test',w:a.w||100,h:a.h||100,thumb:src};

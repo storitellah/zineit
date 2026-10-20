@@ -1,4 +1,4 @@
-MakeZines v6.2.1 test run — 2026-10-19T08:56:46.582Z
+MakeZines v6.3.0 test run — 2026-10-20T19:50:09.383Z
 PASS  boots into a valid A4 mini-zine project — borderless by default
 PASS  the classic US Letter mini zine is still available (the dimension tests below use it)
 PASS  spread model: cover alone · 3 interior pairs · back alone
@@ -17,7 +17,7 @@ PASS  reset crop restores fill, centre and zero rotation; reset frame restores t
 PASS  stage a clean page: one photo, room to move, no empty placeholders
 PASS  plain drag moves the frame (grid-snapped)
 PASS  SHIFT+drag moves the photo — freely, even outside the frame
-PASS  Pan mode button moves the photo without a modifier key
+PASS  Pan tool (toolbar) moves the photo without a modifier key
 PASS  8 resize handles plus a rotate handle on a selected photo
 PASS  corner resize grows the frame; edge resize changes one axis; nothing stretches
 PASS  resize never collapses below minimum size
@@ -52,7 +52,7 @@ PASS  v6.2: DEVOTTE replaces Generation 1970 and never gets a synthetic bold
 PASS  v6.2: "Made to support This is where we're from" links to thisiswherewearefrom.com
 PASS  v6.2: the MZ favicon is bold DEVOTTE outlines in the brand colours
 PASS  timeline panel collapses/expands from the toolbar
-PASS  text editor panel toggles from the toolbar
+PASS  text editor tab toggles from the view bar (one control, not two)
 PASS  tap-to-edit: selecting a block shows the Edit chip; chip opens the tools drawer
 PASS  swipe left/right on the canvas navigates pages
 PASS  swipe in spread view steps whole spreads; vertical drags are ignored
@@ -81,7 +81,7 @@ PASS  lightbox opens instantly and upgrades to full resolution
 PASS  .bak v3 is self-contained: embeds originals + previews, passes the verifier
 PASS  legacy v1/v2 projects ingest: inline photos move to the store, state slims down
 PASS  HEIC import path: files accepted, detection by type and extension
-PASS  feedback channel: support card + view-bar button email bryanjaybee@gmail.com with context
+PASS  feedback channel: support card emails the team with context (one entry point, no duplicate)
 PASS  deleting a photo from the library also frees its stored blobs
 PASS  M-Pesa is completely removed from the tool
 PASS  Ko-fi and Patreon are icon buttons only — no URL text
@@ -244,6 +244,15 @@ PASS  graphic elements render with no background, and a checkerboard can reveal 
 PASS  the checkerboard toggle flips a body class, not anything that would print
 PASS  page rendering can skip the white paper fill for transparent PNG export
 PASS  transparent import auto-detects alpha and marks the asset as a graphic
+PASS  dropping photos fills the frame under the pointer, then empty frames in reading order, then adds frames
+PASS  desk + page accept files from the computer and never navigate away
+PASS  system layouts: 18 layouts, all inside the live area, all rendered as page-shaped tiles
+PASS  timeline plans a fit-all view: every spread visible, compact before it ever scrolls
+PASS  spreads have one name everywhere (timeline + page tag)
+PASS  device detection: phones, iPads (even posing as a Mac), Android tablets and desktops
+PASS  Text and Read tabs hide the page/zoom controls that only drive the layout canvas
+PASS  CSS and JS agree on when the compact (drawer) layout applies
+PASS  Spectrum layer: neutral surfaces, one accent, underline tabs, no duplicate controls
 PASS  no page errors or uncaught exceptions across the whole run
 
-246 passed · 0 failed
+255 passed · 0 failed

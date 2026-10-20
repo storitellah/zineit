@@ -145,10 +145,9 @@ T('preview page numbers: interiors only, toggleable', () => {
 /* ============ 4 · placement, fit/fill/centre, aspect ============ */
 T('template g4 places four frames inside margins', () => {
   Z.goPage(3);
-  const n0 = Z.state.pages[3].elements.length;
-  Z.applyTemplate('g4');
-  const els = Z.state.pages[3].elements.slice(n0);
+  const els = Z.applyTemplate('g4');
   eq(els.length, 4);
+  els.forEach(e => ok(Z.state.pages[3].elements.includes(e), 'frame is on the page'));
   const m = Z.state.settings.margin;
   els.forEach(e => { ok(e.x >= m - 1e-9 && e.y >= m - 1e-9, 'frame starts inside margins');
     ok(e.x + e.w <= 2.75 - m + 1e-9, 'frame ends inside margins'); });
@@ -236,16 +235,16 @@ T('SHIFT+drag moves the photo — freely, even outside the frame', () => {
   ok(!$('cropGhost'), 'ghost removed after the gesture');
   Z.select(3, e.id); click($('resetCropBtn'));
 });
-T('Pan mode button moves the photo without a modifier key', () => {
+T('Pan tool (toolbar) moves the photo without a modifier key', () => {
   const e = Z.state.pages[3].elements.at(-1); Z.select(3, e.id);
   Z.imgCentre(e); Z.renderAll();
-  click($('panModeBtn'));
+  click($('tbPan'));
   const n = nodeFor(e.id);
   ptr(n, 'pointerdown', { clientX: 300, clientY: 300 });
   ptr(window, 'pointermove', { clientX: 330, clientY: 300 });
   ok(e.img.ox !== 0, 'photo moved with pan-mode on');
   ptr(window, 'pointerup', {});
-  click($('panModeBtn'));
+  click($('tbPan'));
   Z.select(3, e.id); click($('resetCropBtn'));
 });
 T('8 resize handles plus a rotate handle on a selected photo', () => {
@@ -581,9 +580,10 @@ T('timeline panel collapses/expands from the toolbar', () => {
   click($('mtbRail')); ok(document.body.classList.contains('railOpen'), 'expanded');
   click($('mtbRail')); ok(!document.body.classList.contains('railOpen'), 'collapsed again');
 });
-T('text editor panel toggles from the toolbar', () => {
-  click($('mtbText')); eq(Z.view.tab, 'text', 'opens text editor');
-  click($('mtbText')); eq(Z.view.tab, 'layout', 'toggles back to layout');
+T('text editor tab toggles from the view bar (one control, not two)', () => {
+  click($('tabText')); eq(Z.view.tab, 'text', 'opens text editor');
+  click($('tabLayout')); eq(Z.view.tab, 'layout', 'back to layout');
+  ok(!$('mtbText'), 'the duplicate mobile Text button is gone');
 });
 T('tap-to-edit: selecting a block shows the Edit chip; chip opens the tools drawer', () => {
   click($('viewSingle')); Z.goPage(3);
@@ -883,10 +883,10 @@ T('HEIC import path: files accepted, detection by type and extension', () => {
   ok(/heic2any/.test(src), 'HEIC converter loads lazily as fallback');
   ok(/createImageBitmap/.test(src), 'native decode attempted first (Safari decodes HEIC natively)');
 });
-T('feedback channel: support card + view-bar button email bryanjaybee@gmail.com with context', () => {
-  const a = $('feedbackLink'), b = $('fbBtn');
-  ok(a && b, 'both entry points exist');
-  [a, b].forEach(l => {
+T('feedback channel: support card emails the team with context (one entry point, no duplicate)', () => {
+  const a = $('feedbackLink');
+  ok(a, 'entry point exists'); ok(!$('fbBtn'), 'duplicate view-bar button removed');
+  [a].forEach(l => {
     ok(l.href.startsWith('mailto:hello@storitellah.com'), 'addressed correctly');
     ok(/subject=/.test(l.href) && /MakeZines/.test(decodeURIComponent(l.href)), 'prefilled subject');
     ok(/bug/i.test(decodeURIComponent(l.href)), 'invites bug reports');
@@ -971,8 +971,8 @@ T('feedback subject carries the running version', () => {
   // that disagrees with the code is.
   ok(/^\d+\.\d+(\.\d+)?$/.test(Z.APP_VER), 'version looks like a version');
   eq($('verBadge').textContent, 'v' + Z.APP_VER, 'the badge in the header matches the code');
-  ok(decodeURIComponent($('fbBtn').href).includes('MakeZines v' + Z.APP_VER), 'mailto subject carries it too');
-  ok($('fbBtn').href.startsWith('mailto:hello@storitellah.com'), 'feedback goes to the right address');
+  ok(decodeURIComponent($('feedbackLink').href).includes('MakeZines v' + Z.APP_VER), 'mailto subject carries it too');
+  ok($('feedbackLink').href.startsWith('mailto:hello@storitellah.com'), 'feedback goes to the right address');
 });
 
 /* ============ 17 · v3.2: type system + production readiness ============ */
@@ -1339,7 +1339,7 @@ T('text colour is part of the model, rendered and exported', () => {
 
 T('the template browser opens, previews and applies', () => {
   Z.newProject('half-letter');
-  click($('tplBrowseBtn'));
+  click($('tbTpl'));
   ok($('tplModalBk').classList.contains('show'), 'browser opens');
   const cards = document.querySelectorAll('#tplGrid .tplCard');
   ok(cards.length >= 9, 'every template is offered');
@@ -1374,8 +1374,9 @@ T('the right panel is tabbed — one pane at a time, no endless scroll', () => {
 });
 T('every control the brief asks for is in the window, not buried', () => {
   // top toolbar
-  ['tbUndo','tbRedo','tbFormat','tbAddPage','tbAddSpread','tbTpl','tbZoomIn','tbZoomOut','tbZoomFit',
+  ['tbUndo','tbRedo','tbAddPage','tbTpl','tbPan',
    'tbFocus','tbPreview','tbReset','tbExport','projName','saveState'].forEach(id => ok($(id), `toolbar: ${id}`));
+  ok($('fmtSel') && $('zoomFit') && $('zoomIn') && $('zoomOut') && $('spreadBtn'), 'format, zoom and spread each live in exactly one place');
   // left = media, centre = preview, right = properties, bottom = timeline
   ok($('left') && $('library'), 'imported photos live on the left');
   ok($('canvasWrap') && $('page'), 'the preview is the centre panel');
@@ -1836,7 +1837,7 @@ T('rulers markup and engine are present', () => {
 /* ============ 19i · v4.2: header, pan toggle, relocated clock ============ */
 T('toolbar buttons carry text labels, not bare icons', () => {
   ok(/<span class="t">Add page<\/span>/.test(SRC2), 'Add page is labelled');
-  ok(/<span class="t">Spread<\/span>/.test(SRC2), 'Spread is labelled');
+  ok(/<span class="t">Pan<\/span>/.test(SRC2), 'Pan is labelled');
   ok(/<span class="t">Templates<\/span>/.test(SRC2), 'Templates is labelled');
   ok(/<span class="t">Undo<\/span>/.test(SRC2) && /<span class="t">Redo<\/span>/.test(SRC2), 'Undo/Redo labelled');
 });
@@ -2444,8 +2445,10 @@ T('the phone QR is a real, inlined code that deep-links to the flipbook', () => 
 });
 T('a ?read deep-link opens the flipbook on load', () => {
   ok(/wantRead/.test(SRC2), 'boot checks for a read parameter');
-  ok(/if\(wantRead\)\{ setTab\('read'\); flipFromProject\(\); \}/.test(SRC2),
-    'when present, it opens the reader and renders the project');
+  ok(/if\(wantRead\)\{ setTab\('read'\); \}/.test(SRC2), 'when present, it opens the reader');
+  ok(/else if\(t==='read'\)\{ if\(flip\.renderedAt!==state\.meta\.modified\) flipFromProject\(\); \}/.test(SRC2),
+    'and opening the Read tab renders the current project by itself — no extra button');
+  ok(!/id="flipProject"/.test(SRC2), 'the redundant “Read my current project” button is gone');
 });
 T('the reader scrolls when zoomed: book is not clamped and the stage uses safe centring', () => {
   ok(/\.flipBook\{position:relative;perspective:2000px;flex:0 0 auto\}/.test(SRC2),
@@ -2505,6 +2508,122 @@ T('transparent import auto-detects alpha and marks the asset as a graphic', () =
   ok(/alphaCapable\(f\) *&& *bitmapHasAlpha\(bmp\)/.test(SRC2), 'normal import auto-detects transparency');
   ok(/drawScaledTransparent/.test(SRC2), 'transparent draws never fill white');
   ok(/image\/png/.test(SRC2), 'graphic previews stay PNG to keep alpha');
+});
+
+/* ============ 21 · v6.3: fit-all timeline, drop-to-page, layouts, devices, Spectrum ============ */
+T('dropping photos fills the frame under the pointer, then empty frames in reading order, then adds frames', () => {
+  Z.newProject('book-8x10'); Z.goPage(2);
+  ['d1','d2','d3','d4','d5','d6'].forEach((k,i)=>Z.setAsset(k,{ name:k+'.png', src:PXDATA, w:1200, h:800 }));
+  const frames = Z.applyTemplate('g4');
+  eq(frames.length, 4, 'four empty frames');
+  const placed = Z.placeAssetsOnPage(['d1','d2','d3'], 2, null, null, frames[1].id);
+  eq(placed[0].id, frames[1].id, 'the frame under the pointer gets the first photo');
+  eq(frames[1].asset, 'd1', 'target filled');
+  eq(frames[0].asset, 'd2', 'then the first empty frame in reading order');
+  eq(frames[2].asset, 'd3', 'then the next');
+  ok(!frames[3].asset, 'unused frame stays empty');
+  const n0 = Z.state.pages[2].elements.length;
+  const more = Z.placeAssetsOnPage(['d4','d5','d6'], 2, 3, 4, null);
+  eq(more[0].id, frames[3].id, 'remaining empty frame used before new ones');
+  eq(Z.state.pages[2].elements.length, n0 + 2, 'two new frames added, nothing replaced');
+  ok(more[1].asset === 'd5' && more[2].asset === 'd6', 'new frames carry the photos');
+  ok(Math.abs((more[2].x - more[1].x) - 0.25) < 0.3, 'new frames cascade so none hides another');
+  eq(Z.selId, more[2].id, 'the last placed photo is selected');
+  const swapped = Z.placeAssetsOnPage(['d6'], 2, null, null, frames[0].id);
+  eq(frames[0].asset, 'd6', 'dropping onto a filled frame swaps its photo');
+  eq(swapped.length, 1, 'one photo, one placement');
+});
+T('desk + page accept files from the computer and never navigate away', () => {
+  ok(/deskEl\.addEventListener\('drop'/.test(SRC2), 'the desk takes drops');
+  ok(/window\.addEventListener\('drop'/.test(SRC2) && /window\.addEventListener\('dragover'/.test(SRC2), 'stray drops are caught at window level');
+  ok(typeof Z.isFileDrag === 'function', 'file drags are told apart from in-app drags');
+  ok(Z.isFileDrag({ dataTransfer: { types: ['Files'] } }), 'Files → file drag');
+  ok(!Z.isFileDrag({ dataTransfer: { types: ['text/zineit-asset'] } }), 'library drag is not a file drag');
+});
+T('system layouts: 18 layouts, all inside the live area, all rendered as page-shaped tiles', () => {
+  Z.newProject('book-8x10');
+  ok(Z.LAYOUTS.length >= 18, 'at least 18 system layouts');
+  const keys = Z.LAYOUTS.map(L => L.k);
+  eq(new Set(keys).size, keys.length, 'unique keys');
+  Z.renderLayoutTiles();
+  const tiles = document.querySelectorAll('#layoutTiles .lyt');
+  eq(tiles.length, Z.LAYOUTS.length, 'one tile per layout');
+  const names = [...tiles].map(b => b.querySelector('.lytName').textContent);
+  eq(new Set(names).size, names.length, 'every tile has a distinct short name');
+  tiles.forEach(b => ok(b.querySelector('.lytPage i.ph, .lytPage i.tx'), 'tile ' + b.dataset.t + ' previews its boxes'));
+  const f = Z.fmt(), m = Z.state.settings.margin;
+  Z.LAYOUTS.forEach(L => { Z.goPage(2); const fr = Z.applyTemplate(L.k) || [];
+    fr.forEach(e => { const lim = (L.f||[]).some(q => q.bleed) ? 0 : m - 1e-6;
+      ok(e.x >= lim - 1e-6 && e.y >= lim - 1e-6 && e.x + e.w <= f.w - lim + 1e-6 && e.y + e.h <= f.h - lim + 1e-6, L.k + ' frame stays on the page/live area'); }); });
+  Z.goPage(2); Z.applyTemplate('g4');
+  click([...document.querySelectorAll('#layoutTiles .lyt')].find(b => b.dataset.t === 'g6'));
+  eq(Z.state.pages[2].elements.filter(e => e.type === 'image').length, 6, 'clicking a tile applies it');
+});
+T('timeline plans a fit-all view: every spread visible, compact before it ever scrolls', () => {
+  const sps = n => Array.from({ length: n }, (_, i) => (i === 0 ? { left: null, right: 0 } : { left: 2*i-1, right: 2*i }));
+  const fakeRail = (w, h) => ({ clientWidth: w, clientHeight: h });
+  const realGCS = window.getComputedStyle;
+  window.getComputedStyle = el => (el && el.clientWidth != null && !el.nodeType) ? { paddingLeft:'16px', paddingRight:'16px', paddingTop:'10px', paddingBottom:'10px' } : realGCS(el);
+  try {
+    const f = { w: 12, h: 8 };
+    const small = Z.timelinePlan(fakeRail(1512, 190), sps(5), f);
+    ok(!small.scroll && small.th >= 64 && !small.compact, 'a short book gets big, labelled thumbnails');
+    const big = Z.timelinePlan(fakeRail(1512, 190), sps(13), f);
+    ok(!big.scroll && big.th >= 34, '24 landscape pages fit on a MacBook Pro 14" without scrolling (th ' + big.th + ')');
+    ok(big.compact, 'it switches to the compact strip to do it');
+    const huge = Z.timelinePlan(fakeRail(700, 150), sps(60), f);
+    ok(huge.scroll, 'only an impossible fit falls back to scrolling');
+  } finally { window.getComputedStyle = realGCS; }
+  ok(/new ResizeObserver\([\s\S]{0,200}renderTimeline\(\)/.test(SRC2), 'the timeline re-fits when its box changes size');
+});
+T('spreads have one name everywhere (timeline + page tag)', () => {
+  Z.newProject('book-8x10'); const sps = Z.buildSpreads ? Z.buildSpreads() : null;
+  if (sps) { eq(Z.spreadName(0, sps), 'cover'); eq(Z.spreadName(sps.length - 1, sps), 'back'); ok(/^spread 1\//.test(Z.spreadName(1, sps)), 'first interior spread is 1'); }
+  ok(/\$\{spreadName\(si,sps\)\}/.test(SRC2) && /lb\.textContent=spreadName\(si,sps\)/.test(SRC2), 'both labels use spreadName');
+});
+T('device detection: phones, iPads (even posing as a Mac), Android tablets and desktops', () => {
+  const IPAD = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15';
+  const d1 = Z.detectDevice('Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)', { w: 393, h: 852 }, 5);
+  eq(d1.kind, 'phone', 'iPhone → phone'); eq(d1.os, 'ios', 'iOS');
+  const d2 = Z.detectDevice(IPAD, { w: 820, h: 1180 }, 5);
+  eq(d2.kind, 'tablet', 'iPadOS (Mac UA + touch) → tablet'); eq(d2.os, 'ios', 'iPad is iOS');
+  const d3 = Z.detectDevice('Mozilla/5.0 (Linux; Android 13; SM-X710)', { w: 800, h: 1280 }, 5);
+  eq(d3.kind, 'tablet', 'Android tablet → tablet'); eq(d3.os, 'android', 'Android');
+  eq(Z.detectDevice('Mozilla/5.0 (Linux; Android 14; Pixel 8)', { w: 412, h: 915 }, 5).kind, 'phone', 'Android phone → phone');
+  eq(Z.detectDevice(IPAD, { w: 1512, h: 982 }, 0).kind, 'desktop', 'a real Mac stays a desktop');
+  eq(Z.detectDevice('Mozilla/5.0 (iPhone)', { w: 852, h: 393 }, 5).kind, 'phone', 'a phone on its side is still a phone');
+  const dv = Z.applyDevice();
+  ok(document.documentElement.classList.contains('dev-' + dv.kind), 'the <html> element carries the device class');
+  eq(document.documentElement.dataset.device, dv.kind, 'and a data-device attribute');
+});
+T('Text and Read tabs hide the page/zoom controls that only drive the layout canvas', () => {
+  ok(/\$\('viewBar'\)\.classList\.toggle\('notLayout',t!=='layout'\)/.test(SRC2), 'every non-layout tab (Read included) hides them');
+  click($('tabText')); ok($('viewBar').classList.contains('notLayout'), 'Text: hidden too');
+  click($('tabLayout')); ok(!$('viewBar').classList.contains('notLayout'), 'Layout: all back');
+  ok(/#viewBar\.notLayout>\*:not\(#tabLayout\):not\(#tabText\):not\(#tabRead\)\{display:none\}/.test(SRC2), 'CSS rule present');
+});
+T('CSS and JS agree on when the compact (drawer) layout applies', () => {
+  const css = SRC2.slice(0, SRC2.indexOf('<style id="pageSizeStyle">'));
+  const n = css.split('@media ' + Z.PHONE_MQ + '{').length - 1;
+  ok(n >= 5, 'every phone-layout block uses the shared query (' + n + ')');
+  ok(!/@media ?\(max-width:820px\)\{/.test(css), 'no width-only phone block left behind');
+  ok(/\(pointer:coarse\) and \(orientation:portrait\) and \(max-width:1100px\)/.test(Z.PHONE_MQ), 'tablets in portrait use the drawer layout');
+  ok(/\(pointer:coarse\) and \(max-height:600px\)/.test(Z.PHONE_MQ), 'short touch screens (phones on their side) too');
+  ok(/\(min-width:821px\) and \(pointer:fine\)/.test(css), 'desktop-only blocks exclude touch tablets in portrait');
+  ok(/view\.mode='single'/.test(SRC2.slice(SRC2.indexOf('function applyMobile'), SRC2.indexOf('function applyMobile') + 700)), 'an upright phone opens in single-page view');
+});
+T('Spectrum layer: neutral surfaces, one accent, underline tabs, no duplicate controls', () => {
+  ok(/<style id="mz-spectrum">/.test(SRC2), 'Spectrum style layer present');
+  const sp = SRC2.slice(SRC2.indexOf('<style id="mz-spectrum">'));
+  ok(/#rtabs button\.on::after\{[^}]*height:2px/.test(sp), 'tabs use an underline indicator');
+  ok(/\.exportBtn,\.exportBtn:hover\{[^}]*border-radius:999px/.test(sp), 'the call to action is a pill');
+  ok(/\.btn\.danger\{[^}]*color:var\(--s-neg\)/.test(sp), 'destructive actions read as destructive');
+  ['fbBtn','tbZoomIn','tbZoomOut','tbZoomFit','tbAddSpread','tbFormat','tplBrowseBtn','panModeBtn','fwdBtn','backBtn','lyDup','lyDel','pdfPrintBtn','mtbText','flipProject']
+    .forEach(id => ok(!$(id), id + ' (duplicate) is gone'));
+  document.querySelectorAll('button').forEach(b => {
+    if (b.closest('#layoutTiles,#rail,#layers,#library,.modal,#tplGrid,#fontList')) return;
+    ok(b.id || b.dataset.p || b.className, 'every button is identifiable: ' + b.outerHTML.slice(0, 60));
+  });
 });
 
 /* ============ 20 · console health ============ */
